@@ -1,0 +1,89 @@
+/**
+ * Editorial copy. DRAFT, written without factual claims: no founding dates, founders,
+ * sourcing partners, awards or quotations. Replace with the owner's verified story when
+ * supplied. Keep sentences short and in the café's voice.
+ */
+
+export const homeContent = {
+  heroTitle: 'Every cup, a small canvas.',
+  heroLead: 'Coffee, tea, mocktails and comfort food in Belda, West Bengal. Order to your door, or ask for a table and stay a while.',
+  storyTitle: 'A place to slow the afternoon down',
+  storyBody: [
+    'Canvas O Coffee is a coffee house for unhurried moments: a hot cup on a cool morning, a cold coffee after college, a plate of momos shared across the table.',
+    'Pull up a chair. The menu is short enough to read in one sitting and long enough to come back for.',
+  ],
+  menuTitle: 'From the first chai to the last mojito',
+  menuLead: 'Twelve sections, one page. Browse it all, then order for delivery.',
+  reserveTitle: 'Keep a table for us',
+  reserveBody: 'Send a table request for the day and time you would like. The café will get back to you to confirm.',
+  visitTitle: 'Find us in Belda',
+};
+
+export const signatureContent = {
+  title: 'Five moments in a glass',
+  lead: 'Glass, milk, espresso, ice. Watch an iced latte come together as you scroll.',
+  steps: [
+    { title: 'The glass', body: 'A clear glass, cold and empty. Everything begins with space.' },
+    { title: 'Milk', body: 'Cold milk goes in first, poured in one slow, steady line.' },
+    { title: 'Espresso', body: 'A shot of espresso follows and drifts down through the milk in soft brown clouds.' },
+    { title: 'Ice', body: 'Ice goes in last, cracking quietly as it meets the cold.' },
+    { title: 'The iced latte', body: 'Layered from pale to dark. Stir it, or watch the layers settle first.' },
+  ],
+};
+
+export const storyContent = {
+  title: 'Our Story',
+  lead: 'A coffee house built around a simple idea: good cups, good food and time to enjoy them.',
+  chapters: [
+    {
+      heading: 'The idea',
+      body: [
+        'A canvas is a place where something is about to happen. We like to think of a table the same way: two cups, a plate between them, and a conversation that has not started yet.',
+        'Canvas O Coffee brings that feeling to Belda: a warm room, a considered menu, and nobody hurrying you out of your chair.',
+      ],
+    },
+    {
+      heading: 'Coffee and comfort food',
+      body: [
+        'The menu moves from tea and coffee to momos, pizzas, burgers and fried plates, then finishes with desserts and mocktails. It is made for every kind of visit, from a quick cup to a long evening with friends.',
+      ],
+    },
+    {
+      heading: 'The room',
+      body: ['Wood, warm light and space to sit. Come in for a cup, stay for a second one.'],
+    },
+  ],
+};
+
+/** General coffee botany. It makes no claim about the café's own beans or sourcing. */
+export const cherryToCup = {
+  title: 'Before the cup',
+  lead: 'Every coffee bean starts as the seed of a small red fruit.',
+  stages: [
+    { title: 'The cherry', body: 'Coffee grows as cherries on a glossy-leaved shrub. They ripen from green to deep red.' },
+    { title: 'Two seeds', body: 'Inside each cherry, usually, are two seeds pressed flat against each other.' },
+    { title: 'Green beans', body: 'Once the fruit is removed and the seeds are dried, they are pale green and hard.' },
+    { title: 'Roasted', body: 'Roasting turns them brown and develops the aroma we know as coffee.' },
+  ],
+};
+
+export const readingCorner = {
+  title: 'Reading Corner',
+  lead: 'A quiet page in a busy day.',
+  journal: [
+    'Some afternoons ask for nothing more than a chair by the window, a cup going slowly cold and a book you have been meaning to finish.',
+    'The Reading Corner is our small shelf on this website: notes from the café, and books worth a second cup. We will add to it from time to time.',
+  ],
+  /**
+   * Owner-curated recommendations. Add entries as { title, author, note }.
+   * Only add quotations with a verified source.
+   */
+  recommendations: [] as Array<{ title: string; author: string; note?: string }>,
+};
+
+export const whisperContent = {
+  title: 'The Whisper Box',
+  lead: 'A thought, a suggestion, a kind word or a complaint. Leave it here and it goes straight to the café.',
+  privacy:
+    'Your name and contact are optional. Add them only if you would like a reply. Messages are read by the café team and are not published.',
+};

@@ -1,0 +1,117 @@
+/* =========================================================================
+   Canvas O Coffee: design tokens
+   Heritage luxury × modern technology. See docs/DESIGN_SYSTEM.md.
+   ========================================================================= */
+
+:root {
+  /* ---- Brand palette (supplied) ---- */
+  --burgundy: #461c25;
+  --forest: #243b32;
+  --parchment: #e9dfc9;
+  --brass: #b08a4b;
+  --walnut: #30231d;
+  --ivory: #f5ebdd;
+  --ink: #211d19;
+
+  /* ---- Derived tones ---- */
+  --burgundy-deep: #2e1218;
+  --burgundy-soft: #6b3440;
+  --walnut-deep: #231915;
+  --walnut-soft: #4a382f;
+  --parchment-deep: #ddd0b4;
+  --ivory-bright: #fbf5ec;
+  --brass-light: #d2b47c; /* brass for text on dark surfaces (AA on walnut/burgundy) */
+  --brass-deep: #7d5f2c; /* brass for text on light surfaces (AA on ivory/parchment) */
+  --ink-soft: #4b4139;
+  --ink-muted: #6a5d52;
+  --forest-light: #3d5c4f;
+
+  /* ---- Semantic ---- */
+  --surface: var(--ivory);
+  --surface-raised: var(--ivory-bright);
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
+  --rule: rgb(48 35 29 / 0.16);
+  --rule-strong: rgb(48 35 29 / 0.32);
+  --focus: #b08a4b;
+  --danger: #8f2424;
+  --danger-surface: #f6e3df;
+  --success: var(--forest);
+  --veg: #2f7a3d;
+  --nonveg: #8a3324;
+
+  /* ---- Typography ---- */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-ui: 'Jost Variable', 'Jost', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+
+  /* Fluid scale, approx. 1.25 on small screens and 1.333 on large screens */
+  --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.88rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.08rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.3vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.65vw, 1.9rem);
+  --step-3: clamp(1.8rem, 1.5rem + 1.3vw, 2.65rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.3vw, 3.7rem);
+  --step-5: clamp(2.7rem, 1.9rem + 3.8vw, 5.3rem);
+  --step-6: clamp(3.1rem, 2rem + 5.6vw, 7.4rem);
+
+  --leading-tight: 1.04;
+  --leading-heading: 1.12;
+  --leading-body: 1.62;
+  --leading-serif: 1.7;
+
+  /* ---- Space (4px base) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-y: clamp(4.5rem, 3rem + 7vw, 9rem);
+
+  /* ---- Layout ---- */
+  --container: 76rem;
+  --container-narrow: 46rem;
+  --measure: 36em;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --header-h: 4.25rem;
+
+  /* ---- Radii: by hierarchy, not one value for everything ---- */
+  --radius-control: 3px; /* buttons, inputs */
+  --radius-panel: 6px; /* dialogs, notices */
+  --radius-pill: 999px; /* category chips, badges */
+
+  /* ---- Elevation: warm, low ---- */
+  --shadow-1: 0 1px 2px rgb(33 29 25 / 0.08), 0 2px 6px rgb(33 29 25 / 0.06);
+  --shadow-2: 0 8px 24px -8px rgb(33 29 25 / 0.28), 0 2px 6px rgb(33 29 25 / 0.08);
+  --shadow-3: 0 30px 80px -20px rgb(20 12 10 / 0.55);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --dur-1: 140ms; /* feedback: hover, press */
+  --dur-2: 260ms; /* state: open, toggle */
+  --dur-3: 620ms; /* reveal */
+  --dur-4: 1100ms; /* hero entrance */
+
+  /* ---- Layers ---- */
+  --z-header: 50;
+  --z-cartbar: 40;
+  --z-toast: 90;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+}
+
+/* Breakpoints (used in media queries):
+   sm 40rem (640px) · md 52rem (832px) · lg 64rem (1024px) · xl 80rem (1280px) */
