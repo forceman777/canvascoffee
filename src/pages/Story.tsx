@@ -3,6 +3,7 @@ import { Botanical } from '../components/common/Botanical';
 import { ButtonLink } from '../components/common/Button';
 import { Ornament } from '../components/common/bits';
 import { Reveal } from '../components/motion/Reveal';
+import { IcedLatteSequence } from '../components/motion/IcedLatteSequence';
 import { cherryToCup, readingCorner, storyContent } from '../data/siteContent';
 import { hasImage, imageFiles, publicPath } from '../data/images';
 import { useDocumentTitle } from '../hooks';
@@ -94,7 +95,9 @@ export default function Story() {
         </div>
       </section>
 
-      <section className="cherry surface-parchment textured" aria-labelledby="cherry-title">
+      <IcedLatteSequence nextId="cherry" />
+
+      <section id="cherry" className="cherry surface-parchment textured" aria-labelledby="cherry-title">
         <div className="container">
           <Reveal className="cherry__header">
             <Ornament />

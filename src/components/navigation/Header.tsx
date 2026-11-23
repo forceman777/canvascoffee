@@ -8,7 +8,7 @@ import { navItems } from './navItems';
 import { site } from '../../config/site';
 
 /** Pages whose first screen is dark get light header text. */
-const darkTopRoutes = ['/', '/reservations', '/gallery', '/contact'];
+const darkTopRoutes = ['/reservations', '/gallery', '/contact'];
 
 export function Header() {
   const { pathname } = useLocation();

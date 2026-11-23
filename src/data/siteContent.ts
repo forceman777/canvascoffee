@@ -7,11 +7,6 @@
 export const homeContent = {
   heroTitle: 'Every cup, a small canvas.',
   heroLead: 'Coffee, tea, mocktails and comfort food in Belda, West Bengal. Order to your door, or ask for a table and stay a while.',
-  storyTitle: 'A place to slow the afternoon down',
-  storyBody: [
-    'Canvas O Coffee is a coffee house for unhurried moments: a hot cup on a cool morning, a cold coffee after college, a plate of momos shared across the table.',
-    'Pull up a chair. The menu is short enough to read in one sitting and long enough to come back for.',
-  ],
   menuTitle: 'From the first chai to the last mojito',
   menuLead: 'Twelve sections, one page. Browse it all, then order for delivery.',
   reserveTitle: 'Keep a table for us',

@@ -5,7 +5,7 @@ paper, brass) translated into a calm, editorial website. All tokens live in `src
 
 ## Principles
 
-1. **One bold moment.** The iced-latte sequence is the signature. Everything around it stays quiet.
+1. **Bold where it sells.** The homepage opens with three animated moments (pour, food, slider), each tied to real menu items. Interior pages stay calm and editorial.
 2. **Typeset, not templated.** The menu reads like a printed café card: serif names, dotted leaders, aligned prices.
 3. **The ring.** The "O" of the wordmark, a thin brass ring, is the one recurring motif. It appears in the
    wordmark, ornaments, empty image frames and list markers. Do not add other decorative motifs.
@@ -24,7 +24,7 @@ paper, brass) translated into a calm, editorial website. All tokens live in `src
 | `--ink` | #211D19 | Body text |
 | `--brass` | #B08A4B | Accents and decorative lines only. Not for text on light surfaces. |
 | `--brass-light` | #D2B47C | Brass-coloured **text** on dark surfaces (meets AA) |
-| `--brass-deep` | #7D5F2C | Brass-coloured **text** on light surfaces (meets AA) |
+| `--brass-deep` | #6F5426 | Brass-coloured **text** on light surfaces (meets AA) |
 | `--forest` | #243B32 | Supporting accent: success, free delivery, leaves |
 
 Burgundy, parchment, walnut and ivory carry the identity; forest and brass support it.
@@ -64,7 +64,10 @@ Burgundy, parchment, walnut and ivory carry the identity; forest and brass suppo
 | Moment | Technique |
 |---|---|
 | Hero entrance | One staggered load sequence (CSS). The content recedes on scroll via CSS scroll-driven animation where supported. |
-| Iced-latte sequence | Sticky frame; five layers cross-fade from one rAF-throttled scroll value, active only while on screen. Skip link provided. Never hijacks scrolling. |
+| Hero pour (home) | Canvas animation: stream, splash particles, ripples, last drops, lid bounce. Pauses off screen, has a pause button, draws a still frame with reduced motion. |
+| Coffee slider (home) | Cross-fading themed slides, outlined ghost word, bean/ice/mint burst on change. Autoplay pauses on hover, focus, off screen, or by button; none with reduced motion. |
+| Food showcase (home) | Floating ingredients (CSS float + scroll parallax), plates spin in on selection and turn slowly. |
+| Iced-latte sequence (Our Story) | Sticky frame; five layers cross-fade from one rAF-throttled scroll value, active only while on screen. Skip link provided. Never hijacks scrolling. |
 | Section reveals | Only key headings and images (IntersectionObserver, one-shot). Images unveil with a clip-path. |
 | Interaction feedback | Hover/press on buttons, count "pop" in the header, toasts, dialog rise, progress bar easing |
 

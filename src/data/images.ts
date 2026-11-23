@@ -13,7 +13,7 @@ export type Tone = 'dark' | 'light';
 export interface ImageSpec {
   /** Path inside assets-src/images (and public/images), without extension. */
   file: string;
-  ext: 'jpg' | 'png' | 'svg';
+  ext: 'jpg' | 'png' | 'svg' | 'mp4';
   ratio: [number, number];
   alt: string;
   /** Placeholder palette: matches the section the image sits in. */
@@ -30,6 +30,8 @@ const img = (file: string, ext: ImageSpec['ext'], ratio: [number, number], tone:
 export const images = {
   'BRAND-01': img('brand/logo', 'svg', [3, 1], 'light', 'Logo', 'Canvas O Coffee'),
 
+  'HERO-VID': img('hero/hero-pour', 'mp4', [4, 5], 'light', 'Hero pour video (optional)', 'Coffee being poured'),
+
   'HERO-01': img('hero/hero-coffee-desktop', 'jpg', [16, 9], 'dark', 'Hero coffee still life (desktop)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
   'HERO-02': img('hero/hero-coffee-mobile', 'jpg', [9, 16], 'dark', 'Hero coffee still life (mobile)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
 
@@ -43,6 +45,18 @@ export const images = {
   'IL-03': img('signature/iced-latte/iced-latte-03-espresso-pour', 'jpg', [4, 5], 'dark', 'Iced latte frame 3: espresso pour', 'Espresso pouring into the milk and clouding through it'),
   'IL-04': img('signature/iced-latte/iced-latte-04-ice-drop', 'jpg', [4, 5], 'dark', 'Iced latte frame 4: ice drop', 'Ice cubes dropping into the glass'),
   'IL-05': img('signature/iced-latte/iced-latte-05-complete', 'jpg', [4, 5], 'dark', 'Iced latte frame 5: complete', 'A finished iced latte with ice, layered from milk-white to coffee-brown'),
+
+  'SLIDE-01': img('slider/slide-hot-coffee', 'png', [1, 1], 'dark', 'Slider: hot coffee cut-out (optional)', '', true),
+  'SLIDE-02': img('slider/slide-cold-coffee', 'png', [1, 1], 'dark', 'Slider: cold coffee cut-out (optional)', '', true),
+  'SLIDE-03': img('slider/slide-tea', 'png', [1, 1], 'dark', 'Slider: tea cut-out (optional)', '', true),
+  'SLIDE-04': img('slider/slide-mocktail', 'png', [1, 1], 'dark', 'Slider: mocktail cut-out (optional)', '', true),
+
+  'PLATE-01': img('food/plate-momo', 'png', [1, 1], 'light', 'Top-down momo plate (optional)', '', true),
+  'PLATE-02': img('food/plate-pizza', 'png', [1, 1], 'light', 'Top-down pizza (optional)', '', true),
+  'PLATE-03': img('food/plate-burger', 'png', [1, 1], 'light', 'Top-down burger plate (optional)', '', true),
+  'PLATE-04': img('food/plate-fried-special', 'png', [1, 1], 'light', 'Top-down fried plate (optional)', '', true),
+  'PLATE-05': img('food/plate-fries', 'png', [1, 1], 'light', 'Top-down fries (optional)', '', true),
+  'PLATE-06': img('food/plate-desserts', 'png', [1, 1], 'light', 'Top-down desserts (optional)', '', true),
 
   'STORY-01': img('story/story-slow-moment', 'jpg', [4, 5], 'light', 'Coffee beside an open book', 'A cup of coffee beside an open book in morning sunlight'),
   'STORY-02': img('story/story-coffee-beans', 'jpg', [3, 2], 'dark', 'Roasted beans and coffee cherries', 'Roasted coffee beans with fresh red coffee cherries'),

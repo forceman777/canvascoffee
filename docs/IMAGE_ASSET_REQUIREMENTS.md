@@ -557,3 +557,30 @@ file is shown without a photo. Add-ons (Cheese Slice Add-on, Cheese Add-on) get 
 
 Total: 55 items (4 + 4 + 4 + 2 + 5 + 8 + 2 + 2 + 3 + 11 + 4 + 6). The same slugs are used as
 product IDs in `src/data/menu.ts`.
+
+---
+
+## Update (homepage redesign): animated hero, coffee slider, food showcase
+
+The homepage now uses three animated sections that are **drawn in code** and work with no
+images at all. Each has an optional slot. When a file is supplied, it replaces the drawing
+automatically.
+
+| ID | File (in `assets-src/images/`) | Replaces | Spec | Priority |
+|---|---|---|---|---|
+| HERO-VID | `hero/hero-pour.mp4` | The drawn coffee pour in the hero | 4:5 portrait, 1080 × 1350, 6–10 s seamless loop, **no audio**, H.264, ≤ 4 MB. Background must be plain warm ivory **#F5EBDD** so it blends with the page. Coffee pouring into a glass of ice, then a cup, then a lidded take-away cup. | Optional |
+| SLIDE-01 | `slider/slide-hot-coffee.png` | Drawn cup on the "Hot coffee" slide | 1:1, 1600 × 1600, **transparent PNG** cut-out, product centred, light from the left | Optional |
+| SLIDE-02 | `slider/slide-cold-coffee.png` | Drawn iced glass on "Cold coffee" | Same as above | Optional |
+| SLIDE-03 | `slider/slide-tea.png` | Drawn tea cup on "Tea" | Same as above | Optional |
+| SLIDE-04 | `slider/slide-mocktail.png` | Drawn mojito on "Mocktails" | Same as above | Optional |
+| PLATE-01 | `food/plate-momo.png` | Drawn momo plate | 1:1, 1600 × 1600, **transparent PNG**, shot **straight down** (top view), plate filling ~95% of the frame, no shadow baked in | Optional |
+| PLATE-02 | `food/plate-pizza.png` | Drawn pizza | Same as above | Optional |
+| PLATE-03 | `food/plate-burger.png` | Drawn burger | Same as above | Optional |
+| PLATE-04 | `food/plate-fried-special.png` | Drawn fried plate | Same as above | Optional |
+| PLATE-05 | `food/plate-fries.png` | Drawn fries | Same as above | Optional |
+| PLATE-06 | `food/plate-desserts.png` | Drawn desserts | Same as above | Optional |
+
+- PLATE images show the café's real dishes, so **real photographs are preferred** (top-down phone
+  photo, background removed). Generated food images would need the "illustrative" label.
+- **HERO-01** is now used only to make the social-share image (optional). **HERO-02 is no longer needed.**
+- The iced-latte frames (IL-01 to IL-05) still apply. That sequence now lives on the **Our Story** page.

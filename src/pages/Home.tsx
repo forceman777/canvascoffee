@@ -1,38 +1,17 @@
 import { Link } from 'react-router-dom';
-import { CalendarDays, UtensilsCrossed } from 'lucide-react';
 import { ButtonLink } from '../components/common/Button';
-import { ImageSlot, sourceSet } from '../components/common/ImageSlot';
-import { Botanical } from '../components/common/Botanical';
+import { ImageSlot } from '../components/common/ImageSlot';
 import { Ornament } from '../components/common/bits';
 import { Reveal } from '../components/motion/Reveal';
-import { IcedLatteSequence } from '../components/motion/IcedLatteSequence';
+import { HeroPour } from '../components/home/HeroPour';
+import { FoodShowcase } from '../components/home/FoodShowcase';
+import { CoffeeSlider } from '../components/home/CoffeeSlider';
 import { categoriesInGroup, fromPrice, menuGroups, products, productsInCategory } from '../data/menu';
 import { homeContent } from '../data/siteContent';
-import { imageFiles, images, publicPath, type ImageId } from '../data/images';
+import type { ImageId } from '../data/images';
 import { formatINR } from '../utils/pricing';
 import { site } from '../config/site';
 import { useDocumentTitle } from '../hooks';
-
-/** Art-directed hero: desktop and mobile compositions from HERO-01 / HERO-02. */
-function HeroMedia() {
-  const desktop = imageFiles('HERO-01');
-  const mobile = imageFiles('HERO-02');
-  if (desktop && mobile) {
-    return (
-      <picture className="hero__media">
-        <source media="(min-width: 52rem)" type="image/webp" srcSet={sourceSet(desktop, images['HERO-01'].file, 'webp')} sizes="100vw" />
-        <source type="image/webp" srcSet={sourceSet(mobile, images['HERO-02'].file, 'webp')} sizes="100vw" />
-        <img src={publicPath(desktop.fallback)} alt={images['HERO-01'].alt} width={desktop.width} height={desktop.height} {...{ fetchpriority: 'high' }} />
-      </picture>
-    );
-  }
-  return (
-    <div className="hero__media">
-      <ImageSlot id="HERO-01" priority bare className="hero__media--desktop" position="70% 50%" />
-      <ImageSlot id="HERO-02" priority bare className="hero__media--mobile" />
-    </div>
-  );
-}
 
 const groupImage: Record<string, ImageId> = { drinks: 'MENU-02', food: 'MENU-03', mocktails: 'MENU-12' };
 
@@ -40,55 +19,9 @@ export default function Home() {
   useDocumentTitle(null);
   return (
     <>
-      {/* ---------- Hero ---------- */}
-      <section className="hero surface-ink grain on-dark" aria-labelledby="hero-title">
-        <HeroMedia />
-        <div className="hero__scrim" aria-hidden="true" />
-        <div className="container hero__content">
-          <p className="hero__place">{site.locality.replace(', India', '')}</p>
-          <h1 id="hero-title" className="hero__title">
-            {homeContent.heroTitle}
-          </h1>
-          <p className="hero__lead">{homeContent.heroLead}</p>
-          <div className="hero__actions">
-            <ButtonLink to="/menu" variant="brass" onDark icon={<UtensilsCrossed size={16} />}>
-              Explore the menu
-            </ButtonLink>
-            <ButtonLink to="/reservations" variant="secondary" onDark icon={<CalendarDays size={16} />}>
-              Reserve a table
-            </ButtonLink>
-          </div>
-        </div>
-        <Botanical variant="horizontal" className="hero__sprig" />
-      </section>
-
-      {/* ---------- Story teaser ---------- */}
-      <section className="home-story textured surface-parchment" aria-labelledby="home-story-title">
-        <Botanical variant="vertical" className="home-story__sprig" />
-        <div className="container home-story__grid">
-          <Reveal kind="unveil" className="home-story__media">
-            <ImageSlot id="STORY-01" sizes="(min-width: 64rem) 34vw, 90vw" />
-          </Reveal>
-          <div className="home-story__text">
-            <Reveal>
-              <h2 id="home-story-title" className="section-title">
-                {homeContent.storyTitle}
-              </h2>
-            </Reveal>
-            {homeContent.storyBody.map((p) => (
-              <p key={p} className="prose-serif">
-                {p}
-              </p>
-            ))}
-            <ButtonLink to="/story" variant="quiet">
-              Read our story
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- Signature iced latte ---------- */}
-      <IcedLatteSequence nextId="home-menu" />
+      <HeroPour />
+      <FoodShowcase />
+      <CoffeeSlider />
 
       {/* ---------- Menu preview ---------- */}
       <section id="home-menu" className="home-menu surface-ivory" aria-labelledby="home-menu-title">

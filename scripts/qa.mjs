@@ -198,7 +198,7 @@ async function scenarioUnconfigured(base, browser) {
 
   // Home deep link to a menu category
   await page.goto(`${base}/`);
-  await page.locator('a[href="/menu#momo"]').click();
+  await page.locator('.menu-teaser a[href="/menu#momo"]').click();
   await page.waitForURL('**/menu#momo');
   await wait(400);
   const top = await page.locator('#momo').evaluate((el) => el.getBoundingClientRect().top);
@@ -207,9 +207,51 @@ async function scenarioUnconfigured(base, browser) {
   // Reduced motion: static iced-latte series
   const rm = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 1280, height: 900 } });
   const rp = await rm.newPage();
+  await rp.goto(`${base}/story`);
+  await rp.locator('.signature__series li').first().waitFor({ timeout: 5000 }).catch(() => {});
+  check('Reduced motion: iced latte (Our Story) shows all 5 frames statically', (await rp.locator('.signature__series li').count()) === 5);
   await rp.goto(`${base}/`);
-  check('Reduced motion: iced latte shows all 5 frames statically', (await rp.locator('.signature__series li').count()) === 5);
+  check('Reduced motion: slider does not autoplay (no pause button needed)', (await rp.getByRole('button', { name: /automatic slides/ }).count()) === 0);
+  check('Reduced motion: hero pour draws a still frame', (await rp.locator('canvas.hero-pour__canvas').count()) === 1);
   await rm.close();
+
+  // ---- New homepage sections ----
+  await page.evaluate(() => localStorage.clear());
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`${base}/`);
+  check('Hero pour canvas is drawn', await page.locator('canvas.hero-pour__canvas').isVisible());
+  const firstName = await page.locator('.pour-caption__name').innerText();
+  await page.getByRole('button', { name: `Add ${firstName} to your order` }).click();
+  check('Hero caption "Add" puts the poured drink in the order', (await page.locator('.order-pill__count').innerText()) === '1');
+  await page.getByRole('button', { name: 'Pause animation' }).click();
+  check('Hero animation can be paused', await page.getByRole('button', { name: 'Play animation' }).isVisible());
+
+  await page.locator('#home-slider').scrollIntoViewIfNeeded();
+  const activeLabel = () => page.locator('.slide.is-active').getAttribute('aria-label');
+  check('Slider starts on slide 1', (await activeLabel()).startsWith('1 of 4'));
+  await page.getByRole('button', { name: 'Next slide' }).click();
+  check('Slider "next" moves to slide 2', (await activeLabel()).startsWith('2 of 4'));
+  await page.getByRole('button', { name: 'Previous slide' }).click();
+  await page.getByRole('button', { name: 'Previous slide' }).click();
+  check('Slider "previous" wraps to slide 4', (await activeLabel()).startsWith('4 of 4'));
+  await page.getByRole('button', { name: 'Show slide 3: Tea' }).click();
+  check('Slider dot jumps to slide 3', (await activeLabel()).startsWith('3 of 4'));
+  await page.locator('#home-slider').focus().catch(() => {});
+  await page.locator('.slide.is-active').getByRole('button', { name: 'Add Masala Tea to your order' }).click();
+  check('Slider "Add" puts the item in the order', (await page.locator('.order-pill__count').innerText()) === '2');
+  check('Inactive slides are hidden from assistive tech', (await page.locator('.slide:not(.is-active)[aria-hidden="true"]').count()) === 3);
+
+  await page.locator('.kitchen').scrollIntoViewIfNeeded();
+  check('Kitchen shows Momo first with 4 dishes', (await page.locator('.kitchen__name').innerText()) === 'Momo' && (await page.locator('.kitchen__items li').count()) === 4);
+  await page.getByRole('tab', { name: 'Pizza' }).click();
+  check('Kitchen tab switches to Pizza', (await page.locator('.kitchen__name').innerText()) === 'Pizza');
+  await page.getByRole('button', { name: 'Choose options for Veg Pizza' }).click();
+  await page.locator('dialog[open]').getByLabel('Cheese Add-on').check();
+  const pizzaLabel = await page.locator('dialog[open] button[type=submit]').innerText();
+  await page.locator('dialog[open] button[type=submit]').click();
+  check('Kitchen "Choose" opens options and adds Veg Pizza + cheese (₹150)', pizzaLabel.includes('₹150') && (await page.locator('.order-pill__count').innerText()) === '3', pizzaLabel);
+  await page.getByRole('tab', { name: 'Pizza' }).press('ArrowRight');
+  check('Kitchen tabs work with arrow keys', (await page.locator('.kitchen__name').innerText()) === 'Burger');
 
   // 404
   await page.goto(`${base}/does-not-exist`);

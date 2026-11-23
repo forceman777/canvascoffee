@@ -24,7 +24,7 @@ async function walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) out.push(...(await walk(full)));
-    else if (/\.(jpe?g|png|webp|svg)$/i.test(entry.name)) out.push(full);
+    else if (/\.(jpe?g|png|webp|svg|mp4|webm)$/i.test(entry.name)) out.push(full);
   }
   return out;
 }
@@ -51,8 +51,8 @@ async function main() {
   for (const file of files) {
     const rel = path.relative(SRC, file).replace(/\\/g, '/');
     const key = rel.replace(/\.[^.]+$/, '');
-    if (/\.svg$/i.test(file)) {
-      // Vector files (the logo) are copied as they are.
+    if (/\.(svg|mp4|webm)$/i.test(file)) {
+      // Vector files (the logo) and videos are copied as they are.
       await mkdir(path.join(OUT, path.dirname(rel)), { recursive: true });
       await copyFile(file, path.join(OUT, rel));
       manifest[key] = { width: 0, height: 0, widths: [], fallback: rel };
