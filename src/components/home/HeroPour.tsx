@@ -3,7 +3,6 @@ import { CalendarDays, Pause, Play, Plus, UtensilsCrossed } from 'lucide-react';
 import { ButtonLink } from '../common/Button';
 import { Price } from '../common/bits';
 import { PourCanvas } from '../art/PourCanvas';
-import { imageFiles, publicPath } from '../../data/images';
 import { getProduct } from '../../data/menu';
 import { homeContent } from '../../data/siteContent';
 import { site } from '../../config/site';
@@ -20,9 +19,8 @@ const sequence: { kind: VesselKind; productId: string; note: string }[] = [
 const kinds = sequence.map((s) => s.kind);
 
 /**
- * Hero: coffee pours into a glass of ice, a cup, then a take-away cup, with splashes
- * and the last drops falling onto the coffee. A supplied video (HERO-VID) replaces the
- * drawn animation automatically.
+ * Fallback hero, used only when no hero video (HERO-VID) has been supplied: coffee pours into a glass of ice, a cup, then a take-away cup, with splashes
+ * and the last drops falling onto the coffee.
  */
 export function HeroPour() {
   const reduced = usePrefersReducedMotion();
@@ -30,7 +28,6 @@ export function HeroPour() {
   const [paused, setPaused] = useState(false);
   const { add } = useAddToOrder();
   const onChange = useCallback((i: number) => setIndex(i), []);
-  const video = imageFiles('HERO-VID');
 
   const current = sequence[index];
   const product = getProduct(current.productId)!;
@@ -40,12 +37,7 @@ export function HeroPour() {
       <div className="hero-pour__glow" aria-hidden="true" />
       <div className="container hero-pour__grid">
         <div className="hero-pour__stage">
-          {video ? (
-            <video className="hero-pour__video" src={publicPath(video.fallback)} autoPlay={!reduced} muted loop playsInline aria-label="Coffee being poured" />
-          ) : (
-            <PourCanvas mode="pour" kinds={kinds} paused={paused} reduced={reduced} onVesselChange={onChange} className="hero-pour__canvas" label="Coffee pouring into a glass of ice, a cup and a take-away cup" />
-          )}
-          {!video && (
+          <PourCanvas mode="pour" kinds={kinds} paused={paused} reduced={reduced} onVesselChange={onChange} className="hero-pour__canvas" label="Coffee pouring into a glass of ice, a cup and a take-away cup" />
             <div className="pour-caption">
               <span className="pour-caption__note">{current.note}</span>
               <span className="pour-caption__name">{product.name}</span>
@@ -60,7 +52,6 @@ export function HeroPour() {
                 </button>
               )}
             </div>
-          )}
         </div>
 
         <div className="hero-pour__text">

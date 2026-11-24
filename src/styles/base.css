@@ -179,13 +179,11 @@ p {
 }
 
 .page-enter {
-  animation: page-in var(--dur-3) var(--ease-out) both;
+  animation: page-in 700ms var(--ease-expo) both;
 }
 @keyframes page-in {
   from {
     opacity: 0;
-  }
-  to {
-    opacity: 1;
+    transform: translateY(12px);
   }
 }

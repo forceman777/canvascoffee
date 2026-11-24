@@ -104,6 +104,6 @@ Edit `src/data/menu.ts` → `npm test` (checks prices against the supplied list;
 
 ```bash
 npm test        # 49 unit tests
-npm run qa      # 63 browser checks across three builds (none / WhatsApp / mocked Supabase)
+npm run qa      # 70 browser checks across three builds (none / WhatsApp / mocked Supabase)
 node scripts/screens.mjs qa-output/screens   # screenshots of every page at 390 / 834 / 1440 px (needs `npm run preview` running)
 ```

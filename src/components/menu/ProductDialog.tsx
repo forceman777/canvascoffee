@@ -3,8 +3,8 @@ import { Dialog } from '../common/Dialog';
 import { Button } from '../common/Button';
 import { DietMark, Price, QuantityStepper } from '../common/bits';
 import { addOnsForProduct, getCategory } from '../../data/menu';
-import { itemPhoto, publicPath } from '../../data/images';
-import { sourceSet } from '../common/ImageSlot';
+import { itemPhoto } from '../../data/images';
+import { Picture } from '../common/ImageSlot';
 import { formatINR, unitPrice, type LineSelection } from '../../utils/pricing';
 import { site } from '../../config/site';
 import type { Product } from '../../types/menu';
@@ -54,10 +54,10 @@ export function ProductDialog({ product, initial, onClose, onConfirm }: Props) {
         }}
       >
         {photo && (
-          <picture className="product-dialog__photo">
-            <source type="image/webp" srcSet={sourceSet(photo, `menu/items/${product.id}`, 'webp')} sizes="(min-width: 40rem) 32rem, 100vw" />
-            <img src={publicPath(photo.fallback)} width={photo.width} height={photo.height} alt={product.name} />
-          </picture>
+          <figure className={`product-dialog__photo ${photo.cutout ? 'is-cutout' : ''}`}>
+            <Picture image={photo} sizes="(min-width: 40rem) 32rem, 100vw" alt={photo.alt || product.name} priority />
+            {site.menuImagesAreIllustrative && <figcaption>Illustrative image</figcaption>}
+          </figure>
         )}
         <p className="product-dialog__meta">
           <DietMark diet={product.diet} />

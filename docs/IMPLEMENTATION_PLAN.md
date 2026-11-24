@@ -18,13 +18,13 @@ Last updated: 2026-11-23
 | Backend | Supabase via REST RPC (no SDK). SECURITY DEFINER functions, RLS on, server-side pricing |
 | WhatsApp | `wa.me` hand-off with a pre-filled message. Never treated as a confirmation. |
 | Images | `assets-src/images` → `npm run images` (sharp) → responsive WebP + fallback + manifest |
-| Tests | Vitest (49), Playwright end-to-end (63 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
+| Tests | Vitest (49), Playwright end-to-end (70 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
 
 ## 2. Site map
 
 | Route | Contents |
 |---|---|
-| `/` | Animated coffee-pour hero · "From our kitchen" food showcase · coffee slider · menu preview · reservation invitation · visit |
+| `/` | Cinematic video hero · "From our kitchen" food showcase · coffee slider · menu preview · reservation invitation · visit |
 | `/story` | Story chapters · iced-latte sequence · cherry-to-bean botanical feature · the room · **Reading Corner** |
 | `/menu` | Full menu: contents index (desktop), sticky category chips (mobile), scroll-spy, search, product dialog |
 | `/order` | Cart → delivery details → review → submit (backend and/or WhatsApp) · order status lookup |
@@ -70,6 +70,10 @@ Last updated: 2026-11-23
 9. **Gallery** stays in the navigation with clearly labelled frames. Only real photos fill them.
 10. **Preview mode** (`previewMode` in `site.ts`) shows placeholder labels and owner setup hints. Turn it off at launch.
 12. **Homepage redesign (owner request):** hero pour, coffee slider and food showcase are drawn in code (canvas/SVG), tied to real menu items, with optional video/photo slots. The reference videos supplied were used for direction only and are not embedded. The iced-latte sequence moved to Our Story.
+13. **Real media (owner-supplied):** the homepage uses the supplied pour video and product photos. Sections switch to
+    photos automatically once enough are supplied (slider: 2+, kitchen: 3+) and never mix drawings with photos.
+    Menu category images fall back to the matching product photo; item thumbnails appear only where a photo shows
+    exactly that item. All are labelled illustrative; trays with sides carry "sides and dips may not be included".
 11. **Copy** is neutral draft text with no founders, dates, sourcing, awards or quotations (`src/data/siteContent.ts`).
 
 ## 5. Waiting on the owner

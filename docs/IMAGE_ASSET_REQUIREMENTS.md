@@ -584,3 +584,31 @@ automatically.
   photo, background removed). Generated food images would need the "illustrative" label.
 - **HERO-01** is now used only to make the social-share image (optional). **HERO-02 is no longer needed.**
 - The iced-latte frames (IL-01 to IL-05) still apply. That sequence now lives on the **Our Story** page.
+
+---
+
+## Supplied assets (status as of 24 Nov 2026)
+
+| Slot | File in `assets-src/images/` | Used for | Notes |
+|---|---|---|---|
+| HERO-VID | `hero/hero-pour.mp4` + `hero/hero-pour.webm` | Homepage hero film (plays once, rests on the full glass) | Compressed from 6.6 MB to 639 KB (MP4) / 518 KB (WebM), audio removed |
+| HERO-POSTER / HERO-STILL | `hero/hero-pour-poster.jpg`, `hero/hero-pour-still.jpg` | First frame shown instantly; last frame for reduced motion / data saver | Extracted from the video |
+| PLATE-01 | `food/plate-momo.webp` | Kitchen section, Momo menu header | |
+| PLATE-02 | `food/plate-pizza.png` | Kitchen section, Pizza menu header | **Low resolution (612 × 408 upload).** Please re-export at 1536 px wide like the others. |
+| PLATE-03 | `food/plate-burger.webp` | Kitchen section, Burger menu header | Shows fries and a dip: labelled "sides may not be included" |
+| PLATE-05 | `food/plate-fries.webp` | Kitchen section, French Fries menu header, Peri-Peri French Fry photo | |
+| PLATE-06 | `food/plate-desserts.webp` | Kitchen section, Desserts menu header, Walnut Brownie photo | Black background removed |
+| PLATE-07 *(new)* | `food/plate-bread-chaat.webp` | Kitchen section, Bread & Chaat menu header, Cheese Garlic Bread photo | |
+| SLIDE-02 | `slider/slide-cold-coffee.webp` (iced mocha) | Drink slider, Coffee menu header, Iced Mocha photo | |
+| SLIDE-03 | `slider/slide-tea.webp` (iced tea) | Drink slider, Tea menu header, Iced Tea photo | |
+| SLIDE-04 | `slider/slide-mocktail.webp` (mint mojito) | Drink slider, Mocktails menu header, Mint Mojito photo | |
+| SLIDE-05 *(new)* | `slider/slide-blue-butterfly.webp` | Drink slider, Blue Butterfly photo | |
+
+Transparent PNG **or WebP** files are both accepted; margins are trimmed automatically.
+
+**Still to supply, to complete the realistic look:**
+
+- `slider/slide-hot-coffee` (SLIDE-01): adds a "Hot coffee" slide (hidden until supplied).
+- `food/plate-fried-special` (PLATE-04): adds Fried Special to the kitchen section and its menu header.
+- Wraps and Noodles: `menu/categories/wraps.jpg`, `menu/categories/noodles.jpg` (or top-down tray cut-outs). Until then those menu sections are text only.
+- The iced-latte frames IL-01 to IL-05 (Our Story page) and the café photos (ATM, GAL) as listed above.

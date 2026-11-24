@@ -35,5 +35,8 @@ export function useAddToOrder() {
     [confirm],
   );
 
-  return { add, choosing, confirm, close: () => setChoosing(null), label: (p: Product) => fullName(p) };
+  /** Open the product panel regardless of options (e.g. to see its photo). */
+  const view = useCallback((p: Product) => setChoosing(p), []);
+
+  return { add, view, choosing, confirm, close: () => setChoosing(null), label: (p: Product) => fullName(p) };
 }

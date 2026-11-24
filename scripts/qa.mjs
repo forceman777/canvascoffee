@@ -212,19 +212,24 @@ async function scenarioUnconfigured(base, browser) {
   check('Reduced motion: iced latte (Our Story) shows all 5 frames statically', (await rp.locator('.signature__series li').count()) === 5);
   await rp.goto(`${base}/`);
   check('Reduced motion: slider does not autoplay (no pause button needed)', (await rp.getByRole('button', { name: /automatic slides/ }).count()) === 0);
-  check('Reduced motion: hero pour draws a still frame', (await rp.locator('canvas.hero-pour__canvas').count()) === 1);
+  check('Reduced motion: hero shows the still frame instead of playing the video', (await rp.locator('.hero-film__still img').count()) === 1 && (await rp.locator('video').count()) === 0);
   await rm.close();
 
   // ---- New homepage sections ----
   await page.evaluate(() => localStorage.clear());
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(`${base}/`);
-  check('Hero pour canvas is drawn', await page.locator('canvas.hero-pour__canvas').isVisible());
-  const firstName = await page.locator('.pour-caption__name').innerText();
-  await page.getByRole('button', { name: `Add ${firstName} to your order` }).click();
-  check('Hero caption "Add" puts the poured drink in the order', (await page.locator('.order-pill__count').innerText()) === '1');
-  await page.getByRole('button', { name: 'Pause animation' }).click();
-  check('Hero animation can be paused', await page.getByRole('button', { name: 'Play animation' }).isVisible());
+  const video = page.locator('video.hero-film__video');
+  check('Hero video is present with WebM and MP4 sources', (await video.locator('source').count()) === 2);
+  await page.waitForFunction(() => { const v = document.querySelector('video'); return v && v.currentTime > 0.3; }, null, { timeout: 8000 }).catch(() => {});
+  check('Hero video autoplays (muted)', await video.evaluate((v) => v.currentTime > 0.3 && v.muted));
+  await page.getByRole('button', { name: 'Pause video' }).click();
+  check('Hero video can be paused', await video.evaluate((v) => v.paused) && (await page.getByRole('button', { name: 'Play video' }).isVisible()));
+  await page.getByRole('button', { name: 'Play video' }).click();
+  await video.evaluate((v) => { v.currentTime = v.duration - 0.05; });
+  await page.getByRole('button', { name: 'Replay video' }).waitFor({ timeout: 5000 }).catch(() => {});
+  check('Hero video rests on the last frame with a replay button', await video.evaluate((v) => v.ended) && (await page.getByRole('button', { name: 'Replay video' }).isVisible()));
+  check('Hero shows starting prices from the menu', (await page.locator('.hero-film__facts').innerText()).includes('from ₹15'));
 
   await page.locator('#home-slider').scrollIntoViewIfNeeded();
   const activeLabel = () => page.locator('.slide.is-active').getAttribute('aria-label');
@@ -234,24 +239,35 @@ async function scenarioUnconfigured(base, browser) {
   await page.getByRole('button', { name: 'Previous slide' }).click();
   await page.getByRole('button', { name: 'Previous slide' }).click();
   check('Slider "previous" wraps to slide 4', (await activeLabel()).startsWith('4 of 4'));
-  await page.getByRole('button', { name: 'Show slide 3: Tea' }).click();
-  check('Slider dot jumps to slide 3', (await activeLabel()).startsWith('3 of 4'));
+  check('Slider shows real drink photos', (await page.locator('.slide.is-active .slide__photo img').count()) === 1);
+  await page.getByRole('button', { name: 'Show slide 2: Tea' }).click();
+  check('Slider dot jumps to the Tea slide', (await activeLabel()).startsWith('2 of 4'));
   await page.locator('#home-slider').focus().catch(() => {});
   await page.locator('.slide.is-active').getByRole('button', { name: 'Add Masala Tea to your order' }).click();
-  check('Slider "Add" puts the item in the order', (await page.locator('.order-pill__count').innerText()) === '2');
+  check('Slider "Add" puts the item in the order', (await page.locator('.order-pill__count').innerText()) === '1');
   check('Inactive slides are hidden from assistive tech', (await page.locator('.slide:not(.is-active)[aria-hidden="true"]').count()) === 3);
 
   await page.locator('.kitchen').scrollIntoViewIfNeeded();
   check('Kitchen shows Momo first with 4 dishes', (await page.locator('.kitchen__name').innerText()) === 'Momo' && (await page.locator('.kitchen__items li').count()) === 4);
+  check('Kitchen shows real tray photos (6 dishes with photos)', (await page.locator('.kitchen__thumb img').count()) === 6 && (await page.locator('.kitchen__tray img').count()) === 1);
   await page.getByRole('tab', { name: 'Pizza' }).click();
   check('Kitchen tab switches to Pizza', (await page.locator('.kitchen__name').innerText()) === 'Pizza');
   await page.getByRole('button', { name: 'Choose options for Veg Pizza' }).click();
   await page.locator('dialog[open]').getByLabel('Cheese Add-on').check();
   const pizzaLabel = await page.locator('dialog[open] button[type=submit]').innerText();
   await page.locator('dialog[open] button[type=submit]').click();
-  check('Kitchen "Choose" opens options and adds Veg Pizza + cheese (₹150)', pizzaLabel.includes('₹150') && (await page.locator('.order-pill__count').innerText()) === '3', pizzaLabel);
+  check('Kitchen "Choose" opens options and adds Veg Pizza + cheese (₹150)', pizzaLabel.includes('₹150') && (await page.locator('.order-pill__count').innerText()) === '2', pizzaLabel);
   await page.getByRole('tab', { name: 'Pizza' }).press('ArrowRight');
   check('Kitchen tabs work with arrow keys', (await page.locator('.kitchen__name').innerText()) === 'Burger');
+
+  // Menu photos
+  await page.goto(`${base}/menu`);
+  await page.locator('.menu-item').first().waitFor();
+  check('Menu shows photos for categories that have them, none for Wraps/Noodles', (await page.locator('#momo .menu-category__media img').count()) === 1 && (await page.locator('#wraps .menu-category__media').count()) === 0);
+  check('Menu items with an exact photo get a thumbnail (7)', (await page.locator('.menu-item__thumb').count()) === 7);
+  await page.getByRole('button', { name: 'View photo of Iced Mocha' }).click();
+  check('Thumbnail opens the item with its photo and price', (await page.locator('dialog[open] .product-dialog__photo img').count()) === 1 && (await page.locator('dialog[open] button[type=submit]').innerText()).includes('₹60'));
+  await page.keyboard.press('Escape');
 
   // 404
   await page.goto(`${base}/does-not-exist`);
@@ -350,6 +366,7 @@ async function scenarioBackend(base, browser) {
 const servers = [];
 try {
   console.log('Building three variants…');
+  execSync('node scripts/build-images.mjs', { stdio: 'ignore' });
   build('qa-output/dist-plain', { VITE_WHATSAPP_NUMBER: '', VITE_SUPABASE_URL: '', VITE_SUPABASE_ANON_KEY: '' });
   build('qa-output/dist-wa', { VITE_WHATSAPP_NUMBER: '910000000000', VITE_SUPABASE_URL: '', VITE_SUPABASE_ANON_KEY: '' });
   build('qa-output/dist-db', { VITE_WHATSAPP_NUMBER: '', VITE_SUPABASE_URL: 'http://localhost:4193/mock', VITE_SUPABASE_ANON_KEY: 'public-anon-test' });

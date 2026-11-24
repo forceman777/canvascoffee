@@ -6,9 +6,10 @@ import { Dialog } from '../common/Dialog';
 import { useCart } from '../../state/CartContext';
 import { navItems } from './navItems';
 import { site } from '../../config/site';
+import { hasImage } from '../../data/images';
 
 /** Pages whose first screen is dark get light header text. */
-const darkTopRoutes = ['/reservations', '/gallery', '/contact'];
+const darkTopRoutes = ['/reservations', '/gallery', '/contact', ...(hasImage('HERO-VID') ? ['/'] : [])];
 
 export function Header() {
   const { pathname } = useLocation();

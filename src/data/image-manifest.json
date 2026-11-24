@@ -1,1 +1,154 @@
-{}
+{
+  "food/plate-bread-chaat": {
+    "width": 1540,
+    "height": 1068,
+    "widths": [
+      320,
+      640,
+      1024,
+      1540
+    ],
+    "fallback": "food/plate-bread-chaat-1540.png",
+    "alpha": true
+  },
+  "food/plate-burger": {
+    "width": 1582,
+    "height": 1070,
+    "widths": [
+      320,
+      640,
+      1024,
+      1582
+    ],
+    "fallback": "food/plate-burger-1582.png",
+    "alpha": true
+  },
+  "food/plate-desserts": {
+    "width": 1522,
+    "height": 1063,
+    "widths": [
+      320,
+      640,
+      1024,
+      1522
+    ],
+    "fallback": "food/plate-desserts-1522.png",
+    "alpha": true
+  },
+  "food/plate-fries": {
+    "width": 1582,
+    "height": 1070,
+    "widths": [
+      320,
+      640,
+      1024,
+      1582
+    ],
+    "fallback": "food/plate-fries-1582.png",
+    "alpha": true
+  },
+  "food/plate-momo": {
+    "width": 1570,
+    "height": 1043,
+    "widths": [
+      320,
+      640,
+      1024,
+      1570
+    ],
+    "fallback": "food/plate-momo-1570.png",
+    "alpha": true
+  },
+  "food/plate-pizza": {
+    "width": 441,
+    "height": 414,
+    "widths": [
+      320,
+      441
+    ],
+    "fallback": "food/plate-pizza-441.png",
+    "alpha": true
+  },
+  "hero/hero-pour-poster": {
+    "width": 1280,
+    "height": 720,
+    "widths": [
+      320,
+      640,
+      1024,
+      1280
+    ],
+    "fallback": "hero/hero-pour-poster-1280.jpg"
+  },
+  "hero/hero-pour-still": {
+    "width": 1280,
+    "height": 720,
+    "widths": [
+      320,
+      640,
+      1024,
+      1280
+    ],
+    "fallback": "hero/hero-pour-still-1280.jpg"
+  },
+  "hero/hero-pour": {
+    "width": 0,
+    "height": 0,
+    "widths": [],
+    "fallback": "hero/hero-pour.mp4",
+    "sources": [
+      {
+        "src": "hero/hero-pour.webm",
+        "type": "video/webm"
+      },
+      {
+        "src": "hero/hero-pour.mp4",
+        "type": "video/mp4"
+      }
+    ]
+  },
+  "slider/slide-blue-butterfly": {
+    "width": 748,
+    "height": 1498,
+    "widths": [
+      320,
+      640,
+      748
+    ],
+    "fallback": "slider/slide-blue-butterfly-748.png",
+    "alpha": true
+  },
+  "slider/slide-cold-coffee": {
+    "width": 692,
+    "height": 1395,
+    "widths": [
+      320,
+      640,
+      692
+    ],
+    "fallback": "slider/slide-cold-coffee-692.png",
+    "alpha": true
+  },
+  "slider/slide-mocktail": {
+    "width": 732,
+    "height": 1440,
+    "widths": [
+      320,
+      640,
+      732
+    ],
+    "fallback": "slider/slide-mocktail-732.png",
+    "alpha": true
+  },
+  "slider/slide-tea": {
+    "width": 699,
+    "height": 1452,
+    "widths": [
+      320,
+      640,
+      699
+    ],
+    "fallback": "slider/slide-tea-699.png",
+    "alpha": true
+  }
+}

@@ -35,7 +35,8 @@ Other commands:
 
 ## Adding the real images
 
-1. Name each file exactly as listed in [`docs/IMAGE_ASSET_REQUIREMENTS.md`](docs/IMAGE_ASSET_REQUIREMENTS.md),
+1. Name each file exactly as listed in [`docs/IMAGE_ASSET_REQUIREMENTS.md`](docs/IMAGE_ASSET_REQUIREMENTS.md)
+   (JPG, PNG or WebP; transparent cut-outs as PNG or WebP; videos as MP4 and/or WebM),
    e.g. `assets-src/images/hero/hero-coffee-desktop.jpg`.
 2. Run `npm run dev` or `npm run build`. The pipeline converts the image and the placeholder is replaced
    automatically. No code changes are needed.

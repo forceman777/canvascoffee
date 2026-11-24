@@ -64,7 +64,10 @@ Burgundy, parchment, walnut and ivory carry the identity; forest and brass suppo
 | Moment | Technique |
 |---|---|
 | Hero entrance | One staggered load sequence (CSS). The content recedes on scroll via CSS scroll-driven animation where supported. |
-| Hero pour (home) | Canvas animation: stream, splash particles, ripples, last drops, lid bounce. Pauses off screen, has a pause button, draws a still frame with reduced motion. |
+| Hero film (home) | Supplied video plays once and rests on the full glass; fades/settles in, pauses off screen, pause/replay control; still frame with reduced motion or data saver. |
+| Drink slider (photos) | Glass glides in with a slight tilt (expo-out), soft light sweep across the backdrop, gentle pointer parallax and float. |
+| Kitchen trays (photos) | Tray settles in from above; subtle 3D tilt toward the pointer; thumbnails lift on hover. |
+| Hero pour (fallback, no video) | Canvas animation: stream, splash particles, ripples, last drops, lid bounce. Pauses off screen, has a pause button, draws a still frame with reduced motion. |
 | Coffee slider (home) | Cross-fading themed slides, outlined ghost word, bean/ice/mint burst on change. Autoplay pauses on hover, focus, off screen, or by button; none with reduced motion. |
 | Food showcase (home) | Floating ingredients (CSS float + scroll parallax), plates spin in on selection and turn slowly. |
 | Iced-latte sequence (Our Story) | Sticky frame; five layers cross-fade from one rAF-throttled scroll value, active only while on screen. Skip link provided. Never hijacks scrolling. |

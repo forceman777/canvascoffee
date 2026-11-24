@@ -93,6 +93,7 @@
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1); /* long, soft settle for reveals and media */
   --dur-1: 140ms; /* feedback: hover, press */
   --dur-2: 260ms; /* state: open, toggle */
   --dur-3: 620ms; /* reveal */

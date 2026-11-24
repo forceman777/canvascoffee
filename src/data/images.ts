@@ -22,15 +22,25 @@ export interface ImageSpec {
   label: string;
   /** Decorative images are hidden from screen readers. */
   decorative?: boolean;
+  /** Transparent cut-out (product shot): shown whole, never cropped. */
+  cutout?: boolean;
+  /** Other assets to show, in order, when this one has not been supplied. */
+  fallbackTo?: string[];
 }
 
 const img = (file: string, ext: ImageSpec['ext'], ratio: [number, number], tone: Tone, label: string, alt: string, decorative = false): ImageSpec =>
   ({ file, ext, ratio, tone, label, alt, decorative });
+const cutout = (file: string, ratio: [number, number], label: string, alt: string): ImageSpec =>
+  ({ file, ext: 'png', ratio, tone: 'light', label, alt, cutout: true });
+const menuImg = (file: string, label: string, alt: string, fallbackTo: string[]): ImageSpec =>
+  ({ ...img(file, 'jpg', [4, 3], 'dark', label, alt), fallbackTo });
 
 export const images = {
   'BRAND-01': img('brand/logo', 'svg', [3, 1], 'light', 'Logo', 'Canvas O Coffee'),
 
-  'HERO-VID': img('hero/hero-pour', 'mp4', [4, 5], 'light', 'Hero pour video (optional)', 'Coffee being poured'),
+  'HERO-VID': img('hero/hero-pour', 'mp4', [16, 9], 'dark', 'Hero pour video', 'Iced coffee being poured over ice in a glass on a wooden bar counter'),
+  'HERO-POSTER': img('hero/hero-pour-poster', 'jpg', [16, 9], 'dark', 'Hero video first frame', 'A glass of ice on a wooden bar counter'),
+  'HERO-STILL': img('hero/hero-pour-still', 'jpg', [16, 9], 'dark', 'Hero video last frame', 'A glass of iced coffee on a wooden bar counter'),
 
   'HERO-01': img('hero/hero-coffee-desktop', 'jpg', [16, 9], 'dark', 'Hero coffee still life (desktop)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
   'HERO-02': img('hero/hero-coffee-mobile', 'jpg', [9, 16], 'dark', 'Hero coffee still life (mobile)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
@@ -46,33 +56,35 @@ export const images = {
   'IL-04': img('signature/iced-latte/iced-latte-04-ice-drop', 'jpg', [4, 5], 'dark', 'Iced latte frame 4: ice drop', 'Ice cubes dropping into the glass'),
   'IL-05': img('signature/iced-latte/iced-latte-05-complete', 'jpg', [4, 5], 'dark', 'Iced latte frame 5: complete', 'A finished iced latte with ice, layered from milk-white to coffee-brown'),
 
-  'SLIDE-01': img('slider/slide-hot-coffee', 'png', [1, 1], 'dark', 'Slider: hot coffee cut-out (optional)', '', true),
-  'SLIDE-02': img('slider/slide-cold-coffee', 'png', [1, 1], 'dark', 'Slider: cold coffee cut-out (optional)', '', true),
-  'SLIDE-03': img('slider/slide-tea', 'png', [1, 1], 'dark', 'Slider: tea cut-out (optional)', '', true),
-  'SLIDE-04': img('slider/slide-mocktail', 'png', [1, 1], 'dark', 'Slider: mocktail cut-out (optional)', '', true),
+  'SLIDE-01': cutout('slider/slide-hot-coffee', [2, 3], 'Slider: hot coffee cut-out', 'Illustrative image: a cup of hot coffee'),
+  'SLIDE-02': cutout('slider/slide-cold-coffee', [1, 2], 'Slider: iced mocha cut-out', 'Illustrative image: an iced mocha with chocolate drizzle in a tall glass'),
+  'SLIDE-03': cutout('slider/slide-tea', [1, 2], 'Slider: iced tea cut-out', 'Illustrative image: iced tea with lemon and mint in a tall glass'),
+  'SLIDE-04': cutout('slider/slide-mocktail', [1, 2], 'Slider: mint mojito cut-out', 'Illustrative image: a mint mojito with lime and ice in a tall glass'),
+  'SLIDE-05': cutout('slider/slide-blue-butterfly', [1, 2], 'Slider: blue butterfly cut-out', 'Illustrative image: a blue mocktail with mint, lime and a blue flower'),
 
-  'PLATE-01': img('food/plate-momo', 'png', [1, 1], 'light', 'Top-down momo plate (optional)', '', true),
-  'PLATE-02': img('food/plate-pizza', 'png', [1, 1], 'light', 'Top-down pizza (optional)', '', true),
-  'PLATE-03': img('food/plate-burger', 'png', [1, 1], 'light', 'Top-down burger plate (optional)', '', true),
-  'PLATE-04': img('food/plate-fried-special', 'png', [1, 1], 'light', 'Top-down fried plate (optional)', '', true),
-  'PLATE-05': img('food/plate-fries', 'png', [1, 1], 'light', 'Top-down fries (optional)', '', true),
-  'PLATE-06': img('food/plate-desserts', 'png', [1, 1], 'light', 'Top-down desserts (optional)', '', true),
+  'PLATE-01': cutout('food/plate-momo', [3, 2], 'Momo tray (top view)', 'Illustrative image: six steamed momos in a paper tray with a red chutney'),
+  'PLATE-02': cutout('food/plate-pizza', [1, 1], 'Pizza box (top view)', 'Illustrative image: a sliced vegetable pizza in an open box'),
+  'PLATE-03': cutout('food/plate-burger', [3, 2], 'Burger tray (top view)', 'Illustrative image: a double patty burger with fries and a dip in a paper tray'),
+  'PLATE-04': cutout('food/plate-fried-special', [3, 2], 'Fried special tray (top view)', 'Illustrative image: fried nuggets and strips in a paper tray'),
+  'PLATE-05': cutout('food/plate-fries', [3, 2], 'Fries tray (top view)', 'Illustrative image: seasoned french fries with a dip in a paper tray'),
+  'PLATE-06': cutout('food/plate-desserts', [3, 2], 'Brownie tray (top view)', 'Illustrative image: a walnut brownie with chocolate drizzle in a paper tray'),
+  'PLATE-07': cutout('food/plate-bread-chaat', [3, 2], 'Garlic bread tray (top view)', 'Illustrative image: cheese garlic bread with fries and a dip in a paper tray'),
 
   'STORY-01': img('story/story-slow-moment', 'jpg', [4, 5], 'light', 'Coffee beside an open book', 'A cup of coffee beside an open book in morning sunlight'),
   'STORY-02': img('story/story-coffee-beans', 'jpg', [3, 2], 'dark', 'Roasted beans and coffee cherries', 'Roasted coffee beans with fresh red coffee cherries'),
 
-  'MENU-01': img('menu/categories/tea', 'jpg', [4, 3], 'dark', 'Tea', 'Illustrative image: a cup of spiced tea and a glass of iced tea'),
-  'MENU-02': img('menu/categories/coffee', 'jpg', [4, 3], 'dark', 'Coffee', 'Illustrative image: a cup of black coffee and a glass of cold coffee'),
-  'MENU-03': img('menu/categories/momo', 'jpg', [4, 3], 'dark', 'Momo', 'Illustrative image: steamed and pan-fried momos'),
-  'MENU-04': img('menu/categories/bread-chaat', 'jpg', [4, 3], 'dark', 'Bread & Chaat', 'Illustrative image: cheese garlic bread and corn chaat'),
-  'MENU-05': img('menu/categories/burger', 'jpg', [4, 3], 'dark', 'Burger', 'Illustrative image: a burger on a wooden board'),
-  'MENU-06': img('menu/categories/pizza', 'jpg', [4, 3], 'dark', 'Pizza', 'Illustrative image: a pizza with melted cheese and corn'),
+  'MENU-01': menuImg('menu/categories/tea', 'Tea', 'Illustrative image: a cup of spiced tea and a glass of iced tea', ['SLIDE-03']),
+  'MENU-02': menuImg('menu/categories/coffee', 'Coffee', 'Illustrative image: a cup of black coffee and a glass of cold coffee', ['SLIDE-02', 'SLIDE-01']),
+  'MENU-03': menuImg('menu/categories/momo', 'Momo', 'Illustrative image: steamed and pan-fried momos', ['PLATE-01']),
+  'MENU-04': menuImg('menu/categories/bread-chaat', 'Bread & Chaat', 'Illustrative image: cheese garlic bread and corn chaat', ['PLATE-07']),
+  'MENU-05': menuImg('menu/categories/burger', 'Burger', 'Illustrative image: a burger on a wooden board', ['PLATE-03']),
+  'MENU-06': menuImg('menu/categories/pizza', 'Pizza', 'Illustrative image: a pizza with melted cheese and corn', ['PLATE-02']),
   'MENU-07': img('menu/categories/wraps', 'jpg', [4, 3], 'dark', 'Wraps', 'Illustrative image: a wrap cut in half'),
   'MENU-08': img('menu/categories/noodles', 'jpg', [4, 3], 'dark', 'Noodles', 'Illustrative image: a bowl of noodles with vegetables'),
-  'MENU-09': img('menu/categories/french-fries', 'jpg', [4, 3], 'dark', 'French Fries', 'Illustrative image: golden fries in a basket'),
-  'MENU-10': img('menu/categories/fried-special', 'jpg', [4, 3], 'dark', 'Fried Special', 'Illustrative image: assorted fried nuggets and strips'),
-  'MENU-11': img('menu/categories/desserts', 'jpg', [4, 3], 'dark', 'Desserts', 'Illustrative image: a slice of chocolate cake and a muffin'),
-  'MENU-12': img('menu/categories/mocktails', 'jpg', [4, 3], 'dark', 'Mocktails', 'Illustrative image: a mint mojito and a masala cola'),
+  'MENU-09': menuImg('menu/categories/french-fries', 'French Fries', 'Illustrative image: golden fries in a basket', ['PLATE-05']),
+  'MENU-10': menuImg('menu/categories/fried-special', 'Fried Special', 'Illustrative image: assorted fried nuggets and strips', ['PLATE-04']),
+  'MENU-11': menuImg('menu/categories/desserts', 'Desserts', 'Illustrative image: a slice of chocolate cake and a muffin', ['PLATE-06']),
+  'MENU-12': menuImg('menu/categories/mocktails', 'Mocktails', 'Illustrative image: a mint mojito and a masala cola', ['SLIDE-04', 'SLIDE-05']),
 
   'ATM-01': img('cafe/interior-wide', 'jpg', [3, 2], 'dark', 'Café interior, wide (real photo)', 'The seating area inside Canvas O Coffee'),
   'ATM-02': img('cafe/interior-table', 'jpg', [4, 5], 'dark', 'A table at the café (real photo)', 'A table set inside Canvas O Coffee'),
@@ -100,16 +112,59 @@ export interface ManifestEntry {
   height: number;
   widths: number[];
   fallback: string;
+  alpha?: boolean;
+  /** Videos: available encodings, smallest first. */
+  sources?: { src: string; type: string }[];
+}
+
+/** A supplied asset, resolved through any fallbacks. */
+export interface ResolvedImage extends ManifestEntry {
+  /** Path inside public/images without size suffix or extension. */
+  key: string;
+  alt: string;
+  decorative: boolean;
+  cutout: boolean;
 }
 
 const generated = manifest as Record<string, ManifestEntry>;
 
-/** Returns the generated files for an asset, or null if it has not been supplied yet. */
-export const imageFiles = (id: ImageId): ManifestEntry | null => generated[images[id].file] ?? null;
+function resolve(id: ImageId, seen = new Set<string>()): ResolvedImage | null {
+  if (seen.has(id)) return null;
+  seen.add(id);
+  const spec: ImageSpec = images[id];
+  const entry = generated[spec.file];
+  if (entry) return { ...entry, key: spec.file, alt: spec.alt, decorative: Boolean(spec.decorative), cutout: Boolean(spec.cutout) };
+  for (const next of spec.fallbackTo ?? []) {
+    const found = resolve(next as ImageId, seen);
+    if (found) return found;
+  }
+  return null;
+}
+
+/** The supplied files for an asset (or its fallback), or null if nothing has been supplied. */
+export const imageFiles = (id: ImageId): ResolvedImage | null => resolve(id);
 
 export const hasImage = (id: ImageId) => imageFiles(id) !== null;
 
-/** Optional real photo for a menu item (assets-src/images/menu/items/{productId}.jpg). */
-export const itemPhoto = (productId: string): ManifestEntry | null => generated[`menu/items/${productId}`] ?? null;
+/**
+ * Photo for a single menu item: a dedicated file at menu/items/{productId}, otherwise a
+ * supplied product shot that clearly shows exactly that item.
+ */
+const itemPhotoFallbacks: Record<string, ImageId> = {
+  'iced-mocha': 'SLIDE-02',
+  'iced-tea': 'SLIDE-03',
+  'mint-mojito': 'SLIDE-04',
+  'blue-butterfly': 'SLIDE-05',
+  'cheese-garlic-bread': 'PLATE-07',
+  'walnut-brownie': 'PLATE-06',
+  'peri-peri-french-fry': 'PLATE-05',
+};
+export function itemPhoto(productId: string): ResolvedImage | null {
+  const key = `menu/items/${productId}`;
+  const own = generated[key];
+  if (own) return { ...own, key, alt: '', decorative: false, cutout: Boolean(own.alpha) };
+  const fallback = itemPhotoFallbacks[productId];
+  return fallback ? imageFiles(fallback) : null;
+}
 
 export const publicPath = (file: string) => `/images/${file}`;

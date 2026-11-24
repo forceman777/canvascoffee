@@ -821,13 +821,13 @@ body:has(.cart-bar) .toasts {
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     transition:
-      opacity var(--dur-3) var(--ease-out),
-      transform var(--dur-3) var(--ease-out),
-      clip-path var(--dur-4) var(--ease-in-out);
+      opacity 900ms var(--ease-expo),
+      transform 1100ms var(--ease-expo),
+      clip-path 1300ms var(--ease-expo);
   }
   .reveal--rise:not(.is-visible) {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(26px);
   }
   .reveal--fade:not(.is-visible) {
     opacity: 0;
@@ -843,4 +843,61 @@ body:has(.cart-bar) .toasts {
 
 .page-loading {
   min-height: 70svh;
+}
+
+/* ---------- Product cut-outs (transparent photos) ---------- */
+.image-slot--cutout {
+  background:
+    radial-gradient(70% 60% at 50% 55%, rgb(255 251 244 / 0.95), rgb(245 235 221 / 0) 75%),
+    linear-gradient(180deg, var(--parchment) 0%, #e3d6ba 100%);
+  border-radius: var(--radius-panel);
+}
+.image-slot--cutout picture {
+  display: block;
+  height: 100%;
+  padding: 6%;
+}
+.image-slot--cutout img {
+  filter: drop-shadow(0 12px 14px rgb(48 35 29 / 0.24));
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform 900ms var(--ease-expo);
+}
+
+/* Product panel photo */
+.product-dialog__photo {
+  margin: -0.25rem 0 0;
+}
+.product-dialog__photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-control);
+}
+.product-dialog__photo.is-cutout picture {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-panel);
+  background: radial-gradient(70% 60% at 50% 55%, #fffaf2, var(--parchment) 80%);
+  padding: 1rem;
+}
+.product-dialog__photo.is-cutout img {
+  width: auto;
+  max-width: 100%;
+  max-height: min(46svh, 22rem);
+  aspect-ratio: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 16px rgb(48 35 29 / 0.25));
+  animation: photo-settle 700ms var(--ease-expo) both;
+}
+@keyframes photo-settle {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+.product-dialog__photo figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
 }

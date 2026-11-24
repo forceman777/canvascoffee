@@ -4,6 +4,8 @@ import { ImageSlot } from '../components/common/ImageSlot';
 import { Ornament } from '../components/common/bits';
 import { Reveal } from '../components/motion/Reveal';
 import { HeroPour } from '../components/home/HeroPour';
+import { HeroFilm } from '../components/home/HeroFilm';
+import { hasImage } from '../data/images';
 import { FoodShowcase } from '../components/home/FoodShowcase';
 import { CoffeeSlider } from '../components/home/CoffeeSlider';
 import { categoriesInGroup, fromPrice, menuGroups, products, productsInCategory } from '../data/menu';
@@ -19,7 +21,7 @@ export default function Home() {
   useDocumentTitle(null);
   return (
     <>
-      <HeroPour />
+      {hasImage('HERO-VID') ? <HeroFilm /> : <HeroPour />}
       <FoodShowcase />
       <CoffeeSlider />
 
@@ -39,7 +41,7 @@ export default function Home() {
               const from = Math.min(...items.map(fromPrice));
               return (
                 <article key={g.id} className="menu-teaser">
-                  <ImageSlot id={groupImage[g.id]} sizes="(min-width: 64rem) 30vw, 90vw" />
+                  <ImageSlot id={groupImage[g.id]} ratio={[4, 3]} sizes="(min-width: 64rem) 30vw, 90vw" />
                   <div className="menu-teaser__body">
                     <h3 className="menu-teaser__title">{g.name}</h3>
                     <p className="menu-teaser__meta">

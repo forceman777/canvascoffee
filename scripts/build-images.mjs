@@ -15,7 +15,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(root, 'assets-src/images');
 const OUT = path.join(root, 'public/images');
 const MANIFEST = path.join(root, 'src/data/image-manifest.json');
-const WIDTHS = [640, 1024, 1600, 2400];
+const WIDTHS = [320, 640, 1024, 1600, 2400];
 const TEXTURE_WIDTHS = [512, 1024];
 
 async function walk(dir) {
@@ -52,24 +52,37 @@ async function main() {
     const rel = path.relative(SRC, file).replace(/\\/g, '/');
     const key = rel.replace(/\.[^.]+$/, '');
     if (/\.(svg|mp4|webm)$/i.test(file)) {
-      // Vector files (the logo) and videos are copied as they are.
+      // Vector files (the logo) and videos are copied as they are (videos are pre-compressed).
       await mkdir(path.join(OUT, path.dirname(rel)), { recursive: true });
       await copyFile(file, path.join(OUT, rel));
-      manifest[key] = { width: 0, height: 0, widths: [], fallback: rel };
+      if (/\.svg$/i.test(file)) {
+        manifest[key] = { width: 0, height: 0, widths: [], fallback: rel };
+      } else {
+        // One entry per video; WebM listed first (smaller), MP4 as the universal fallback.
+        const entry = manifest[key] ?? { width: 0, height: 0, widths: [], fallback: '', sources: [] };
+        const type = /\.webm$/i.test(file) ? 'video/webm' : 'video/mp4';
+        entry.sources.push({ src: rel, type });
+        entry.sources.sort((a, b) => (a.type === 'video/webm' ? -1 : 1) - (b.type === 'video/webm' ? -1 : 1));
+        if (type === 'video/mp4' || !entry.fallback) entry.fallback = rel;
+        manifest[key] = entry;
+      }
       continue;
     }
-    const isPng = /\.png$/i.test(file);
+    const meta0 = await sharp(file).metadata();
+    // Transparent images keep their transparency: WebP with alpha + PNG fallback.
+    const isPng = /\.png$/i.test(file) || Boolean(meta0.hasAlpha);
     const fallbackExt = isPng ? 'png' : 'jpg';
     const outDir = path.join(OUT, path.dirname(rel));
     const base = path.basename(key);
     const srcTime = (await stat(file)).mtimeMs;
 
-    const meta = await sharp(file).metadata();
+    const meta = meta0;
     const width = meta.width ?? 0;
     const height = meta.height ?? 0;
     const candidates = key.startsWith('textures/') ? TEXTURE_WIDTHS : WIDTHS;
     let widths = candidates.filter((w) => w <= width);
-    if (widths.length === 0) widths = [width];
+    // Always offer the native width too, so nothing is capped below the master's quality.
+    if (widths.length === 0 || width > widths[widths.length - 1] * 1.08) widths.push(width);
     const largest = widths[widths.length - 1];
     const fallback = `${key}-${largest}.${fallbackExt}`;
 
@@ -83,14 +96,15 @@ async function main() {
       await mkdir(outDir, { recursive: true });
       for (const w of widths) {
         const pipeline = sharp(file).rotate().resize({ width: w, withoutEnlargement: true });
-        await pipeline.clone().webp({ quality: isPng ? 90 : 80, alphaQuality: 90 }).toFile(path.join(outDir, `${base}-${w}.webp`));
+        await pipeline.clone().webp({ quality: 80, alphaQuality: 82, effort: 5 }).toFile(path.join(outDir, `${base}-${w}.webp`));
       }
       const fb = sharp(file).rotate().resize({ width: largest, withoutEnlargement: true });
-      if (isPng) await fb.png({ compressionLevel: 9 }).toFile(fallbackPath);
+      // Fallback for browsers without WebP: palette PNG keeps transparency at a fraction of the size.
+      if (isPng) await fb.png({ compressionLevel: 9, palette: true, quality: 85, effort: 8 }).toFile(fallbackPath);
       else await fb.jpeg({ quality: 82, mozjpeg: true }).toFile(fallbackPath);
       console.log(`[images] ${rel} → ${widths.join(', ')}px`);
     }
-    manifest[key] = { width, height, widths, fallback };
+    manifest[key] = { width, height, widths, fallback, ...(isPng ? { alpha: true } : {}) };
   }
 
   // Social share image from the desktop hero, if supplied.

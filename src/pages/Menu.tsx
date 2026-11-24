@@ -5,6 +5,7 @@ import { addOns, categories, categoriesInGroup, fullName, menuGroups, products, 
 import { MenuItem } from '../components/menu/MenuItem';
 import { ProductDialog } from '../components/menu/ProductDialog';
 import { ImageSlot } from '../components/common/ImageSlot';
+import { hasImage } from '../data/images';
 import { DietMark, EmptyState, Price } from '../components/common/bits';
 import { Button } from '../components/common/Button';
 import { useCart } from '../state/CartContext';
@@ -18,7 +19,7 @@ const normalise = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').tri
 export default function MenuPage() {
   useDocumentTitle('Menu');
   const { lines } = useCart();
-  const { add, choosing, confirm, close } = useAddToOrder();
+  const { add, view, choosing, confirm, close } = useAddToOrder();
   const reduced = usePrefersReducedMotion();
   const location = useLocation();
   const [query, setQuery] = useState('');
@@ -182,11 +183,13 @@ export default function MenuPage() {
                   const subgroups = [...new Set(items.map((p) => p.subgroup).filter(Boolean))] as string[];
                   const catAddOns = addOns.filter((a) => a.categoryId === c.id);
                   return (
-                    <div key={c.id} id={c.id} data-category={c.id} className="menu-category">
-                      <div className="menu-category__media">
-                        <ImageSlot id={c.imageId} sizes="(min-width: 64rem) 22rem, 100vw" />
-                        {site.menuImagesAreIllustrative && <p className="menu-category__note">Illustrative image</p>}
-                      </div>
+                    <div key={c.id} id={c.id} data-category={c.id} className={`menu-category ${hasImage(c.imageId) ? '' : 'menu-category--text'}`}>
+                      {hasImage(c.imageId) && (
+                        <div className="menu-category__media">
+                          <ImageSlot id={c.imageId} sizes="(min-width: 52rem) 15rem, 80vw" />
+                          {site.menuImagesAreIllustrative && <p className="menu-category__note">Illustrative image</p>}
+                        </div>
+                      )}
                       <div className="menu-category__body">
                         <h3 id={`cat-${c.id}`} className="menu-category__title" tabIndex={-1}>
                           <span className="menu-category__num oldstyle" aria-hidden="true">
@@ -200,7 +203,7 @@ export default function MenuPage() {
                               <h4 className="menu-subgroup__title">{sg}</h4>
                               <ul role="list" className="menu-list">
                                 {items.filter((p) => p.subgroup === sg).map((p) => (
-                                  <MenuItem key={p.id} product={p} inOrder={inOrder(p.id)} onAdd={add} query={deferred.trim()} />
+                                  <MenuItem key={p.id} product={p} inOrder={inOrder(p.id)} onAdd={add} onView={view} query={deferred.trim()} />
                                 ))}
                               </ul>
                             </div>
@@ -208,7 +211,7 @@ export default function MenuPage() {
                         ) : (
                           <ul role="list" className="menu-list">
                             {items.map((p) => (
-                              <MenuItem key={p.id} product={p} inOrder={inOrder(p.id)} onAdd={add} query={deferred.trim()} />
+                              <MenuItem key={p.id} product={p} inOrder={inOrder(p.id)} onAdd={add} onView={view} query={deferred.trim()} />
                             ))}
                           </ul>
                         )}

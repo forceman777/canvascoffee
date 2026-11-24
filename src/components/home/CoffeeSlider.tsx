@@ -2,14 +2,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Pause, Play, Plus } from 'lucide-react';
 import { PourCanvas } from '../art/PourCanvas';
-import { Bean, IceCube, LimeWheel, MintLeaf } from '../art/Ingredients';
-import { ImageSlot } from '../common/ImageSlot';
+import { Bean, IceCube, MintLeaf } from '../art/Ingredients';
+import { Picture } from '../common/ImageSlot';
 import { Price } from '../common/bits';
 import { getProduct, productsInCategory } from '../../data/menu';
-import { hasImage, type ImageId } from '../../data/images';
+import { hasImage, imageFiles, type ImageId } from '../../data/images';
 import { useAddToOrder } from '../../hooks/useAddToOrder';
 import { usePrefersReducedMotion } from '../../hooks';
 import { formatINR } from '../../utils/pricing';
+import { site } from '../../config/site';
 import type { VesselKind } from '../art/vessels';
 
 interface Slide {
@@ -21,17 +22,21 @@ interface Slide {
   body: string;
   products: string[];
   categoryId: string;
-  vessel: VesselKind;
   imageId: ImageId;
-  particles: 'beans' | 'ice' | 'mint';
+  /** Drawn stand-in, used only when no drink photos have been supplied at all. */
+  vessel?: VesselKind;
+  particles?: 'beans' | 'ice' | 'mint';
 }
 
-const range = (categoryId: string) => {
-  const prices = productsInCategory(categoryId).map((p) => p.price as number);
-  return `${formatINR(Math.min(...prices))} to ${formatINR(Math.max(...prices))}`;
+const priceRange = (ids: string[]) => {
+  const prices = ids.map((id) => getProduct(id)!.price as number);
+  const lo = Math.min(...prices);
+  const hi = Math.max(...prices);
+  return lo === hi ? `${formatINR(lo)} each` : `${formatINR(lo)} to ${formatINR(hi)}`;
 };
+const categoryRange = (categoryId: string) => priceRange(productsInCategory(categoryId).map((p) => p.id));
 
-const slides: Slide[] = [
+const allSlides: Slide[] = [
   {
     id: 'hot',
     theme: 'walnut',
@@ -41,21 +46,21 @@ const slides: Slide[] = [
     body: 'A straight black coffee or a milky regular. The simple ones, done properly.',
     products: ['black-coffee', 'regular-coffee'],
     categoryId: 'coffee',
-    vessel: 'cup',
     imageId: 'SLIDE-01',
+    vessel: 'cup',
     particles: 'beans',
   },
   {
     id: 'cold',
-    theme: 'caramel',
+    theme: 'burgundy',
     ghost: 'Iced',
     kicker: 'Cold coffee',
     title: 'Cold, creamy, over ice',
-    body: 'For the warm afternoons: a cold coffee, or an iced mocha with chocolate.',
-    products: ['cold-coffee', 'iced-mocha'],
+    body: 'A chilled cold coffee, or an iced mocha with chocolate.',
+    products: ['iced-mocha', 'cold-coffee'],
     categoryId: 'coffee',
-    vessel: 'glass',
     imageId: 'SLIDE-02',
+    vessel: 'glass',
     particles: 'ice',
   },
   {
@@ -63,51 +68,80 @@ const slides: Slide[] = [
     theme: 'forest',
     ghost: 'Chai',
     kicker: 'Tea',
-    title: 'Tea, any time of day',
-    body: `Four teas on the menu, ${range('tea')}.`,
-    products: ['masala-tea', 'leaker-tea', 'green-tea', 'iced-tea'],
+    title: 'Tea, iced or hot',
+    body: `Four teas on the menu, ${categoryRange('tea')}.`,
+    products: ['iced-tea', 'masala-tea', 'leaker-tea', 'green-tea'],
     categoryId: 'tea',
-    vessel: 'tea',
     imageId: 'SLIDE-03',
+    vessel: 'tea',
     particles: 'beans',
   },
   {
-    id: 'mocktails',
-    theme: 'burgundy',
-    ghost: 'Fizz',
-    kicker: 'Mocktails',
-    title: 'Fizz, mint and something cold',
-    body: `Six coolers, ${range('mocktails')}.`,
-    products: ['mint-mojito', 'kacha-aam-mojito', 'blue-butterfly'],
+    id: 'mojito',
+    theme: 'walnut',
+    ghost: 'Mint',
+    kicker: 'Mojitos',
+    title: 'Cold, fresh and minty',
+    body: `Mint, Kacha Aam or Fire: three mojitos, ${priceRange(['mint-mojito', 'kacha-aam-mojito', 'fire-mojito'])}.`,
+    products: ['mint-mojito', 'kacha-aam-mojito', 'fire-mojito'],
     categoryId: 'mocktails',
-    vessel: 'mocktail',
     imageId: 'SLIDE-04',
+    vessel: 'mocktail',
     particles: 'mint',
   },
+  {
+    id: 'blue',
+    theme: 'caramel',
+    ghost: 'Blue',
+    kicker: 'Blue Butterfly',
+    title: 'Bright blue, served cold',
+    body: `Our Blue Butterfly, with two masala coolers alongside. ${priceRange(['blue-butterfly', 'masala-cola', 'jira-masala-soda'])}.`,
+    products: ['blue-butterfly', 'masala-cola', 'jira-masala-soda'],
+    categoryId: 'mocktails',
+    imageId: 'SLIDE-05',
+  },
 ];
+
+/** Real drink photos when supplied (at least two); otherwise the drawn stand-ins. */
+const photoSlides = allSlides.filter((s) => hasImage(s.imageId));
+const usePhotos = photoSlides.length >= 2;
+const slides = usePhotos ? photoSlides : allSlides.filter((s) => s.vessel);
 
 const INTERVAL = 7000;
 /** Stable arrays, so the canvas is not re-initialised on every render. */
 const single: Record<VesselKind, VesselKind[]> = { glass: ['glass'], cup: ['cup'], tea: ['tea'], togo: ['togo'], mocktail: ['mocktail'] };
 
-/** Positions for the burst of beans / ice / leaves when a slide arrives. */
-const burst = Array.from({ length: 12 }, (_, i) => {
-  const a = (i / 12) * Math.PI * 2 + 0.3;
-  const d = 170 + (i % 3) * 60;
-  return { x: Math.cos(a) * d, y: Math.sin(a) * d * 0.8, r: (i * 67) % 360, s: 0.6 + (i % 4) * 0.18, delay: (i % 4) * 40 };
-});
 const ambient = [
   { x: -42, y: -30, s: 0.9, d: 0 },
   { x: 40, y: -38, s: 0.7, d: 1.2 },
   { x: 46, y: 30, s: 1, d: 0.6 },
   { x: -46, y: 34, s: 0.75, d: 1.8 },
-  { x: 8, y: -46, s: 0.6, d: 2.4 },
 ];
 
 function Particle({ kind, style, className }: { kind: Slide['particles']; style?: React.CSSProperties; className: string }) {
   if (kind === 'ice') return <IceCube className={className} style={style} />;
   if (kind === 'mint') return <MintLeaf className={className} style={style} />;
   return <Bean className={className} style={style} />;
+}
+
+function SlideArt({ slide, mounted, active, reduced }: { slide: Slide; mounted: boolean; active: boolean; reduced: boolean }) {
+  if (!mounted) return null;
+  if (usePhotos) {
+    const image = imageFiles(slide.imageId)!;
+    return (
+      <div className="slide__photo">
+        <Picture image={image} sizes="(min-width: 52rem) 22rem, 46vw" alt="" priority={active} />
+      </div>
+    );
+  }
+  return (
+    <>
+      {ambient.map((a, k) => (
+        <Particle key={k} kind={slide.particles} className="slide__ambient" style={{ '--x': `${a.x}%`, '--y': `${a.y}%`, '--s': a.s, '--d': `${a.d}s` } as React.CSSProperties} />
+      ))}
+      <PourCanvas mode="idle" kinds={single[slide.vessel!]} reduced={reduced} paused={!active} label={slide.kicker} />
+    </>
+  );
 }
 
 export function CoffeeSlider() {
@@ -122,6 +156,7 @@ export function CoffeeSlider() {
   const [announce, setAnnounce] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
   const pointer = useRef<{ x: number; y: number } | null>(null);
+  const tilt = useRef(0);
   const { add } = useAddToOrder();
 
   const autoplay = !reduced && !userPaused && !hovering && !focused && onScreen;
@@ -158,15 +193,34 @@ export function CoffeeSlider() {
     return () => window.clearTimeout(t);
   }, [previous, active]);
 
+  // Gentle depth: the drink drifts a few pixels toward the pointer (fine pointers only).
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (reduced || e.pointerType !== 'mouse') return;
+    const el = rootRef.current;
+    if (!el || tilt.current) return;
+    const { clientX, clientY } = e;
+    tilt.current = requestAnimationFrame(() => {
+      tilt.current = 0;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--px', ((clientX - r.left) / r.width - 0.5).toFixed(3));
+      el.style.setProperty('--py', ((clientY - r.top) / r.height - 0.5).toFixed(3));
+    });
+  };
+
   return (
     <section
       ref={rootRef}
       id="home-slider"
-      className={`slider theme-${slides[active].theme} on-dark`}
+      className={`slider ${usePhotos ? 'slider--photos' : ''} theme-${slides[active].theme} on-dark`}
       aria-roledescription="carousel"
       aria-label="Coffee, tea and mocktails"
       onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
+      onMouseLeave={() => {
+        setHovering(false);
+        rootRef.current?.style.setProperty('--px', '0');
+        rootRef.current?.style.setProperty('--py', '0');
+      }}
+      onPointerMove={onPointerMove}
       onFocus={() => setFocused(true)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setFocused(false);
@@ -196,13 +250,13 @@ export function CoffeeSlider() {
         {slides.map((s, i) => (
           <div key={s.id} className={`slider__backdrop theme-${s.theme} ${i === active ? 'is-active' : ''}`} />
         ))}
+        <div className="slider__sheen" key={`sheen-${active}`} />
       </div>
 
       <div className="slider__track" aria-live={announce && !autoplay ? 'polite' : 'off'}>
         {slides.map((s, i) => {
           const isActive = i === active;
           const isLeaving = i === previous;
-          const mountArt = isActive || isLeaving;
           return (
             <div
               key={s.id}
@@ -236,41 +290,15 @@ export function CoffeeSlider() {
                     })}
                   </ul>
                   <Link to={`/menu#${s.categoryId}`} className="slide__link">
-                    See all {s.kicker.toLowerCase()} on the menu
+                    See all {s.categoryId === 'mocktails' ? 'mocktails' : s.kicker.toLowerCase()} on the menu
                   </Link>
                 </div>
                 <div className="slide__art" aria-hidden="true">
                   <div className="slide__halo" />
-                  {mountArt &&
-                    ambient.map((a, k) => (
-                      <Particle
-                        key={k}
-                        kind={s.particles}
-                        className="slide__ambient"
-                        style={{ '--x': `${a.x}%`, '--y': `${a.y}%`, '--s': a.s, '--d': `${a.d}s` } as React.CSSProperties}
-                      />
-                    ))}
+                  {usePhotos && <div className="slide__floor" />}
                   <div className="slide__product">
-                    {mountArt &&
-                      (hasImage(s.imageId) ? (
-                        <ImageSlot id={s.imageId} bare fit="contain" sizes="(min-width: 52rem) 40vw, 80vw" />
-                      ) : (
-                        <PourCanvas mode="idle" kinds={single[s.vessel]} reduced={reduced} paused={!isActive} label={s.kicker} />
-                      ))}
+                    <SlideArt slide={s} mounted={isActive || isLeaving} active={isActive} reduced={reduced} />
                   </div>
-                  {isActive && !reduced && (
-                    <div className="slide__burst" key={`burst-${active}`}>
-                      {burst.map((b, k) => (
-                        <Particle
-                          key={k}
-                          kind={s.particles}
-                          className="slide__burst-piece"
-                          style={{ '--bx': `${b.x}px`, '--by': `${b.y}px`, '--br': `${b.r}deg`, '--bs': b.s, animationDelay: `${b.delay}ms` } as React.CSSProperties}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  {s.particles === 'mint' && <LimeWheel className="slide__lime" />}
                 </div>
               </div>
             </div>
@@ -310,6 +338,7 @@ export function CoffeeSlider() {
           </button>
         </div>
       </div>
+      {usePhotos && site.menuImagesAreIllustrative && <p className="container slider__note">Images are illustrative.</p>}
     </section>
   );
 }

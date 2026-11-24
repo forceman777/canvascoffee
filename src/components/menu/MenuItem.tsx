@@ -1,12 +1,16 @@
 import { Plus } from 'lucide-react';
 import { DietMark, Price } from '../common/bits';
 import { fullName, needsChoices } from '../../data/menu';
+import { itemPhoto } from '../../data/images';
+import { Picture } from '../common/ImageSlot';
 import type { Product } from '../../types/menu';
 
 interface Props {
   product: Product;
   inOrder: number;
   onAdd: (p: Product) => void;
+  /** Opens the product panel with its photo. */
+  onView?: (p: Product) => void;
   /** Highlight matches when searching. */
   query?: string;
 }
@@ -25,12 +29,18 @@ function highlight(text: string, query?: string) {
 }
 
 /** One line of the printed-style menu: name, dotted leader, price, add button. */
-export function MenuItem({ product, inOrder, onAdd, query }: Props) {
+export function MenuItem({ product, inOrder, onAdd, onView, query }: Props) {
+  const photo = onView ? itemPhoto(product.id) : null;
   const multi = (product.variants?.length ?? 0) > 1;
   const choose = needsChoices(product);
   return (
     <li className="menu-item">
       <div className="menu-item__line">
+        {photo && (
+          <button type="button" className="menu-item__thumb" onClick={() => onView!(product)} aria-label={`View photo of ${fullName(product)}`} aria-haspopup="dialog">
+            <Picture image={photo} sizes="3rem" alt="" />
+          </button>
+        )}
         <DietMark diet={product.diet} />
         <span className="menu-item__name">
           {highlight(product.name, query)}
