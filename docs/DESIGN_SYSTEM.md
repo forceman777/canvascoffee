@@ -67,6 +67,8 @@ Burgundy, parchment, walnut and ivory carry the identity; forest and brass suppo
 | Hero film (home) | Supplied video plays once and rests on the full glass; fades/settles in, pauses off screen, pause/replay control; still frame with reduced motion or data saver. |
 | Drink slider (photos) | Glass glides in with a slight tilt (expo-out), soft light sweep across the backdrop, gentle pointer parallax and float. |
 | Kitchen trays (photos) | Tray settles in from above; subtle 3D tilt toward the pointer; thumbnails lift on hover. |
+| Café reel (home, gallery) | The owner's video in a tall rounded frame: muted loop that plays only while on screen, fades in over its first frame, pause control; play button instead of autoplay with reduced motion or data saver. Nothing downloads until it scrolls into view. |
+| Gallery | Masonry (each photo into the shortest column, so the top row keeps the curated order); tiles rise in; slow zoom on hover; lightbox with arrow keys. |
 | Hero pour (fallback, no video) | Canvas animation: stream, splash particles, ripples, last drops, lid bounce. Pauses off screen, has a pause button, draws a still frame with reduced motion. |
 | Coffee slider (home) | Cross-fading themed slides, outlined ghost word, bean/ice/mint burst on change. Autoplay pauses on hover, focus, off screen, or by button; none with reduced motion. |
 | Food showcase (home) | Floating ingredients (CSS float + scroll parallax), plates spin in on selection and turn slowly. |

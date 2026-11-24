@@ -1,4 +1,58 @@
 {
+  "cafe/cafe-walkthrough-poster": {
+    "width": 720,
+    "height": 1280,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "cafe/cafe-walkthrough-poster-720.jpg"
+  },
+  "cafe/cafe-walkthrough": {
+    "width": 0,
+    "height": 0,
+    "widths": [],
+    "fallback": "cafe/cafe-walkthrough.mp4",
+    "sources": [
+      {
+        "src": "cafe/cafe-walkthrough.mp4",
+        "type": "video/mp4"
+      }
+    ]
+  },
+  "cafe/interior-table": {
+    "width": 1440,
+    "height": 1440,
+    "widths": [
+      320,
+      640,
+      1024,
+      1440
+    ],
+    "fallback": "cafe/interior-table-1440.jpg"
+  },
+  "cafe/lamps": {
+    "width": 840,
+    "height": 1260,
+    "widths": [
+      320,
+      640,
+      840
+    ],
+    "fallback": "cafe/lamps-840.jpg"
+  },
+  "cafe/wall-art": {
+    "width": 1330,
+    "height": 750,
+    "widths": [
+      320,
+      640,
+      1024,
+      1330
+    ],
+    "fallback": "cafe/wall-art-1330.jpg"
+  },
   "food/plate-bread-chaat": {
     "width": 1540,
     "height": 1068,
@@ -104,6 +158,46 @@
     "fallback": "food/plate-wraps-1553.png",
     "alpha": true
   },
+  "gallery/gallery-01": {
+    "width": 720,
+    "height": 960,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "gallery/gallery-01-720.jpg"
+  },
+  "gallery/gallery-02": {
+    "width": 720,
+    "height": 1280,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "gallery/gallery-02-720.jpg"
+  },
+  "gallery/gallery-03": {
+    "width": 720,
+    "height": 900,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "gallery/gallery-03-720.jpg"
+  },
+  "gallery/gallery-04": {
+    "width": 720,
+    "height": 900,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "gallery/gallery-04-720.jpg"
+  },
   "hero/hero-pour-poster": {
     "width": 1280,
     "height": 720,
@@ -142,6 +236,17 @@
       }
     ]
   },
+  "reading/reading-corner": {
+    "width": 1440,
+    "height": 1440,
+    "widths": [
+      320,
+      640,
+      1024,
+      1440
+    ],
+    "fallback": "reading/reading-corner-1440.jpg"
+  },
   "slider/slide-blue-butterfly": {
     "width": 748,
     "height": 1498,
@@ -162,6 +267,18 @@
       692
     ],
     "fallback": "slider/slide-cold-coffee-692.png",
+    "alpha": true
+  },
+  "slider/slide-hot-coffee": {
+    "width": 1144,
+    "height": 1293,
+    "widths": [
+      320,
+      640,
+      1024,
+      1144
+    ],
+    "fallback": "slider/slide-hot-coffee-1144.png",
     "alpha": true
   },
   "slider/slide-mocktail": {

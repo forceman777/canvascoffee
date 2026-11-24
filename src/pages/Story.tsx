@@ -70,6 +70,10 @@ const foodDuo = (() => {
   return tray && glass ? { tray, glass } : null;
 })();
 
+/** "The room" adapts to a portrait photo (the pendant-lamp photo stands in until a wide one arrives). */
+const roomRatio = imageFiles('ATM-01')?.ratio;
+const roomPortrait = Boolean(roomRatio && roomRatio[0] < roomRatio[1]);
+
 export default function Story() {
   useDocumentTitle('Our Story');
   const [idea, food, room] = storyContent.chapters;
@@ -188,7 +192,7 @@ export default function Story() {
       </section>
 
       <section className="story-room surface-ivory" aria-labelledby="ch-room">
-        <div className="container story-room__grid">
+        <div className={`container story-room__grid ${roomPortrait ? 'story-room__grid--portrait' : ''}`}>
           <div className="story-room__text">
             <h2 id="ch-room" className="section-title">
               {room.heading}
@@ -203,7 +207,7 @@ export default function Story() {
             </ButtonLink>
           </div>
           <Reveal kind="unveil" className="story-room__media">
-            <ImageSlot id="ATM-01" sizes="(min-width: 64rem) 55vw, 90vw" />
+            <ImageSlot id="ATM-01" sizes={roomPortrait ? '(min-width: 52rem) 26rem, 90vw' : '(min-width: 64rem) 55vw, 90vw'} />
           </Reveal>
         </div>
       </section>

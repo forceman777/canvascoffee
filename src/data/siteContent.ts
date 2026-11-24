@@ -12,6 +12,8 @@ export const homeContent = {
   reserveTitle: 'Keep a table for us',
   reserveBody: 'Send a table request for the day and time you would like. The café will get back to you to confirm.',
   visitTitle: 'Find us in Belda',
+  /** Describes what is visible in the owner's own video of the café. */
+  visitLead: 'Painted masks, a village mural, lantern light and walls full of art. Come in, take a seat and look around.',
 };
 
 export const signatureContent = {

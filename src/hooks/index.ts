@@ -61,3 +61,10 @@ export function useInView<T extends HTMLElement>(ref: RefObject<T>, rootMargin =
   }, [ref, rootMargin]);
   return inView;
 }
+
+/** True when the visitor has asked the browser to save data (e.g. Chrome's Lite mode). */
+export function prefersSaveData(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  const c = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  return Boolean(c?.saveData);
+}

@@ -587,7 +587,7 @@ automatically.
 
 ---
 
-## Supplied assets (status as of 24 Nov 2026, second batch included)
+## Supplied assets (status as of 24 Nov 2026, third batch: real café photos and video)
 
 | Slot | File in `assets-src/images/` | Used for | Notes |
 |---|---|---|---|
@@ -601,6 +601,13 @@ automatically.
 | PLATE-09 *(new)* | `food/plate-noodles.webp` | Kitchen section, Noodles menu header, Veggie Maggi Noodles photo | |
 | STORY-01 | `story/story-slow-moment.webp` (latte beside a book, 3:2) | Our Story header; stands in for the café table photo (ATM-02) on the homepage and Reservations until a real one is supplied | |
 | STORY-02 | `story/story-coffee-beans.webp` | Our Story "Before the cup": photo beside the four-stage timeline (replaces the drawings) | |
+| CAFE-VID *(new)* | `cafe/cafe-walkthrough.mp4` (+ `cafe-walkthrough-poster.jpg`) | Homepage "Find us in Belda" and the top of the Gallery | Owner's reel, edited for the web: black opening and the strobe flash removed, the end dissolves into the start for a seamless loop, audio removed, 540 × 960, 2.3 MB. Loads only when scrolled into view; never autoplays with reduced motion or data saver. |
+| ATM-02 | `cafe/interior-table.jpg` | Homepage "Keep a table for us", Reservations page, Gallery | **Real photo**: a table under the three flower paintings |
+| ATM-05 *(new)* | `cafe/lamps.jpg` | Our Story "The room" (stands in for ATM-01), Gallery | **Real photo**, cropped to the gold pendant lamps and wooden wall (wiring and the inverter box cropped out) |
+| ATM-06 *(new)* | `cafe/wall-art.jpg` | Contact page (stands in for the storefront ATM-03), Gallery | **Real photo**, cropped to the three face paintings (the wall fan cropped out) |
+| READ-01 | `reading/reading-corner.jpg` | Our Story Reading Corner, Gallery | **Real photo** of the painting of a woman reading with coffee |
+| GAL-01 to GAL-04 | `gallery/gallery-01.jpg` … `gallery-04.jpg` | Gallery | Stills from the owner's reel: the village mural, the lamp-lit corner, the blue mask close-up, the green mask |
+| SLIDE-01 | `slider/slide-hot-coffee.webp` | Drink slider (Hot coffee slide is now live), Black Coffee photo | |
 | PLATE-05 | `food/plate-fries.webp` | Kitchen section, French Fries menu header, Peri-Peri French Fry photo | |
 | PLATE-06 | `food/plate-desserts.webp` | Kitchen section, Desserts menu header, Walnut Brownie photo | Black background removed |
 | PLATE-07 *(new)* | `food/plate-bread-chaat.webp` | Kitchen section, Bread & Chaat menu header, Cheese Garlic Bread photo | |
@@ -613,8 +620,9 @@ Transparent PNG **or WebP** files are both accepted; margins are trimmed automat
 
 **Still to supply, to complete the realistic look:**
 
-- **Real café photos** (must not be AI): storefront (ATM-03), a table (ATM-02, replaces the latte stand-in), interior (ATM-01), counter (ATM-04), and 6–9 gallery photos (GAL-01…09).
-- **Iced-latte video** for Our Story (in progress): replaces the drawn "Five moments in a glass" frames; it will play as you scroll.
-- `slider/slide-hot-coffee` (SLIDE-01): adds a "Hot coffee" slide (hidden until supplied).
+- **Storefront photo** (ATM-03, real): the front of the café with its signboard, so people can find it. The Contact page shows the wall-art photo until then.
+- **Iced-latte video** for Our Story (in progress): replaces the drawn "Five moments in a glass" frames.
+- **Wide interior photo** (ATM-01, optional): "The room" on Our Story uses the lamp photo until then.
+- **More gallery photos** (optional): `gallery/gallery-05.jpg` to `gallery-09.jpg` appear in the gallery automatically. Daylight photos of drinks and food as served would add variety to the evening shots.
 - `food/plate-pizza`: please re-export at 1536 px wide (current upload is 612 × 408).
-- Reading Corner still life (READ-01) and the logo (BRAND-01), if available.
+- The logo (BRAND-01), if available.

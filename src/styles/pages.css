@@ -1668,3 +1668,198 @@
     display: none;
   }
 }
+
+/* ---------- Real café media ---------- */
+/* Our Story: "The room" with a portrait photo */
+@media (min-width: 52rem) {
+  .story-room__grid--portrait {
+    grid-template-columns: 1.15fr 1fr;
+  }
+}
+.story-room__grid--portrait .story-room__media {
+  width: min(100%, 26rem);
+  justify-self: center;
+}
+.story-room__media .image-slot,
+.reading__media .image-slot,
+.contact-hero__media .image-slot,
+.res-hero__media .image-slot {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-2);
+}
+
+/* Homepage "Find us in Belda" with the café reel */
+@media (min-width: 52rem) {
+  .home-visit__grid--reel {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-9);
+  }
+}
+.home-visit__grid--reel .visit-list {
+  margin-top: var(--space-5);
+}
+.home-visit__reel {
+  justify-self: center;
+  /* a definite width, so the centred grid item does not shrink to the caption's width */
+  width: min(100%, 21rem);
+}
+.home-visit__reel .reel {
+  width: 100%;
+}
+
+/* The reel: a tall, phone-shaped frame */
+.reel {
+  margin: 0;
+  width: min(100%, 21rem);
+}
+@media (min-width: 52rem) {
+  .home-visit__reel {
+    width: auto;
+  }
+  .home-visit__reel .reel {
+    width: auto;
+  }
+  .home-visit__reel .reel__frame {
+    height: min(76svh, 40rem);
+    width: auto;
+  }
+}
+.reel__frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  border-radius: 14px;
+  background: var(--walnut-deep);
+  box-shadow: var(--shadow-3);
+  isolation: isolate;
+}
+.reel__frame::after {
+  /* soft vignette so the control stays legible over bright frames */
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  background: linear-gradient(transparent, rgb(20 14 11 / 0.55));
+  pointer-events: none;
+}
+.reel__poster,
+.reel__poster img,
+.reel__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reel__video {
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+.reel__frame.is-ready .reel__video {
+  opacity: 1;
+}
+.reel__control,
+.reel__play {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  color: var(--ivory);
+  border-radius: 50%;
+  border: 1px solid rgb(245 235 221 / 0.4);
+  background: rgb(20 14 11 / 0.45);
+  backdrop-filter: blur(6px);
+  transition:
+    background-color var(--dur-1),
+    border-color var(--dur-1),
+    transform var(--dur-1);
+}
+.reel__control {
+  right: 0.75rem;
+  bottom: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.reel__play {
+  left: 50%;
+  top: 50%;
+  width: 4.25rem;
+  height: 4.25rem;
+  translate: -50% -50%;
+}
+.reel__control:hover,
+.reel__play:hover {
+  background: rgb(20 14 11 / 0.7);
+  border-color: var(--ivory);
+}
+.reel__control:active,
+.reel__play:active {
+  transform: scale(0.94);
+}
+.reel__caption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.on-dark .reel__caption {
+  color: rgb(245 235 221 / 0.7);
+}
+
+/* ---------- Gallery: masonry of real photos ---------- */
+.masonry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+.masonry__col {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: var(--space-6);
+}
+.masonry__item {
+  margin: 0;
+}
+.masonry__item--reel .reel {
+  width: 100%;
+}
+.masonry__item--reel .reel__caption {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgb(245 235 221 / 0.85);
+}
+.masonry__open {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+}
+.masonry__open .image-slot img {
+  transition:
+    opacity var(--dur-3) var(--ease-out),
+    transform 1400ms var(--ease-expo),
+    filter 600ms var(--ease-out);
+}
+.masonry__open:hover .image-slot img {
+  transform: scale(1.04);
+  filter: brightness(1.06);
+}
+.masonry__caption {
+  margin-top: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgb(245 235 221 / 0.85);
+}
+.gallery-page .notice__dev {
+  margin-top: var(--space-4);
+  color: rgb(245 235 221 / 0.55);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .masonry__item {
+    animation: rise-in 900ms var(--ease-expo) both;
+    animation-delay: calc(min(var(--i, 0), 6) * 70ms);
+  }
+}

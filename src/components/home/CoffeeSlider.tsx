@@ -260,7 +260,7 @@ export function CoffeeSlider() {
           return (
             <div
               key={s.id}
-              className={`slide ${isActive ? 'is-active' : ''} ${isLeaving ? 'is-leaving' : ''} ${direction === 1 ? 'dir-next' : 'dir-prev'}`}
+              className={`slide slide--${s.id} ${isActive ? 'is-active' : ''} ${isLeaving ? 'is-leaving' : ''} ${direction === 1 ? 'dir-next' : 'dir-prev'}`}
               role="group"
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${slides.length}: ${s.kicker}`}

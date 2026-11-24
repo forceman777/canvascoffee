@@ -3,6 +3,7 @@ import { ButtonLink } from '../components/common/Button';
 import { ImageSlot } from '../components/common/ImageSlot';
 import { Ornament } from '../components/common/bits';
 import { Reveal } from '../components/motion/Reveal';
+import { CafeReel } from '../components/common/CafeReel';
 import { HeroPour } from '../components/home/HeroPour';
 import { HeroFilm } from '../components/home/HeroFilm';
 import { hasImage } from '../data/images';
@@ -16,6 +17,7 @@ import { site } from '../config/site';
 import { useDocumentTitle } from '../hooks';
 
 const groupImage: Record<string, ImageId> = { drinks: 'MENU-02', food: 'MENU-03', mocktails: 'MENU-12' };
+const hasReel = hasImage('CAFE-VID');
 
 export default function Home() {
   useDocumentTitle(null);
@@ -97,11 +99,12 @@ export default function Home() {
 
       {/* ---------- Visit ---------- */}
       <section className="home-visit surface-ivory" aria-labelledby="home-visit-title">
-        <div className="container home-visit__grid">
-          <div>
+        <div className={`container home-visit__grid ${hasReel ? 'home-visit__grid--reel' : ''}`}>
+          <div className="home-visit__text">
             <h2 id="home-visit-title" className="section-title">
               {homeContent.visitTitle}
             </h2>
+            {hasReel && <p className="section-lead">{homeContent.visitLead}</p>}
             <dl className="visit-list">
               <div>
                 <dt>Where</dt>
@@ -128,13 +131,26 @@ export default function Home() {
                 </dd>
               </div>
             </dl>
-            <ButtonLink to="/contact" variant="quiet">
-              Contact and directions
-            </ButtonLink>
+            <div className="button-row">
+              <ButtonLink to="/contact" variant="secondary">
+                Contact and directions
+              </ButtonLink>
+              {hasReel && (
+                <ButtonLink to="/gallery" variant="quiet">
+                  See the gallery
+                </ButtonLink>
+              )}
+            </div>
           </div>
-          <Reveal kind="unveil" className="home-visit__media">
-            <ImageSlot id="ATM-03" sizes="(min-width: 64rem) 45vw, 90vw" />
-          </Reveal>
+          {hasReel ? (
+            <Reveal kind="rise" className="home-visit__reel">
+              <CafeReel caption="A walk around the café" />
+            </Reveal>
+          ) : (
+            <Reveal kind="unveil" className="home-visit__media">
+              <ImageSlot id="ATM-03" sizes="(min-width: 64rem) 45vw, 90vw" />
+            </Reveal>
+          )}
         </div>
       </section>
     </>

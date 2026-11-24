@@ -1106,7 +1106,7 @@
   position: absolute;
   inset: 3% 0 7%;
   display: grid;
-  place-items: center;
+  place-items: end center;
   transform: translate3d(calc(var(--px, 0) * 22px), calc(var(--py, 0) * 14px), 0);
   transition: transform 1000ms var(--ease-out);
 }
@@ -1303,4 +1303,14 @@
     opacity: 0;
     transform: translateY(22px);
   }
+}
+
+/* Hot coffee: a wide cup and saucer, scaled to the same visual weight as the tall glasses
+   and resting on the same floor shadow. */
+.slider--photos .slide--hot .slide__photo picture {
+  height: 72%;
+}
+.slider--photos .slide--hot .slide__floor {
+  width: 50%;
+  bottom: 4%;
 }

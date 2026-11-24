@@ -212,7 +212,13 @@ async function scenarioUnconfigured(base, browser) {
   check('Reduced motion: iced latte (Our Story) shows all 5 frames statically', (await rp.locator('.signature__series li').count()) === 5);
   await rp.goto(`${base}/`);
   check('Reduced motion: slider does not autoplay (no pause button needed)', (await rp.getByRole('button', { name: /automatic slides/ }).count()) === 0);
-  check('Reduced motion: hero shows the still frame instead of playing the video', (await rp.locator('.hero-film__still img').count()) === 1 && (await rp.locator('video').count()) === 0);
+  check('Reduced motion: hero shows the still frame instead of playing the video', (await rp.locator('.hero-film__still img').count()) === 1 && (await rp.locator('.hero-film video').count()) === 0);
+  await rp.locator('.home-visit__reel').scrollIntoViewIfNeeded();
+  await rp.waitForTimeout(1200);
+  check('Reduced motion: café reel does not autoplay and offers a play button', (await rp.locator('.home-visit video').evaluate((v) => v.paused && v.currentTime === 0)) && (await rp.getByRole('button', { name: 'Play the café video' }).isVisible()));
+  await rp.getByRole('button', { name: 'Play the café video' }).click();
+  await rp.waitForFunction(() => { const v = document.querySelector('.home-visit video'); return v && v.currentTime > 0.2; }, null, { timeout: 8000 }).catch(() => {});
+  check('Reduced motion: café reel plays when the visitor asks', await rp.locator('.home-visit video').evaluate((v) => !v.paused && v.currentTime > 0.2));
   await rm.close();
 
   // ---- New homepage sections ----
@@ -233,19 +239,19 @@ async function scenarioUnconfigured(base, browser) {
 
   await page.locator('#home-slider').scrollIntoViewIfNeeded();
   const activeLabel = () => page.locator('.slide.is-active').getAttribute('aria-label');
-  check('Slider starts on slide 1', (await activeLabel()).startsWith('1 of 4'));
+  check('Slider starts on slide 1 (Hot coffee, 5 slides with photos)', (await activeLabel()) === '1 of 5: Hot coffee');
   await page.getByRole('button', { name: 'Next slide' }).click();
-  check('Slider "next" moves to slide 2', (await activeLabel()).startsWith('2 of 4'));
+  check('Slider "next" moves to slide 2', (await activeLabel()).startsWith('2 of 5'));
   await page.getByRole('button', { name: 'Previous slide' }).click();
   await page.getByRole('button', { name: 'Previous slide' }).click();
-  check('Slider "previous" wraps to slide 4', (await activeLabel()).startsWith('4 of 4'));
+  check('Slider "previous" wraps to the last slide', (await activeLabel()).startsWith('5 of 5'));
   check('Slider shows real drink photos', (await page.locator('.slide.is-active .slide__photo img').count()) === 1);
-  await page.getByRole('button', { name: 'Show slide 2: Tea' }).click();
-  check('Slider dot jumps to the Tea slide', (await activeLabel()).startsWith('2 of 4'));
+  await page.getByRole('button', { name: 'Show slide 3: Tea' }).click();
+  check('Slider dot jumps to the Tea slide', (await activeLabel()).startsWith('3 of 5'));
   await page.locator('#home-slider').focus().catch(() => {});
   await page.locator('.slide.is-active').getByRole('button', { name: 'Add Masala Tea to your order' }).click();
   check('Slider "Add" puts the item in the order', (await page.locator('.order-pill__count').innerText()) === '1');
-  check('Inactive slides are hidden from assistive tech', (await page.locator('.slide:not(.is-active)[aria-hidden="true"]').count()) === 3);
+  check('Inactive slides are hidden from assistive tech', (await page.locator('.slide:not(.is-active)[aria-hidden="true"]').count()) === 4);
 
   await page.locator('.kitchen').scrollIntoViewIfNeeded();
   check('Kitchen shows Momo first with 4 dishes', (await page.locator('.kitchen__name').innerText()) === 'Momo' && (await page.locator('.kitchen__items li').count()) === 4);
@@ -264,7 +270,7 @@ async function scenarioUnconfigured(base, browser) {
   await page.goto(`${base}/menu`);
   await page.locator('.menu-item').first().waitFor();
   check('Every one of the 12 menu categories shows a photo', (await page.locator('.menu-category__media img').count()) === 12);
-  check('Menu items with an exact photo get a thumbnail (9)', (await page.locator('.menu-item__thumb').count()) === 9);
+  check('Menu items with an exact photo get a thumbnail (10)', (await page.locator('.menu-item__thumb').count()) === 10);
   await page.getByRole('button', { name: 'View photo of Iced Mocha' }).click();
   check('Thumbnail opens the item with its photo and price', (await page.locator('dialog[open] .product-dialog__photo img').count()) === 1 && (await page.locator('dialog[open] button[type=submit]').innerText()).includes('₹60'));
   await page.keyboard.press('Escape');
@@ -274,6 +280,32 @@ async function scenarioUnconfigured(base, browser) {
   await page.locator('.cherry__timeline').waitFor({ timeout: 5000 }).catch(() => {});
   check('Our Story: beans photo with a 4-step timeline (no drawings)', (await page.locator('.cherry__photo img').count()) === 1 && (await page.locator('.timeline-step').count()) === 4 && (await page.locator('.cherry__stages').count()) === 0);
   check('Our Story: real tray and glass composition', (await page.locator('.story-duo img').count()) === 2);
+  check('Our Story: "The room" and the Reading Corner use real café photos', (await page.locator('.story-room__media img[src*="cafe/lamps"]').count()) === 1 && (await page.locator('.reading__media img[src*="reading/reading-corner"]').count()) === 1);
+
+  // Home: the café reel in "Find us in Belda"
+  await page.goto(`${base}/`);
+  const reel = page.locator('.home-visit video');
+  check('Home reel: nothing is downloaded before it scrolls into view', await reel.evaluate((v) => v.readyState === 0 && v.currentTime === 0));
+  await page.locator('.home-visit__reel').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => { const v = document.querySelector('.home-visit video'); return v && v.currentTime > 0.3; }, null, { timeout: 10000 }).catch(() => {});
+  check('Home reel: autoplays muted and looping once on screen', await reel.evaluate((v) => !v.paused && v.muted && v.loop && v.currentTime > 0.3));
+  await page.getByRole('button', { name: 'Pause the café video' }).click();
+  check('Home reel: can be paused', await reel.evaluate((v) => v.paused));
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(400);
+  await page.locator('.home-visit__reel').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(800);
+  check('Home reel: stays paused after the visitor paused it, even when scrolled back', await reel.evaluate((v) => v.paused));
+
+  // Gallery: real photos and the reel
+  await page.goto(`${base}/gallery`);
+  await page.locator('.masonry__open').first().waitFor({ timeout: 5000 }).catch(() => {});
+  check('Gallery: the reel plus 8 real café photos, no placeholders', (await page.locator('.masonry video').count()) === 1 && (await page.locator('.masonry__open').count()) === 8 && (await page.locator('.masonry .image-slot--placeholder').count()) === 0);
+  await page.getByRole('button', { name: /Open photo: A mural/ }).click();
+  check('Gallery: a photo opens in the lightbox', (await page.locator('dialog.lightbox[open] img').count()) === 1 && (await page.locator('dialog.lightbox[open] figcaption').innerText()).includes('1 / 8'));
+  await page.getByRole('button', { name: 'Next photo' }).click();
+  check('Gallery: lightbox steps to the next photo', (await page.locator('dialog.lightbox[open] figcaption').innerText()).includes('2 / 8'));
+  await page.keyboard.press('Escape');
 
   // 404
   await page.goto(`${base}/does-not-exist`);

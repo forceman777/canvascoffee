@@ -7,7 +7,7 @@ import { categoriesInGroup, fromPrice, productsInCategory } from '../../data/men
 import { homeContent } from '../../data/siteContent';
 import { site } from '../../config/site';
 import { formatINR } from '../../utils/pricing';
-import { usePrefersReducedMotion } from '../../hooks';
+import { prefersSaveData, usePrefersReducedMotion } from '../../hooks';
 
 type Phase = 'loading' | 'playing' | 'paused' | 'ended';
 
@@ -18,11 +18,6 @@ const facts = [
   { label: 'Mocktails', value: from('mocktails') },
   { label: 'Food', value: formatINR(Math.min(...categoriesInGroup('food').flatMap((c) => productsInCategory(c.id)).map(fromPrice))) },
 ];
-
-function saveData() {
-  const c = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  return Boolean(c?.saveData);
-}
 
 /**
  * Cinematic hero: the supplied pour video (HERO-VID) plays once and rests on the full glass.
@@ -36,7 +31,7 @@ export function HeroFilm() {
   const ref = useRef<HTMLVideoElement>(null);
   const [phase, setPhase] = useState<Phase>('loading');
   const [ready, setReady] = useState(false);
-  const [lite] = useState(() => typeof navigator !== 'undefined' && saveData());
+  const [lite] = useState(prefersSaveData);
   const showStill = (reduced || lite) && still;
 
   // Pause while off screen; resume if it was playing.
