@@ -1,4 +1,4 @@
-import { ImageSlot } from '../components/common/ImageSlot';
+import { ImageSlot, Picture } from '../components/common/ImageSlot';
 import { Botanical } from '../components/common/Botanical';
 import { ButtonLink } from '../components/common/Button';
 import { Ornament } from '../components/common/bits';
@@ -62,6 +62,14 @@ function Stage({ index }: { index: number }) {
   );
 }
 
+/** Real media for this page, when supplied. The illustrated plate (BOT-04) still wins for the stages. */
+const originPhoto = hasImage('STORY-02') && !hasImage('BOT-04');
+const foodDuo = (() => {
+  const tray = imageFiles('PLATE-01');
+  const glass = imageFiles('SLIDE-02');
+  return tray && glass ? { tray, glass } : null;
+})();
+
 export default function Story() {
   useDocumentTitle('Our Story');
   const [idea, food, room] = storyContent.chapters;
@@ -106,24 +114,63 @@ export default function Story() {
             </h2>
             <p className="section-lead">{cherryToCup.lead}</p>
           </Reveal>
-          <ol className="cherry__stages" role="list">
-            {cherryToCup.stages.map((s, i) => (
-              <li key={s.title} className="stage">
-                <Stage index={i} />
-                <h3 className="stage__title">{s.title}</h3>
-                <p className="stage__body">{s.body}</p>
-              </li>
-            ))}
-          </ol>
-          {!hasImage('BOT-04') && <p className="cherry__pending">Drawings shown are interim. The illustrated plate (BOT-04) will replace them.</p>}
+          {originPhoto ? (
+            // Real photo of beans and cherries beside the four stages as a timeline.
+            <div className="cherry__photo-layout">
+              <Reveal kind="unveil" className="cherry__photo">
+                <ImageSlot id="STORY-02" sizes="(min-width: 52rem) 50vw, 92vw" />
+              </Reveal>
+              <Reveal kind="fade" className="timeline-reveal">
+              <ol className="cherry__timeline" role="list">
+                {cherryToCup.stages.map((s, i) => (
+                  <li key={s.title} className="timeline-step" style={{ '--i': i } as React.CSSProperties}>
+                    <span className="timeline-step__num" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="stage__title">{s.title}</h3>
+                      <p className="stage__body">{s.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              </Reveal>
+            </div>
+          ) : (
+            <>
+              <ol className="cherry__stages" role="list">
+                {cherryToCup.stages.map((s, i) => (
+                  <li key={s.title} className="stage">
+                    <Stage index={i} />
+                    <h3 className="stage__title">{s.title}</h3>
+                    <p className="stage__body">{s.body}</p>
+                  </li>
+                ))}
+              </ol>
+              {!hasImage('BOT-04') && <p className="cherry__pending">Drawings shown are interim. The illustrated plate (BOT-04) will replace them.</p>}
+            </>
+          )}
         </div>
       </section>
 
       <section className="story-split surface-walnut grain on-dark" aria-labelledby="ch-food">
         <div className="container story-split__grid">
-          <Reveal kind="unveil" className="story-split__media">
-            <ImageSlot id="STORY-02" sizes="(min-width: 64rem) 50vw, 90vw" />
-          </Reveal>
+          {foodDuo ? (
+            // Real product shots: a momo tray with an iced mocha alongside.
+            <Reveal kind="rise" className="story-duo">
+              <div className="story-duo__glow" aria-hidden="true" />
+              <div className="story-duo__tray">
+                <Picture image={foodDuo.tray} sizes="(min-width: 64rem) 34vw, 72vw" alt={foodDuo.tray.alt} />
+              </div>
+              <div className="story-duo__glass">
+                <Picture image={foodDuo.glass} sizes="(min-width: 64rem) 14vw, 30vw" alt={foodDuo.glass.alt} />
+              </div>
+            </Reveal>
+          ) : (
+            <Reveal kind="unveil" className="story-split__media">
+              <ImageSlot id="STORY-02" sizes="(min-width: 64rem) 50vw, 90vw" />
+            </Reveal>
+          )}
           <div className="story-split__text">
             <h2 id="ch-food" className="section-title">
               {food.heading}

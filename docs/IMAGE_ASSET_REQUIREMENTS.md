@@ -587,7 +587,7 @@ automatically.
 
 ---
 
-## Supplied assets (status as of 24 Nov 2026)
+## Supplied assets (status as of 24 Nov 2026, second batch included)
 
 | Slot | File in `assets-src/images/` | Used for | Notes |
 |---|---|---|---|
@@ -596,6 +596,11 @@ automatically.
 | PLATE-01 | `food/plate-momo.webp` | Kitchen section, Momo menu header | |
 | PLATE-02 | `food/plate-pizza.png` | Kitchen section, Pizza menu header | **Low resolution (612 × 408 upload).** Please re-export at 1536 px wide like the others. |
 | PLATE-03 | `food/plate-burger.webp` | Kitchen section, Burger menu header | Shows fries and a dip: labelled "sides may not be included" |
+| PLATE-04 | `food/plate-fried-special.webp` | Kitchen section, Fried Special menu header | Nuggets, strips and wings |
+| PLATE-08 *(new)* | `food/plate-wraps.webp` | Kitchen section, Wraps menu header, Chicken Wrap photo | |
+| PLATE-09 *(new)* | `food/plate-noodles.webp` | Kitchen section, Noodles menu header, Veggie Maggi Noodles photo | |
+| STORY-01 | `story/story-slow-moment.webp` (latte beside a book, 3:2) | Our Story header; stands in for the café table photo (ATM-02) on the homepage and Reservations until a real one is supplied | |
+| STORY-02 | `story/story-coffee-beans.webp` | Our Story "Before the cup": photo beside the four-stage timeline (replaces the drawings) | |
 | PLATE-05 | `food/plate-fries.webp` | Kitchen section, French Fries menu header, Peri-Peri French Fry photo | |
 | PLATE-06 | `food/plate-desserts.webp` | Kitchen section, Desserts menu header, Walnut Brownie photo | Black background removed |
 | PLATE-07 *(new)* | `food/plate-bread-chaat.webp` | Kitchen section, Bread & Chaat menu header, Cheese Garlic Bread photo | |
@@ -608,7 +613,8 @@ Transparent PNG **or WebP** files are both accepted; margins are trimmed automat
 
 **Still to supply, to complete the realistic look:**
 
+- **Real café photos** (must not be AI): storefront (ATM-03), a table (ATM-02, replaces the latte stand-in), interior (ATM-01), counter (ATM-04), and 6–9 gallery photos (GAL-01…09).
+- **Iced-latte video** for Our Story (in progress): replaces the drawn "Five moments in a glass" frames; it will play as you scroll.
 - `slider/slide-hot-coffee` (SLIDE-01): adds a "Hot coffee" slide (hidden until supplied).
-- `food/plate-fried-special` (PLATE-04): adds Fried Special to the kitchen section and its menu header.
-- Wraps and Noodles: `menu/categories/wraps.jpg`, `menu/categories/noodles.jpg` (or top-down tray cut-outs). Until then those menu sections are text only.
-- The iced-latte frames IL-01 to IL-05 (Our Story page) and the café photos (ATM, GAL) as listed above.
+- `food/plate-pizza`: please re-export at 1536 px wide (current upload is 612 × 408).
+- Reading Corner still life (READ-01) and the logo (BRAND-01), if available.

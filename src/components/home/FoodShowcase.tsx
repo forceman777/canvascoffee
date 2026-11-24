@@ -25,6 +25,8 @@ const allEntries: Entry[] = [
   { key: 'momo', categoryId: 'momo', imageId: 'PLATE-01', dish: 'momo', line: 'Steamed, fried or pan fried.' },
   { key: 'pizza', categoryId: 'pizza', imageId: 'PLATE-02', dish: 'pizza', line: 'From a pocket pizza to a chicken farmhouse.' },
   { key: 'burger', categoryId: 'burger', imageId: 'PLATE-03', dish: 'burger', line: 'Single or double patty, with a cheese slice if you like.' },
+  { key: 'wraps', categoryId: 'wraps', imageId: 'PLATE-08', line: 'Veggie or chicken, wrapped up.' },
+  { key: 'noodles', categoryId: 'noodles', imageId: 'PLATE-09', line: 'Veggie or chicken Maggi noodles.' },
   { key: 'bread', categoryId: 'bread-chaat', imageId: 'PLATE-07', line: 'Cheese garlic bread and corn masala chaat.' },
   { key: 'fried', categoryId: 'fried-special', imageId: 'PLATE-04', dish: 'fried', line: 'Nuggets, strips, wings and a Kolkata style vetki fry.' },
   { key: 'fries', categoryId: 'french-fries', imageId: 'PLATE-05', dish: 'fries', line: 'Salted, peri-peri, or loaded with chicken.' },

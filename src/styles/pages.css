@@ -1526,3 +1526,145 @@
 .menu-teaser:hover .image-slot img {
   transform: scale(1.05) translateY(-4px);
 }
+
+/* ---------- Our Story: real photos ---------- */
+.story-hero__media {
+  width: min(100%, 36rem);
+}
+.story-hero__media .image-slot,
+.cherry__photo .image-slot {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-2);
+}
+.cherry__photo-layout {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+@media (min-width: 52rem) {
+  .cherry__photo-layout {
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--space-8);
+  }
+}
+.cherry__timeline {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+}
+.cherry__timeline::before {
+  /* the thread linking the four stages */
+  content: '';
+  position: absolute;
+  left: 1.15rem;
+  top: 1.2rem;
+  bottom: 1.2rem;
+  width: 1px;
+  background: linear-gradient(var(--brass), rgb(176 138 75 / 0.25));
+}
+.timeline-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.3rem 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.timeline-step__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--brass);
+  background: var(--parchment);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  color: var(--brass-deep);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .timeline-reveal .timeline-step {
+    transition:
+      opacity 900ms var(--ease-expo),
+      transform 1000ms var(--ease-expo);
+    transition-delay: calc(var(--i) * 120ms);
+  }
+  .timeline-reveal:not(.is-visible) .timeline-step {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+
+/* Coffee and comfort food: a real tray with a glass alongside */
+.story-duo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+}
+.story-duo__glow {
+  position: absolute;
+  inset: 6% 4%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(210 180 124 / 0.24), rgb(210 180 124 / 0));
+}
+.story-duo__tray {
+  position: absolute;
+  left: 0;
+  bottom: 5%;
+  width: 80%;
+  filter: drop-shadow(0 24px 26px rgb(0 0 0 / 0.45));
+}
+.story-duo__tray img {
+  width: 100%;
+  height: auto;
+}
+.story-duo__glass {
+  position: absolute;
+  right: 3%;
+  bottom: 0;
+  height: 88%;
+  filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.45));
+}
+.story-duo__glass picture,
+.story-duo__glass img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .story-duo .story-duo__tray,
+  .story-duo .story-duo__glass {
+    transition:
+      transform 1300ms var(--ease-expo),
+      opacity 900ms var(--ease-expo);
+  }
+  .story-duo .story-duo__glass {
+    transition-delay: 180ms;
+  }
+  .story-duo:not(.is-visible) .story-duo__tray {
+    opacity: 0;
+    transform: translateX(-30px) rotate(-2deg);
+  }
+  .story-duo:not(.is-visible) .story-duo__glass {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+
+/* Homepage reservation invitation: room for a landscape photo */
+.home-reserve__media {
+  width: min(100%, 30rem);
+}
+.home-reserve__media .image-slot {
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-3);
+}
+@media (max-width: 52rem) {
+  /* the drawn sprig would cross the intro text on narrow screens */
+  .story-hero__sprig {
+    display: none;
+  }
+}

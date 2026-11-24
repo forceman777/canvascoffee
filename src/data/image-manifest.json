@@ -35,6 +35,18 @@
     "fallback": "food/plate-desserts-1522.png",
     "alpha": true
   },
+  "food/plate-fried-special": {
+    "width": 1493,
+    "height": 1007,
+    "widths": [
+      320,
+      640,
+      1024,
+      1493
+    ],
+    "fallback": "food/plate-fried-special-1493.png",
+    "alpha": true
+  },
   "food/plate-fries": {
     "width": 1582,
     "height": 1070,
@@ -59,6 +71,17 @@
     "fallback": "food/plate-momo-1570.png",
     "alpha": true
   },
+  "food/plate-noodles": {
+    "width": 1022,
+    "height": 1046,
+    "widths": [
+      320,
+      640,
+      1022
+    ],
+    "fallback": "food/plate-noodles-1022.png",
+    "alpha": true
+  },
   "food/plate-pizza": {
     "width": 441,
     "height": 414,
@@ -67,6 +90,18 @@
       441
     ],
     "fallback": "food/plate-pizza-441.png",
+    "alpha": true
+  },
+  "food/plate-wraps": {
+    "width": 1553,
+    "height": 1070,
+    "widths": [
+      320,
+      640,
+      1024,
+      1553
+    ],
+    "fallback": "food/plate-wraps-1553.png",
     "alpha": true
   },
   "hero/hero-pour-poster": {
@@ -150,5 +185,27 @@
     ],
     "fallback": "slider/slide-tea-699.png",
     "alpha": true
+  },
+  "story/story-coffee-beans": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "story/story-coffee-beans-1536.jpg"
+  },
+  "story/story-slow-moment": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "story/story-slow-moment-1536.jpg"
   }
 }

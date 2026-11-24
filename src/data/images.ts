@@ -65,13 +65,15 @@ export const images = {
   'PLATE-01': cutout('food/plate-momo', [3, 2], 'Momo tray (top view)', 'Illustrative image: six steamed momos in a paper tray with a red chutney'),
   'PLATE-02': cutout('food/plate-pizza', [1, 1], 'Pizza box (top view)', 'Illustrative image: a sliced vegetable pizza in an open box'),
   'PLATE-03': cutout('food/plate-burger', [3, 2], 'Burger tray (top view)', 'Illustrative image: a double patty burger with fries and a dip in a paper tray'),
-  'PLATE-04': cutout('food/plate-fried-special', [3, 2], 'Fried special tray (top view)', 'Illustrative image: fried nuggets and strips in a paper tray'),
+  'PLATE-04': cutout('food/plate-fried-special', [3, 2], 'Fried special tray (top view)', 'Illustrative image: chicken nuggets, strips and wings in a paper tray'),
   'PLATE-05': cutout('food/plate-fries', [3, 2], 'Fries tray (top view)', 'Illustrative image: seasoned french fries with a dip in a paper tray'),
   'PLATE-06': cutout('food/plate-desserts', [3, 2], 'Brownie tray (top view)', 'Illustrative image: a walnut brownie with chocolate drizzle in a paper tray'),
   'PLATE-07': cutout('food/plate-bread-chaat', [3, 2], 'Garlic bread tray (top view)', 'Illustrative image: cheese garlic bread with fries and a dip in a paper tray'),
+  'PLATE-08': cutout('food/plate-wraps', [3, 2], 'Wrap tray (top view)', 'Illustrative image: a grilled chicken wrap cut in half in a paper tray'),
+  'PLATE-09': cutout('food/plate-noodles', [1, 1], 'Noodle bowl (top view)', 'Illustrative image: instant-style noodles with vegetables in a paper bowl'),
 
-  'STORY-01': img('story/story-slow-moment', 'jpg', [4, 5], 'light', 'Coffee beside an open book', 'A cup of coffee beside an open book in morning sunlight'),
-  'STORY-02': img('story/story-coffee-beans', 'jpg', [3, 2], 'dark', 'Roasted beans and coffee cherries', 'Roasted coffee beans with fresh red coffee cherries'),
+  'STORY-01': img('story/story-slow-moment', 'jpg', [3, 2], 'light', 'Coffee beside an open book', 'A cup of milky coffee beside an open book on a wooden table in warm sunlight'),
+  'STORY-02': img('story/story-coffee-beans', 'jpg', [3, 2], 'dark', 'Roasted beans and coffee cherries', 'Roasted coffee beans beside ripe red coffee cherries and glossy coffee leaves'),
 
   'MENU-01': menuImg('menu/categories/tea', 'Tea', 'Illustrative image: a cup of spiced tea and a glass of iced tea', ['SLIDE-03']),
   'MENU-02': menuImg('menu/categories/coffee', 'Coffee', 'Illustrative image: a cup of black coffee and a glass of cold coffee', ['SLIDE-02', 'SLIDE-01']),
@@ -79,15 +81,15 @@ export const images = {
   'MENU-04': menuImg('menu/categories/bread-chaat', 'Bread & Chaat', 'Illustrative image: cheese garlic bread and corn chaat', ['PLATE-07']),
   'MENU-05': menuImg('menu/categories/burger', 'Burger', 'Illustrative image: a burger on a wooden board', ['PLATE-03']),
   'MENU-06': menuImg('menu/categories/pizza', 'Pizza', 'Illustrative image: a pizza with melted cheese and corn', ['PLATE-02']),
-  'MENU-07': img('menu/categories/wraps', 'jpg', [4, 3], 'dark', 'Wraps', 'Illustrative image: a wrap cut in half'),
-  'MENU-08': img('menu/categories/noodles', 'jpg', [4, 3], 'dark', 'Noodles', 'Illustrative image: a bowl of noodles with vegetables'),
+  'MENU-07': menuImg('menu/categories/wraps', 'Wraps', 'Illustrative image: a wrap cut in half', ['PLATE-08']),
+  'MENU-08': menuImg('menu/categories/noodles', 'Noodles', 'Illustrative image: a bowl of noodles with vegetables', ['PLATE-09']),
   'MENU-09': menuImg('menu/categories/french-fries', 'French Fries', 'Illustrative image: golden fries in a basket', ['PLATE-05']),
   'MENU-10': menuImg('menu/categories/fried-special', 'Fried Special', 'Illustrative image: assorted fried nuggets and strips', ['PLATE-04']),
   'MENU-11': menuImg('menu/categories/desserts', 'Desserts', 'Illustrative image: a slice of chocolate cake and a muffin', ['PLATE-06']),
   'MENU-12': menuImg('menu/categories/mocktails', 'Mocktails', 'Illustrative image: a mint mojito and a masala cola', ['SLIDE-04', 'SLIDE-05']),
 
   'ATM-01': img('cafe/interior-wide', 'jpg', [3, 2], 'dark', 'Café interior, wide (real photo)', 'The seating area inside Canvas O Coffee'),
-  'ATM-02': img('cafe/interior-table', 'jpg', [4, 5], 'dark', 'A table at the café (real photo)', 'A table set inside Canvas O Coffee'),
+  'ATM-02': { ...img('cafe/interior-table', 'jpg', [4, 5], 'dark', 'A table at the café (real photo)', 'A table set inside Canvas O Coffee'), fallbackTo: ['STORY-01'] },
   'ATM-03': img('cafe/storefront', 'jpg', [3, 2], 'dark', 'Storefront (real photo)', 'The front of Canvas O Coffee'),
   'ATM-04': img('cafe/counter', 'jpg', [4, 5], 'dark', 'Counter (real photo)', 'The counter at Canvas O Coffee'),
 
@@ -124,6 +126,8 @@ export interface ResolvedImage extends ManifestEntry {
   alt: string;
   decorative: boolean;
   cutout: boolean;
+  /** Crop ratio of the asset actually shown (a fallback keeps its own proportions). */
+  ratio: [number, number];
 }
 
 const generated = manifest as Record<string, ManifestEntry>;
@@ -133,7 +137,7 @@ function resolve(id: ImageId, seen = new Set<string>()): ResolvedImage | null {
   seen.add(id);
   const spec: ImageSpec = images[id];
   const entry = generated[spec.file];
-  if (entry) return { ...entry, key: spec.file, alt: spec.alt, decorative: Boolean(spec.decorative), cutout: Boolean(spec.cutout) };
+  if (entry) return { ...entry, key: spec.file, alt: spec.alt, decorative: Boolean(spec.decorative), cutout: Boolean(spec.cutout), ratio: spec.ratio };
   for (const next of spec.fallbackTo ?? []) {
     const found = resolve(next as ImageId, seen);
     if (found) return found;
@@ -158,11 +162,13 @@ const itemPhotoFallbacks: Record<string, ImageId> = {
   'cheese-garlic-bread': 'PLATE-07',
   'walnut-brownie': 'PLATE-06',
   'peri-peri-french-fry': 'PLATE-05',
+  'chicken-wrap': 'PLATE-08',
+  'veggie-maggi-noodles': 'PLATE-09',
 };
 export function itemPhoto(productId: string): ResolvedImage | null {
   const key = `menu/items/${productId}`;
   const own = generated[key];
-  if (own) return { ...own, key, alt: '', decorative: false, cutout: Boolean(own.alpha) };
+  if (own) return { ...own, key, alt: '', decorative: false, cutout: Boolean(own.alpha), ratio: [own.width, own.height] };
   const fallback = itemPhotoFallbacks[productId];
   return fallback ? imageFiles(fallback) : null;
 }

@@ -82,7 +82,7 @@ export function ImageSlot({ id, sizes = '100vw', priority, fit, position, classN
   const [failed, setFailed] = useState(false);
 
   if (image && !failed) {
-    const [rw, rh] = ratio ?? (image.cutout ? [image.width, image.height] : spec.ratio);
+    const [rw, rh] = ratio ?? (image.cutout ? [image.width, image.height] : image.ratio);
     const style = bare ? undefined : { aspectRatio: `${rw} / ${rh}` };
     const classes = ['image-slot', bare && 'image-slot--bare', image.cutout && 'image-slot--cutout', loaded && 'is-loaded', className].filter(Boolean).join(' ');
     return (

@@ -83,7 +83,7 @@ export default function Home() {
               {homeContent.reserveTitle}
             </h2>
             <p className="prose-serif">{homeContent.reserveBody}</p>
-            <div className="hero__actions">
+            <div className="button-row">
               <ButtonLink to="/reservations" variant="brass" onDark>
                 Request a table
               </ButtonLink>

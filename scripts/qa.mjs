@@ -249,7 +249,7 @@ async function scenarioUnconfigured(base, browser) {
 
   await page.locator('.kitchen').scrollIntoViewIfNeeded();
   check('Kitchen shows Momo first with 4 dishes', (await page.locator('.kitchen__name').innerText()) === 'Momo' && (await page.locator('.kitchen__items li').count()) === 4);
-  check('Kitchen shows real tray photos (6 dishes with photos)', (await page.locator('.kitchen__thumb img').count()) === 6 && (await page.locator('.kitchen__tray img').count()) === 1);
+  check('Kitchen shows real tray photos (9 dishes with photos)', (await page.locator('.kitchen__thumb img').count()) === 9 && (await page.locator('.kitchen__tray img').count()) === 1);
   await page.getByRole('tab', { name: 'Pizza' }).click();
   check('Kitchen tab switches to Pizza', (await page.locator('.kitchen__name').innerText()) === 'Pizza');
   await page.getByRole('button', { name: 'Choose options for Veg Pizza' }).click();
@@ -263,11 +263,17 @@ async function scenarioUnconfigured(base, browser) {
   // Menu photos
   await page.goto(`${base}/menu`);
   await page.locator('.menu-item').first().waitFor();
-  check('Menu shows photos for categories that have them, none for Wraps/Noodles', (await page.locator('#momo .menu-category__media img').count()) === 1 && (await page.locator('#wraps .menu-category__media').count()) === 0);
-  check('Menu items with an exact photo get a thumbnail (7)', (await page.locator('.menu-item__thumb').count()) === 7);
+  check('Every one of the 12 menu categories shows a photo', (await page.locator('.menu-category__media img').count()) === 12);
+  check('Menu items with an exact photo get a thumbnail (9)', (await page.locator('.menu-item__thumb').count()) === 9);
   await page.getByRole('button', { name: 'View photo of Iced Mocha' }).click();
   check('Thumbnail opens the item with its photo and price', (await page.locator('dialog[open] .product-dialog__photo img').count()) === 1 && (await page.locator('dialog[open] button[type=submit]').innerText()).includes('₹60'));
   await page.keyboard.press('Escape');
+
+  // Our Story uses the real photos
+  await page.goto(`${base}/story`);
+  await page.locator('.cherry__timeline').waitFor({ timeout: 5000 }).catch(() => {});
+  check('Our Story: beans photo with a 4-step timeline (no drawings)', (await page.locator('.cherry__photo img').count()) === 1 && (await page.locator('.timeline-step').count()) === 4 && (await page.locator('.cherry__stages').count()) === 0);
+  check('Our Story: real tray and glass composition', (await page.locator('.story-duo img').count()) === 2);
 
   // 404
   await page.goto(`${base}/does-not-exist`);
