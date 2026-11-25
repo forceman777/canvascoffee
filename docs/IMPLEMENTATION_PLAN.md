@@ -89,7 +89,7 @@ Last updated: 2026-11-23
 |---|---|
 | Official WhatsApp number | `VITE_WHATSAPP_NUMBER` |
 | Supabase project (optional) | `docs/DEPLOYMENT.md` §3 |
-| Address, phone, email, hours, map link, socials, delivery area | `src/config/site.ts` |
+| ~~Address, phone, map link~~ (done, from the Google Maps listing). Still open: opening hours for each day, email, Instagram link, delivery area | `src/config/site.ts` |
 | Logo (if one exists) | `assets-src/images/brand/logo.svg` or `logo.png`: replaces the wordmark automatically |
 | Images | `docs/IMAGE_ASSET_REQUIREMENTS.md` |
 | Confirm "Leaker Tea" spelling and the diet of unmarked items | `src/data/menu.ts` |

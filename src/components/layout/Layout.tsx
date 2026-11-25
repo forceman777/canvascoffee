@@ -5,9 +5,22 @@ import { Footer } from './Footer';
 import { useCart } from '../../state/CartContext';
 import { formatINR } from '../../utils/pricing';
 import { hasImage, imageFiles, publicPath } from '../../data/images';
+import { site } from '../../config/site';
 
 /** Exposes the parchment texture (TEX-01) to CSS once it is supplied. */
 const texture = hasImage('TEX-01') ? `url("${publicPath(imageFiles('TEX-01')!.fallback)}")` : undefined;
+
+/** Business details for search engines (Google, Maps), built only from confirmed facts. */
+const businessData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'CafeOrCoffeeShop',
+  name: site.name,
+  ...(site.contact.address ? { address: { '@type': 'PostalAddress', streetAddress: 'College Road, Deuli', addressLocality: 'Belda', addressRegion: 'West Bengal', postalCode: '721424', addressCountry: 'IN' } } : {}),
+  ...(site.contact.geo ? { geo: { '@type': 'GeoCoordinates', latitude: site.contact.geo.lat, longitude: site.contact.geo.lng } } : {}),
+  ...(site.contact.phone ? { telephone: site.contact.phone.replace(/\s/g, '') } : {}),
+  ...(site.contact.mapUrl ? { hasMap: site.contact.mapUrl } : {}),
+  servesCuisine: ['Coffee', 'Tea', 'Momo', 'Pizza', 'Burgers'],
+});
 
 function CartBar() {
   const { totals } = useCart();
@@ -42,6 +55,7 @@ export function Layout() {
       <Footer />
       <CartBar />
       <ScrollRestoration />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: businessData }} />
     </div>
   );
 }

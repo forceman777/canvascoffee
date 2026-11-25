@@ -22,17 +22,22 @@ export const site = {
 
   contact: {
     /** Full street address, e.g. "12 Station Road, Belda, Paschim Medinipur 721424". */
-    address: null as string | null,
+    address: 'College Road, Belda, Deuli, West Bengal 721424' as string | null,
     /** Display phone, e.g. "+91 98XXX XXXXX". */
-    phone: null as string | null,
+    phone: '+91 93327 40085' as string | null,
     email: null as string | null,
     /** Google Maps share link for the café. */
-    mapUrl: null as string | null,
+    mapUrl: 'https://www.google.com/maps/place/Canvas+O+Coffee/@22.0754402,87.3344918,17z/data=!4m6!3m5!1s0x3a1d3b0041f3aa2d:0x37aa33c9807cef3!8m2!3d22.0754402!4d87.3344918' as string | null,
+    /** Map pin (from the Google Maps listing), used for the embedded map and search engines. */
+    geo: { lat: 22.0754402, lng: 87.3344918 } as { lat: number; lng: number } | null,
     instagramUrl: null as string | null,
     facebookUrl: null as string | null,
   },
 
-  /** Leave empty until the owner confirms. */
+  /**
+   * Leave empty until the owner confirms. Google Maps shows "closes 10 PM" for one day only;
+   * add each day's opening and closing time here, e.g. { days: 'Monday – Sunday', hours: '11:00 am – 10:00 pm' }.
+   */
   openingHours: [] as OpeningHours[],
 
   /** Official WhatsApp number, digits only with country code (e.g. 91XXXXXXXXXX). */

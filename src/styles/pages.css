@@ -1880,3 +1880,34 @@
   object-fit: cover;
   padding: 0;
 }
+
+/* ---------- Contact: embedded map ---------- */
+.contact-map {
+  padding-block: var(--space-8);
+}
+.contact-map__title {
+  font-size: var(--step-3);
+  margin-bottom: var(--space-5);
+}
+.contact-map__frame {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  min-height: 18rem;
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  background: var(--walnut-soft);
+  box-shadow: var(--shadow-2);
+}
+.contact-map__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: sepia(0.15) saturate(0.9);
+}
+@media (max-width: 40rem) {
+  .contact-map__frame {
+    aspect-ratio: 4 / 5;
+  }
+}

@@ -87,6 +87,24 @@ export default function Contact() {
           </div>
         </div>
       </section>
+      {site.contact.geo && (
+        <section className="contact-map surface-ink" aria-labelledby="map-title">
+          <div className="container">
+            <h2 id="map-title" className="contact-map__title">
+              On the map
+            </h2>
+            <div className="contact-map__frame">
+              <iframe
+                title={`Map showing ${site.name}, ${site.contact.address ?? site.locality}`}
+                src={`https://www.google.com/maps?q=${site.contact.geo.lat},${site.contact.geo.lng}&z=17&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+      )}
       <WhisperBox />
     </div>
   );
