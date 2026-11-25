@@ -58,6 +58,7 @@ export function requestReservation(f: ReservationForm) {
   return callRpc<SubmittedRequest>('request_reservation', {
     p_date: f.date,
     p_time: f.time,
+    p_time_until: f.until,
     p_party_size: Number(f.partySize),
     p_name: f.name.trim(),
     p_phone: normalisePhone(f.phone),

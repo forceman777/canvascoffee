@@ -68,7 +68,8 @@ create table if not exists public.reservations (
   id uuid primary key default gen_random_uuid(),
   reference text not null unique,
   reservation_date date not null,
-  reservation_time time not null,
+  reservation_time time not null,            -- approximate start ("from")
+  reservation_time_until time,                -- approximate end ("to")
   party_size integer not null check (party_size between 1 and 50),
   customer_name text not null check (char_length(customer_name) between 2 and 80),
   phone text not null check (phone ~ '^[0-9]{10}$'),
@@ -78,6 +79,7 @@ create table if not exists public.reservations (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table public.reservations add column if not exists reservation_time_until time;
 create index if not exists reservations_date_idx on public.reservations (reservation_date, reservation_time);
 
 -- ---------- Occasion enquiries ----------
@@ -269,6 +271,7 @@ $$;
 create or replace function public.request_reservation(
   p_date date,
   p_time time,
+  p_time_until time,
   p_party_size integer,
   p_name text,
   p_phone text,
@@ -288,6 +291,9 @@ begin
   end if;
   -- Opening hours: 5 pm to 10 pm (keep in sync with site.hours in src/config/site.ts).
   if p_time is null or p_time < time '17:00' or p_time >= time '22:00' or (p_date = v_now::date and p_time <= v_now::time) then
+    raise exception 'invalid_time';
+  end if;
+  if p_time_until is null or p_time_until <= p_time or p_time_until > time '22:00' then
     raise exception 'invalid_time';
   end if;
   if p_party_size is null or p_party_size < 1 or p_party_size > 10 then
@@ -310,8 +316,8 @@ begin
   end if;
 
   v_ref := public.new_reference('RS');
-  insert into public.reservations (reference, reservation_date, reservation_time, party_size, customer_name, phone, email, requests)
-  values (v_ref, p_date, p_time, p_party_size, btrim(p_name), p_phone, nullif(btrim(p_email), ''), nullif(btrim(p_requests), ''));
+  insert into public.reservations (reference, reservation_date, reservation_time, reservation_time_until, party_size, customer_name, phone, email, requests)
+  values (v_ref, p_date, p_time, p_time_until, p_party_size, btrim(p_name), p_phone, nullif(btrim(p_email), ''), nullif(btrim(p_requests), ''));
   return json_build_object('reference', v_ref, 'status', 'pending');
 end $$;
 
@@ -390,6 +396,6 @@ end $$;
 revoke execute on all functions in schema public from public, anon, authenticated;
 grant execute on function public.place_order(text, text, text, text, jsonb) to anon, authenticated;
 grant execute on function public.get_order_status(text, text) to anon, authenticated;
-grant execute on function public.request_reservation(date, time, integer, text, text, text, text) to anon, authenticated;
+grant execute on function public.request_reservation(date, time, time, integer, text, text, text, text) to anon, authenticated;
 grant execute on function public.send_occasion_enquiry(text, text, text, text, date, integer, text) to anon, authenticated;
 grant execute on function public.leave_message(text, text, text) to anon, authenticated;

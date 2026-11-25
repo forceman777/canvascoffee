@@ -45,11 +45,13 @@ begin
   begin perform public.place_order('Asha', '9000000009', '12 Station Road, Belda', null, '[{"product_id":"masala-tea","quantity":1}]'); raise exception 'FAIL rate limit'; exception when others then assert sqlerrm = 'rate_limited', sqlerrm; end;
 
   -- Reservations: request only; past dates and oversize parties rejected
-  r := public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', 4, 'Asha Roy', '9000000010', null, null);
+  r := public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', '21:00', 4, 'Asha Roy', '9000000010', null, null);
   assert r->>'status' = 'pending', 'reservation pending';
-  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date - 1), '19:30', 4, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL past date'; exception when others then assert sqlerrm = 'invalid_date', sqlerrm; end;
-  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '15:00', 2, 'Asha Roy', '9000000012', null, null); raise exception 'FAIL before opening'; exception when others then assert sqlerrm = 'invalid_time', sqlerrm; end;
-  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', 11, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL party 11'; exception when others then assert sqlerrm = 'invalid_party_size', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date - 1), '19:30', '21:00', 4, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL past date'; exception when others then assert sqlerrm = 'invalid_date', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:00', '18:30', 2, 'Asha Roy', '9000000013', null, null); raise exception 'FAIL end before start'; exception when others then assert sqlerrm = 'invalid_time', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '21:30', '23:00', 2, 'Asha Roy', '9000000014', null, null); raise exception 'FAIL after closing'; exception when others then assert sqlerrm = 'invalid_time', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '15:00', '16:00', 2, 'Asha Roy', '9000000012', null, null); raise exception 'FAIL before opening'; exception when others then assert sqlerrm = 'invalid_time', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', '21:00', 11, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL party 11'; exception when others then assert sqlerrm = 'invalid_party_size', sqlerrm; end;
 
   -- Enquiry and Whisper Box
   assert public.send_occasion_enquiry('Asha Roy', '9000000011', null, 'Birthday', null, 12, 'Cake?')->>'status' = 'pending', 'enquiry';

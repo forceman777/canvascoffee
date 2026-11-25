@@ -1911,3 +1911,40 @@
     aspect-ratio: 4 / 5;
   }
 }
+
+/* ---------- Reservation time range ---------- */
+.time-range {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.time-range legend {
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.time-range__row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: var(--space-3);
+}
+.time-range__to {
+  padding-bottom: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+.time-range .field__label {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+.time-range__hint {
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+}

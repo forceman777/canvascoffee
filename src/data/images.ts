@@ -38,9 +38,9 @@ const menuImg = (file: string, label: string, alt: string, fallbackTo: string[])
 export const images = {
   'BRAND-01': img('brand/logo', 'svg', [3, 1], 'light', 'Logo', 'Canvas O Coffee'),
 
-  'HERO-VID': img('hero/hero-pour', 'mp4', [16, 9], 'dark', 'Hero pour video', 'Iced coffee being poured over ice in a glass on a wooden bar counter'),
-  'HERO-POSTER': img('hero/hero-pour-poster', 'jpg', [16, 9], 'dark', 'Hero video first frame', 'A glass of ice on a wooden bar counter'),
-  'HERO-STILL': img('hero/hero-pour-still', 'jpg', [16, 9], 'dark', 'Hero video last frame', 'A glass of iced coffee on a wooden bar counter'),
+  'HERO-VID': img('hero/hero-pour', 'mp4', [47, 36], 'dark', 'Hero film', 'Coffee beans tumbling onto a wooden table, then coffee pouring into a white cup until the last drops fall into the crema'),
+  'HERO-POSTER': img('hero/hero-pour-poster', 'jpg', [47, 36], 'dark', 'Hero film first frame', 'Coffee beans falling onto a wooden table'),
+  'HERO-STILL': img('hero/hero-pour-still', 'jpg', [47, 36], 'dark', 'Hero film last frame', 'A white cup of black coffee with golden crema'),
 
   // Real footage from the café (owner's reel, edited for the web: flash removed, seamless loop, no audio).
   'CAFE-VID': img('cafe/cafe-walkthrough', 'mp4', [9, 16], 'dark', 'Café walkthrough video', 'A walk around Canvas O Coffee: painted masks, lantern lights, paintings and a village mural'),

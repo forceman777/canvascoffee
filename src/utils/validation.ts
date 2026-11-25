@@ -71,7 +71,8 @@ export function validateCheckout(f: CheckoutForm): Errors<CheckoutForm> {
 
 export interface ReservationForm {
   date: string; // YYYY-MM-DD
-  time: string; // HH:MM
+  time: string; // HH:MM, approximate arrival ("from")
+  until: string; // HH:MM, approximate end ("to")
   partySize: string;
   name: string;
   phone: string;
@@ -99,6 +100,14 @@ export function validateReservation(f: ReservationForm, now = new Date()): Error
     if (minutes <= now.getHours() * 60 + now.getMinutes()) time = 'That time has already passed today.';
   }
 
+  let until: string | undefined;
+  if (!time) {
+    if (!f.until) until = 'Choose roughly until when.';
+    else if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(f.until)) until = 'Choose a valid time.';
+    else if (f.until <= f.time) until = 'Choose a time after the start time.';
+    else if (site.hours && f.until > site.hours.close) until = `The café closes at ${formatTime(site.hours.close)}.`;
+  }
+
   const size = Number(f.partySize);
   let partySize: string | undefined;
   if (!f.partySize) partySize = 'Choose how many guests.';
@@ -109,6 +118,7 @@ export function validateReservation(f: ReservationForm, now = new Date()): Error
   return compact<ReservationForm>({
     date,
     time,
+    until,
     partySize,
     name: requireName(f.name),
     phone: requirePhone(f.phone),

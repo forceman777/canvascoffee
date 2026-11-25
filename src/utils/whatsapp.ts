@@ -56,7 +56,7 @@ export function reservationMessage(f: ReservationForm): string {
     `Hello ${site.name}, I would like to request a table.`,
     '',
     `Date: ${formatLongDate(f.date)}`,
-    `Time: ${formatTime(f.time)}`,
+    `Time: about ${formatTime(f.time)} to ${formatTime(f.until)}`,
     `Guests: ${f.partySize}`,
     `Name: ${f.name.trim()}`,
     `Phone: ${f.phone.trim()}`,

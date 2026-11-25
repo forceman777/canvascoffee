@@ -4,13 +4,19 @@ import { Button } from '../common/Button';
 import { Honeypot, SelectField, TextArea, TextField } from '../common/Field';
 import { ErrorNotice, InfoNotice, SetupNotice, DevHint } from '../common/bits';
 import { hasErrors, validateReservation, type Errors, type ReservationForm as Form } from '../../utils/validation';
-import { addDays, formatLongDate, formatTime, isoDate } from '../../utils/dates';
+import { addDays, addMinutes, formatLongDate, formatTime, isoDate, timeSlots } from '../../utils/dates';
 import { reservationMessage, whatsappConfigured, whatsappUrl } from '../../utils/whatsapp';
 import { backendConfigured, BackendError } from '../../services/backend';
 import { requestReservation } from '../../services/submissions';
 import { site } from '../../config/site';
 
-const empty: Form = { date: '', time: '', partySize: '2', name: '', phone: '', email: '', requests: '' };
+const empty: Form = { date: '', time: '', until: '', partySize: '2', name: '', phone: '', email: '', requests: '' };
+
+/** 30-minute choices within opening hours: starts up to 30 min before closing, ends up to closing. */
+const open = site.hours?.open ?? '08:00';
+const close = site.hours?.close ?? '23:00';
+const startSlots = timeSlots(open, addMinutes(close, -30));
+const endSlots = timeSlots(addMinutes(open, 30), close);
 
 type State =
   | { kind: 'form' }
@@ -35,6 +41,16 @@ export function ReservationForm() {
   const set = (k: keyof Form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
     if (errors[k]) setErrors((er) => ({ ...er, [k]: undefined }));
+  };
+
+  // Choosing a start time suggests an end time one hour later (the guest can change it).
+  const setFrom = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const from = e.target.value;
+    setForm((f) => {
+      const suggested = addMinutes(from, 60) > close ? close : addMinutes(from, 60);
+      return { ...f, time: from, until: !from ? '' : f.until && f.until > from ? f.until : suggested };
+    });
+    if (errors.time || errors.until) setErrors((er) => ({ ...er, time: undefined, until: undefined }));
   };
 
   const focusTop = () => requestAnimationFrame(() => topRef.current?.focus());
@@ -73,7 +89,7 @@ export function ReservationForm() {
   const summary = (
     <dl className="booking-summary">
       <div><dt>Date</dt><dd>{form.date && formatLongDate(form.date)}</dd></div>
-      <div><dt>Time</dt><dd>{form.time && formatTime(form.time)}</dd></div>
+      <div><dt>Time</dt><dd>{form.time && form.until && `About ${formatTime(form.time)} to ${formatTime(form.until)}`}</dd></div>
       <div><dt>Guests</dt><dd>{form.partySize}</dd></div>
       <div><dt>Name</dt><dd>{form.name}</dd></div>
       <div><dt>Phone</dt><dd>{form.phone}</dd></div>
@@ -151,9 +167,8 @@ export function ReservationForm() {
           <p>You can fill this in, but it cannot be sent from the website at the moment.{site.contact.phone ? ` Call ${site.contact.phone} to ask about a table.` : ''}</p>
         </SetupNotice>
       )}
-      <div className="booking-form__row">
+      <div className="booking-form__row booking-form__row--2">
         <TextField id="res-date" label="Date" type="date" min={today} max={lastDay} value={form.date} onChange={set('date')} error={errors.date} />
-        <TextField id="res-time" label="Time" type="time" step={900} min={site.hours?.open} max={site.hours?.close} value={form.time} onChange={set('time')} error={errors.time} hint={site.hours ? `Open ${formatTime(site.hours.open)} – ${formatTime(site.hours.close)}` : undefined} />
         <SelectField id="res-partySize" label="Guests" value={form.partySize} onChange={set('partySize')} error={errors.partySize}>
           {Array.from({ length: site.reservations.maxPartySize }, (_, i) => (
             <option key={i + 1} value={i + 1}>
@@ -162,6 +177,39 @@ export function ReservationForm() {
           ))}
         </SelectField>
       </div>
+      <fieldset className="time-range">
+        <legend>
+          Time <span className="field__optional">(approximately)</span>
+        </legend>
+        <div className="time-range__row">
+          <SelectField id="res-time" label="From" value={form.time} onChange={setFrom} error={errors.time}>
+            <option value="">Choose…</option>
+            {startSlots.map((t) => (
+              <option key={t} value={t}>
+                {formatTime(t)}
+              </option>
+            ))}
+          </SelectField>
+          <span className="time-range__to" aria-hidden="true">
+            to
+          </span>
+          <SelectField id="res-until" label="To" value={form.until} onChange={set('until')} error={errors.until}>
+            <option value="">Choose…</option>
+            {endSlots
+              .filter((t) => !form.time || t > form.time)
+              .map((t) => (
+                <option key={t} value={t}>
+                  {formatTime(t)}
+                </option>
+              ))}
+          </SelectField>
+        </div>
+        {site.hours && (
+          <p className="time-range__hint">
+            Open {formatTime(site.hours.open)} to {formatTime(site.hours.close)}. Give a rough window; the café confirms the exact time.
+          </p>
+        )}
+      </fieldset>
       {!site.hours && (
         <p className="booking-form__hint">Opening hours will be shown here once confirmed. The café will tell you if your chosen time is not available.</p>
       )}

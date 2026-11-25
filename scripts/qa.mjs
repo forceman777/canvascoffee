@@ -165,12 +165,16 @@ async function scenarioUnconfigured(base, browser) {
   const tomorrow = new Date(Date.now() + 86400000);
   const iso = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
   await page.locator('#res-date').fill(iso);
-  await page.locator('#res-time').fill('19:30');
+  await page.locator('#res-time').selectOption('19:30');
+  check('Reservation: choosing a start suggests an end one hour later', (await page.locator('#res-until').inputValue()) === '20:30');
+  check('Reservation: start times only within opening hours (5:00 pm to 9:30 pm)', JSON.stringify(await page.locator('#res-time option').evaluateAll((o) => o.map((x) => x.value).filter(Boolean)).then((v) => [v[0], v[v.length - 1], v.length])) === JSON.stringify(['17:00', '21:30', 10]));
+  check('Reservation: end times start after the chosen start and stop at closing', JSON.stringify(await page.locator('#res-until option').evaluateAll((o) => o.map((x) => x.value).filter(Boolean)).then((v) => [v[0], v[v.length - 1]])) === JSON.stringify(['20:00', '22:00']));
   await page.locator('#res-partySize').selectOption('4');
   await page.locator('#res-name').fill('Test Guest');
   await page.locator('#res-phone').fill('9876543210');
   await page.getByRole('button', { name: 'Review request' }).click();
   check('Valid reservation reaches review', await page.getByRole('heading', { name: 'Check your request' }).isVisible());
+  check('Review shows the approximate time window', await page.getByText('About 7:30 pm to 8:30 pm').isVisible());
   check('Unconfigured: reservation send disabled with notice', (await page.getByText('Table requests are not connected yet').isVisible()) && (await page.getByRole('button', { name: 'Send table request' }).isDisabled()));
 
   // Occasion enquiry validation
@@ -398,7 +402,7 @@ async function scenarioBackend(base, browser) {
   await page.goto(`${base}/reservations`);
   const t = new Date(Date.now() + 2 * 86400000);
   await page.locator('#res-date').fill(`${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`);
-  await page.locator('#res-time').fill('19:00');
+  await page.locator('#res-time').selectOption('19:00');
   await page.locator('#res-name').fill('Test Guest');
   await page.locator('#res-phone').fill('9876543210');
   await page.getByRole('button', { name: 'Review request' }).click();

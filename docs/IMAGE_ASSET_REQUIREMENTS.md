@@ -642,3 +642,11 @@ Transparent PNG **or WebP** files are both accepted; margins are trimmed automat
 **Storefront (ATM-03): not available.** The Contact page permanently shows the real wall-art photo (ATM-06); supplying `cafe/storefront.jpg` later would replace it automatically.
 
 Nothing else is required. Optional later: more real gallery photos (`gallery/gallery-05.jpg` to `gallery-09.jpg`), a wide interior photo (`cafe/interior-wide.jpg`), and the logo.
+
+### Update (25 Nov 2026): new hero film
+
+`hero/hero-pour.mp4` / `.webm` now hold an edit of the two owner-supplied videos: coffee beans tumbling onto wood,
+then coffee pouring from a glass carafe and into a white cup, ending on the last drops falling into the crema
+(11.5 s, plays once and rests on the cup). The corner marks ("AI Generated", "Pavo") are cropped out, and the closing
+shot of a coffee bag printed with another brand name was cut. The original iced-coffee video's frames remain in use
+on Our Story (`signature/iced-coffee/`).

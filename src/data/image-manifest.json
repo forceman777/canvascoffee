@@ -222,26 +222,24 @@
     "fallback": "gallery/gallery-04-720.jpg"
   },
   "hero/hero-pour-poster": {
-    "width": 1280,
+    "width": 940,
     "height": 720,
     "widths": [
       320,
       640,
-      1024,
-      1280
+      940
     ],
-    "fallback": "hero/hero-pour-poster-1280.jpg"
+    "fallback": "hero/hero-pour-poster-940.jpg"
   },
   "hero/hero-pour-still": {
-    "width": 1280,
+    "width": 940,
     "height": 720,
     "widths": [
       320,
       640,
-      1024,
-      1280
+      940
     ],
-    "fallback": "hero/hero-pour-still-1280.jpg"
+    "fallback": "hero/hero-pour-still-940.jpg"
   },
   "hero/hero-pour": {
     "width": 0,

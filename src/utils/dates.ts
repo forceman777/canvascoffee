@@ -30,3 +30,20 @@ export function formatTime(hhmm: string): string {
   const h12 = h % 12 === 0 ? 12 : h % 12;
   return `${h12}:${String(m).padStart(2, '0')} ${suffix}`;
 }
+
+/** "HH:MM" plus a number of minutes, clamped to the same day. */
+export function addMinutes(hhmm: string, minutes: number): string {
+  const [h, m] = hhmm.split(':').map(Number);
+  const total = Math.min(Math.max(h * 60 + m + minutes, 0), 23 * 60 + 59);
+  return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
+}
+
+/** Times from `from` to `to` inclusive, every `step` minutes, as "HH:MM". */
+export function timeSlots(from: string, to: string, step = 30): string[] {
+  const out: string[] = [];
+  for (let t = from; t <= to; t = addMinutes(t, step)) {
+    out.push(t);
+    if (t === '23:59') break;
+  }
+  return out;
+}
