@@ -286,7 +286,8 @@ begin
   if p_date is null or p_date < v_now::date or p_date > v_now::date + 60 then
     raise exception 'invalid_date';
   end if;
-  if p_time is null or (p_date = v_now::date and p_time <= v_now::time) then
+  -- Opening hours: 5 pm to 10 pm (keep in sync with site.hours in src/config/site.ts).
+  if p_time is null or p_time < time '17:00' or p_time >= time '22:00' or (p_date = v_now::date and p_time <= v_now::time) then
     raise exception 'invalid_time';
   end if;
   if p_party_size is null or p_party_size < 1 or p_party_size > 10 then

@@ -35,13 +35,17 @@ export const site = {
   },
 
   /**
-   * Leave empty until the owner confirms. Google Maps shows "closes 10 PM" for one day only;
-   * add each day's opening and closing time here, e.g. { days: 'Monday – Sunday', hours: '11:00 am – 10:00 pm' }.
+   * Confirmed by the owner: opens 5 pm; Google Maps listing: closes 10 pm. Days closed (if any) are not
+   * known, so no day range is shown. Example with days: { days: 'Tuesday – Sunday', hours: '5:00 pm – 10:00 pm' }.
    */
-  openingHours: [] as OpeningHours[],
+  openingHours: [{ days: 'Open', hours: '5:00 pm – 10:00 pm' }] as OpeningHours[],
+  /** Same hours as numbers (24-hour HH:MM), used to check table-request times. */
+  hours: { open: '17:00', close: '22:00' } as { open: string; close: string } | null,
 
   /** Official WhatsApp number, digits only with country code (e.g. 91XXXXXXXXXX). */
-  whatsappNumber: clean(env.VITE_WHATSAPP_NUMBER),
+  // Confirmed by the owner: the café phone is also its WhatsApp number. An env variable can override it.
+  // Setting VITE_WHATSAPP_NUMBER to an empty value switches WhatsApp off (used by the QA builds).
+  whatsappNumber: env.VITE_WHATSAPP_NUMBER === undefined ? '919332740085' : clean(env.VITE_WHATSAPP_NUMBER),
 
   ordering: {
     /** Supplied: free delivery on orders ABOVE ₹500. */
@@ -65,7 +69,7 @@ export const site = {
    * Preview mode: shows asset IDs/filenames on image placeholders and setup hints for the
    * site owner on unconnected features. Set to false for the public launch.
    */
-  previewMode: true,
+  previewMode: false,
   /** Adds "Images are illustrative" beneath generated menu category images. */
   menuImagesAreIllustrative: true,
 } as const;

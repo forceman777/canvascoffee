@@ -108,9 +108,9 @@ async function main() {
   }
 
   // Social share image from the desktop hero, if supplied.
-  const hero = files.find((f) => f.includes('hero/hero-coffee-desktop'));
+  const hero = files.find((f) => f.includes('hero/hero-coffee-desktop')) ?? files.find((f) => f.includes('hero/hero-pour-still'));
   if (hero) {
-    await sharp(hero).resize(1200, 630, { fit: 'cover', position: 'right' }).jpeg({ quality: 82 }).toFile(path.join(root, 'public/og-image.jpg'));
+    await sharp(hero).resize(1200, 630, { fit: 'cover', position: 'centre' }).jpeg({ quality: 82 }).toFile(path.join(root, 'public/og-image.jpg'));
   }
 
   await writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');

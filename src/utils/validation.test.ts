@@ -31,6 +31,11 @@ describe('reservation', () => {
   it('rejects past dates', () => expect(validateReservation({ ...base, date: '2026-11-22' }, now).date).toBeTruthy());
   it('rejects a time already passed today', () =>
     expect(validateReservation({ ...base, date: '2026-11-23', time: '14:00' }, now).time).toBeTruthy());
+  it('rejects times outside opening hours (5 pm to 10 pm)', () => {
+    expect(validateReservation({ ...base, time: '16:30' }, now).time).toMatch(/5:00 pm to 10:00 pm/);
+    expect(validateReservation({ ...base, time: '22:00' }, now).time).toBeTruthy();
+    expect(validateReservation({ ...base, time: '21:45' }, now)).toEqual({});
+  });
   it('accepts a later time today', () =>
     expect(validateReservation({ ...base, date: '2026-11-23', time: '18:00' }, now)).toEqual({}));
   it('rejects dates beyond the window', () => expect(validateReservation({ ...base, date: '2027-03-01' }, now).date).toBeTruthy());

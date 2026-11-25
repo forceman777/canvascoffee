@@ -83,4 +83,6 @@ export const whisperContent = {
   lead: 'A thought, a suggestion, a kind word or a complaint. Leave it here and it goes straight to the café.',
   privacy:
     'Your name and contact are optional. Add them only if you would like a reply. Messages are read by the café team and are not published.',
+  privacyWhatsApp:
+    'Your note opens in WhatsApp, addressed to the café, and is sent from your own number. Name and contact are optional. Messages are read by the café team and are not published.',
 };

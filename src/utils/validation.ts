@@ -3,7 +3,7 @@
  * The database functions repeat these checks server-side (supabase/migrations).
  */
 import { site } from '../config/site';
-import { addDays, isoDate } from './dates';
+import { addDays, formatTime, isoDate } from './dates';
 
 export type Errors<T> = Partial<Record<keyof T, string>>;
 
@@ -91,6 +91,8 @@ export function validateReservation(f: ReservationForm, now = new Date()): Error
   let time: string | undefined;
   if (!f.time) time = 'Choose a time.';
   else if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(f.time)) time = 'Choose a valid time.';
+  else if (site.hours && (f.time < site.hours.open || f.time >= site.hours.close))
+    time = `The café is open ${formatTime(site.hours.open)} to ${formatTime(site.hours.close)}. Choose a time in between.`;
   else if (f.date === today) {
     const [h, m] = f.time.split(':').map(Number);
     const minutes = h * 60 + m;

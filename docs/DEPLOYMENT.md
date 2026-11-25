@@ -82,10 +82,10 @@ Edit `src/data/menu.ts` → `npm test` (checks prices against the supplied list;
 
 ## 4. Launch checklist
 
-- [ ] Real business details in `src/config/site.ts` (address, phone, hours, map link)
-- [ ] At least one channel configured (WhatsApp and/or Supabase)
+- [x] Real business details in `src/config/site.ts` (address, phone, hours 5–10 pm, map link)
+- [x] WhatsApp configured (919332740085, built in; Supabase optional)
 - [ ] Essential images supplied (see `docs/IMAGE_ASSET_REQUIREMENTS.md`)
-- [ ] `previewMode: false` in `src/config/site.ts`. This hides placeholder labels and owner setup hints.
+- [x] `previewMode: false` in `src/config/site.ts`. This hides placeholder labels and owner setup hints.
 - [ ] `menuImagesAreIllustrative` set to match the images actually used
 - [ ] Confirm "Leaker Tea" spelling and veg / non-veg marks with the owner
 - [ ] `npm test` and `npm run qa` pass
@@ -104,6 +104,6 @@ Edit `src/data/menu.ts` → `npm test` (checks prices against the supplied list;
 
 ```bash
 npm test        # 49 unit tests
-npm run qa      # 85 browser checks across three builds (none / WhatsApp / mocked Supabase)
+npm run qa      # 87 browser checks across three builds (none / WhatsApp / mocked Supabase)
 node scripts/screens.mjs qa-output/screens   # screenshots of every page at 390 / 834 / 1440 px (needs `npm run preview` running)
 ```

@@ -61,6 +61,7 @@ export default function Contact() {
                   {contact.phone ? <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a> : <p><Pending>To be added</Pending></p>}
                 </div>
               </li>
+              {(contact.email || site.previewMode) && (
               <li>
                 <Mail size={20} strokeWidth={1.4} aria-hidden="true" />
                 <div>
@@ -68,6 +69,7 @@ export default function Contact() {
                   {contact.email ? <a href={`mailto:${contact.email}`}>{contact.email}</a> : <p><Pending>To be added</Pending></p>}
                 </div>
               </li>
+              )}
             </ul>
             <div className="contact-hero__actions">
               {contact.mapUrl && (

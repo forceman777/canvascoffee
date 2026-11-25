@@ -153,7 +153,7 @@ export function ReservationForm() {
       )}
       <div className="booking-form__row">
         <TextField id="res-date" label="Date" type="date" min={today} max={lastDay} value={form.date} onChange={set('date')} error={errors.date} />
-        <TextField id="res-time" label="Time" type="time" step={900} value={form.time} onChange={set('time')} error={errors.time} />
+        <TextField id="res-time" label="Time" type="time" step={900} min={site.hours?.open} max={site.hours?.close} value={form.time} onChange={set('time')} error={errors.time} hint={site.hours ? `Open ${formatTime(site.hours.open)} – ${formatTime(site.hours.close)}` : undefined} />
         <SelectField id="res-partySize" label="Guests" value={form.partySize} onChange={set('partySize')} error={errors.partySize}>
           {Array.from({ length: site.reservations.maxPartySize }, (_, i) => (
             <option key={i + 1} value={i + 1}>
@@ -162,7 +162,7 @@ export function ReservationForm() {
           ))}
         </SelectField>
       </div>
-      {site.openingHours.length === 0 && (
+      {!site.hours && (
         <p className="booking-form__hint">Opening hours will be shown here once confirmed. The café will tell you if your chosen time is not available.</p>
       )}
       <div className="booking-form__row booking-form__row--2">

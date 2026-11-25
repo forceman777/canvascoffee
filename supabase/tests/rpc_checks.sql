@@ -48,6 +48,7 @@ begin
   r := public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', 4, 'Asha Roy', '9000000010', null, null);
   assert r->>'status' = 'pending', 'reservation pending';
   begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date - 1), '19:30', 4, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL past date'; exception when others then assert sqlerrm = 'invalid_date', sqlerrm; end;
+  begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '15:00', 2, 'Asha Roy', '9000000012', null, null); raise exception 'FAIL before opening'; exception when others then assert sqlerrm = 'invalid_time', sqlerrm; end;
   begin perform public.request_reservation(((now() at time zone 'Asia/Kolkata')::date + 1), '19:30', 11, 'Asha Roy', '9000000010', null, null); raise exception 'FAIL party 11'; exception when others then assert sqlerrm = 'invalid_party_size', sqlerrm; end;
 
   -- Enquiry and Whisper Box

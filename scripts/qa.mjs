@@ -341,6 +341,12 @@ async function scenarioWhatsApp(base, browser) {
   await popup.close();
   check('WhatsApp: page does not claim the order is placed', await page.getByText('Your order is only placed once you press send in WhatsApp').isVisible());
   check('WhatsApp: order kept until the visitor confirms', (await page.locator('.order-pill__count').innerText()) === '1');
+  await page.goto(`${base}/contact`);
+  await page.getByLabel('Your note').fill('Lovely evening, thank you.');
+  const [note] = await Promise.all([page.waitForEvent('popup'), page.getByRole('button', { name: 'Send the note on WhatsApp' }).click()]);
+  check('WhatsApp: Whisper Box note opens WhatsApp with the message', decodeURIComponent(note.url().replace(/\+/g, ' ')).includes('Lovely evening, thank you.'));
+  await note.close();
+  check('WhatsApp: Whisper Box does not claim the note was delivered', await page.getByText('It reaches the café when you press send there.').isVisible());
   await ctx.close();
 }
 
@@ -392,7 +398,7 @@ async function scenarioBackend(base, browser) {
   await page.goto(`${base}/reservations`);
   const t = new Date(Date.now() + 2 * 86400000);
   await page.locator('#res-date').fill(`${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`);
-  await page.locator('#res-time').fill('13:00');
+  await page.locator('#res-time').fill('19:00');
   await page.locator('#res-name').fill('Test Guest');
   await page.locator('#res-phone').fill('9876543210');
   await page.getByRole('button', { name: 'Review request' }).click();
