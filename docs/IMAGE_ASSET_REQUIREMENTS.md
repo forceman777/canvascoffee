@@ -626,3 +626,19 @@ Transparent PNG **or WebP** files are both accepted; margins are trimmed automat
 - **More gallery photos** (optional): `gallery/gallery-05.jpg` to `gallery-09.jpg` appear in the gallery automatically. Daylight photos of drinks and food as served would add variety to the evening shots.
 - `food/plate-pizza`: please re-export at 1536 px wide (current upload is 612 × 408).
 - The logo (BRAND-01), if available.
+
+---
+
+## Final status (25 Nov 2026): every section uses real media
+
+| Slot | File in `assets-src/images/` | Used for |
+|---|---|---|
+| IL-01 to IL-05 | `signature/iced-coffee/iced-coffee-0X-*.jpg` | Our Story "Five moments in a glass". Five frames taken from the hero pour video (fixed camera, so they line up exactly). The sequence now tells an **iced coffee** (glass of ice → pour → filling → finished) instead of an iced latte, because no milk footage exists. Supplying latte frames at these paths would replace them (update the step copy in `src/data/siteContent.ts`). |
+| FOOD-VID | `food/momo-steam.mp4` (+ poster) | Homepage menu preview, Food card: steaming momos. Cropped to 4:3 (the corner labels fall outside the crop), seamless loop, no audio, 300 KB. |
+| PLATE-02 | `food/plate-pizza.webp` | Kitchen section and Pizza menu header: the top-down vegetable pizza, cut out with a circular mask (replaces the low-resolution pizza box) |
+| SCENE-DRINKS / SCENE-MOCKTAILS | `menu/items/cold-coffee.jpg`, `menu/items/blue-butterfly.jpg` | Homepage menu preview cards (Drinks, Mocktails) |
+| Item photos | `menu/items/{cold-coffee, blue-butterfly, mint-mojito, iced-tea, peri-peri-french-fry, veg-pizza, chicken-burger, chicken-pizza}` | Menu thumbnails and the product window (14 items now have a photo) |
+
+**Storefront (ATM-03): not available.** The Contact page permanently shows the real wall-art photo (ATM-06); supplying `cafe/storefront.jpg` later would replace it automatically.
+
+Nothing else is required. Optional later: more real gallery photos (`gallery/gallery-05.jpg` to `gallery-09.jpg`), a wide interior photo (`cafe/interior-wide.jpg`), and the logo.

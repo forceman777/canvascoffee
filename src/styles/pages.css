@@ -1863,3 +1863,20 @@
     animation-delay: calc(min(var(--i, 0), 6) * 70ms);
   }
 }
+
+/* ---------- Video cards and in-context photos ---------- */
+.reel--card {
+  width: 100%;
+}
+.reel--card .reel__frame {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-panel);
+  box-shadow: none;
+}
+.menu-teaser__image {
+  border-radius: var(--radius-panel);
+}
+.menu-item__thumb.is-photo img {
+  object-fit: cover;
+  padding: 0;
+}

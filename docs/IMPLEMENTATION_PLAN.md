@@ -18,7 +18,7 @@ Last updated: 2026-11-23
 | Backend | Supabase via REST RPC (no SDK). SECURITY DEFINER functions, RLS on, server-side pricing |
 | WhatsApp | `wa.me` hand-off with a pre-filled message. Never treated as a confirmation. |
 | Images | `assets-src/images` → `npm run images` (sharp) → responsive WebP + fallback + manifest |
-| Tests | Vitest (49), Playwright end-to-end (82 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
+| Tests | Vitest (49), Playwright end-to-end (85 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
 
 ## 2. Site map
 
@@ -78,6 +78,9 @@ Last updated: 2026-11-23
     Reading Corner, Contact, Gallery). The owner's reel was edited only for the web (flash removed, seamless loop,
     no audio) and loads lazily. Gallery stills were taken from the reel's sharpest frames; the gallery shows only
     real photographs, never generated images. Crops removed a brand-logo fan, wiring and an inverter box.
+15. **Signature sequence:** built from five frames of the hero pour video, so it shows an iced coffee (glass of ice,
+    pour, filling, finished) rather than an iced latte; no milk footage was supplied. It remains brand storytelling
+    with no order button. No storefront photo exists, so Contact keeps the real wall-art photo.
 11. **Copy** is neutral draft text with no founders, dates, sourcing, awards or quotations (`src/data/siteContent.ts`).
 
 ## 5. Waiting on the owner

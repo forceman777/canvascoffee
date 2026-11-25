@@ -53,6 +53,28 @@
     ],
     "fallback": "cafe/wall-art-1330.jpg"
   },
+  "food/momo-steam-poster": {
+    "width": 720,
+    "height": 540,
+    "widths": [
+      320,
+      640,
+      720
+    ],
+    "fallback": "food/momo-steam-poster-720.jpg"
+  },
+  "food/momo-steam": {
+    "width": 0,
+    "height": 0,
+    "widths": [],
+    "fallback": "food/momo-steam.mp4",
+    "sources": [
+      {
+        "src": "food/momo-steam.mp4",
+        "type": "video/mp4"
+      }
+    ]
+  },
   "food/plate-bread-chaat": {
     "width": 1540,
     "height": 1068,
@@ -137,13 +159,14 @@
     "alpha": true
   },
   "food/plate-pizza": {
-    "width": 441,
-    "height": 414,
+    "width": 984,
+    "height": 984,
     "widths": [
       320,
-      441
+      640,
+      984
     ],
-    "fallback": "food/plate-pizza-441.png",
+    "fallback": "food/plate-pizza-984.png",
     "alpha": true
   },
   "food/plate-wraps": {
@@ -236,6 +259,93 @@
       }
     ]
   },
+  "menu/items/blue-butterfly": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/blue-butterfly-1536.jpg"
+  },
+  "menu/items/chicken-burger": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/chicken-burger-1536.jpg"
+  },
+  "menu/items/chicken-pizza": {
+    "width": 581,
+    "height": 417,
+    "widths": [
+      320,
+      581
+    ],
+    "fallback": "menu/items/chicken-pizza-581.png",
+    "alpha": true
+  },
+  "menu/items/cold-coffee": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/cold-coffee-1536.jpg"
+  },
+  "menu/items/iced-tea": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/iced-tea-1536.jpg"
+  },
+  "menu/items/mint-mojito": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/mint-mojito-1536.jpg"
+  },
+  "menu/items/peri-peri-french-fry": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/peri-peri-french-fry-1536.jpg"
+  },
+  "menu/items/veg-pizza": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      320,
+      640,
+      1024,
+      1536
+    ],
+    "fallback": "menu/items/veg-pizza-1536.jpg"
+  },
   "reading/reading-corner": {
     "width": 1440,
     "height": 1440,
@@ -246,6 +356,51 @@
       1440
     ],
     "fallback": "reading/reading-corner-1440.jpg"
+  },
+  "signature/iced-coffee/iced-coffee-01-glass": {
+    "width": 576,
+    "height": 720,
+    "widths": [
+      320,
+      576
+    ],
+    "fallback": "signature/iced-coffee/iced-coffee-01-glass-576.jpg"
+  },
+  "signature/iced-coffee/iced-coffee-02-first-pour": {
+    "width": 576,
+    "height": 720,
+    "widths": [
+      320,
+      576
+    ],
+    "fallback": "signature/iced-coffee/iced-coffee-02-first-pour-576.jpg"
+  },
+  "signature/iced-coffee/iced-coffee-03-through-ice": {
+    "width": 576,
+    "height": 720,
+    "widths": [
+      320,
+      576
+    ],
+    "fallback": "signature/iced-coffee/iced-coffee-03-through-ice-576.jpg"
+  },
+  "signature/iced-coffee/iced-coffee-04-filling": {
+    "width": 576,
+    "height": 720,
+    "widths": [
+      320,
+      576
+    ],
+    "fallback": "signature/iced-coffee/iced-coffee-04-filling-576.jpg"
+  },
+  "signature/iced-coffee/iced-coffee-05-complete": {
+    "width": 576,
+    "height": 720,
+    "widths": [
+      320,
+      576
+    ],
+    "fallback": "signature/iced-coffee/iced-coffee-05-complete-576.jpg"
   },
   "slider/slide-blue-butterfly": {
     "width": 748,

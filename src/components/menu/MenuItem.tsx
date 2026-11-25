@@ -37,7 +37,7 @@ export function MenuItem({ product, inOrder, onAdd, onView, query }: Props) {
     <li className="menu-item">
       <div className="menu-item__line">
         {photo && (
-          <button type="button" className="menu-item__thumb" onClick={() => onView!(product)} aria-label={`View photo of ${fullName(product)}`} aria-haspopup="dialog">
+          <button type="button" className={`menu-item__thumb ${photo.cutout ? '' : 'is-photo'}`} onClick={() => onView!(product)} aria-label={`View photo of ${fullName(product)}`} aria-haspopup="dialog">
             <Picture image={photo} sizes="3rem" alt="" />
           </button>
         )}

@@ -72,7 +72,7 @@ Burgundy, parchment, walnut and ivory carry the identity; forest and brass suppo
 | Hero pour (fallback, no video) | Canvas animation: stream, splash particles, ripples, last drops, lid bounce. Pauses off screen, has a pause button, draws a still frame with reduced motion. |
 | Coffee slider (home) | Cross-fading themed slides, outlined ghost word, bean/ice/mint burst on change. Autoplay pauses on hover, focus, off screen, or by button; none with reduced motion. |
 | Food showcase (home) | Floating ingredients (CSS float + scroll parallax), plates spin in on selection and turn slowly. |
-| Iced-latte sequence (Our Story) | Sticky frame; five layers cross-fade from one rAF-throttled scroll value, active only while on screen. Skip link provided. Never hijacks scrolling. |
+| Iced-coffee sequence (Our Story, real frames) | Sticky frame; five layers cross-fade from one rAF-throttled scroll value, active only while on screen. Skip link provided. Never hijacks scrolling. |
 | Section reveals | Only key headings and images (IntersectionObserver, one-shot). Images unveil with a clip-path. |
 | Interaction feedback | Hover/press on buttons, count "pop" in the header, toasts, dialog rise, progress bar easing |
 

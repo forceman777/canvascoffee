@@ -46,6 +46,12 @@ export const images = {
   'CAFE-VID': img('cafe/cafe-walkthrough', 'mp4', [9, 16], 'dark', 'Café walkthrough video', 'A walk around Canvas O Coffee: painted masks, lantern lights, paintings and a village mural'),
   'CAFE-POSTER': img('cafe/cafe-walkthrough-poster', 'jpg', [9, 16], 'dark', 'Café video first frame', 'A painted mask on the café wall'),
 
+  // Steaming momos (supplied video, cropped to 4:3, seamless loop, no audio) and in-context drink photos.
+  'FOOD-VID': img('food/momo-steam', 'mp4', [4, 3], 'dark', 'Steaming momos video', 'Illustrative video: steam rising from six momos in a paper tray'),
+  'FOOD-POSTER': img('food/momo-steam-poster', 'jpg', [4, 3], 'dark', 'Steaming momos, first frame', 'Illustrative image: six momos in a paper tray'),
+  'SCENE-DRINKS': img('menu/items/cold-coffee', 'jpg', [3, 2], 'dark', 'Cold coffee on a café table', 'Illustrative image: a cold coffee with whipped cream and chocolate on a sunlit wooden table'),
+  'SCENE-MOCKTAILS': img('menu/items/blue-butterfly', 'jpg', [3, 2], 'dark', 'Blue Butterfly on a café table', 'Illustrative image: a blue mocktail with mint and lime on a sunlit wooden table'),
+
   'HERO-01': img('hero/hero-coffee-desktop', 'jpg', [16, 9], 'dark', 'Hero coffee still life (desktop)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
   'HERO-02': img('hero/hero-coffee-mobile', 'jpg', [9, 16], 'dark', 'Hero coffee still life (mobile)', 'A cup of black coffee on a dark walnut table beside a sprig of coffee leaves and cherries'),
 
@@ -54,11 +60,12 @@ export const images = {
   'BOT-03': img('botanical/coffee-cherry-cluster', 'png', [1, 1], 'light', 'Coffee cherry cluster', '', true),
   'BOT-04': img('botanical/cherry-to-bean-sheet', 'png', [4, 1], 'light', 'Cherry-to-bean botanical sheet', 'Botanical drawing of a coffee cherry, its cross-section, green beans and roasted beans'),
 
-  'IL-01': img('signature/iced-latte/iced-latte-01-empty-glass', 'jpg', [4, 5], 'dark', 'Iced latte frame 1: empty glass', 'An empty clear glass on a dark walnut table'),
-  'IL-02': img('signature/iced-latte/iced-latte-02-milk-pour', 'jpg', [4, 5], 'dark', 'Iced latte frame 2: milk pour', 'Cold milk pouring into the glass'),
-  'IL-03': img('signature/iced-latte/iced-latte-03-espresso-pour', 'jpg', [4, 5], 'dark', 'Iced latte frame 3: espresso pour', 'Espresso pouring into the milk and clouding through it'),
-  'IL-04': img('signature/iced-latte/iced-latte-04-ice-drop', 'jpg', [4, 5], 'dark', 'Iced latte frame 4: ice drop', 'Ice cubes dropping into the glass'),
-  'IL-05': img('signature/iced-latte/iced-latte-05-complete', 'jpg', [4, 5], 'dark', 'Iced latte frame 5: complete', 'A finished iced latte with ice, layered from milk-white to coffee-brown'),
+  // Five frames from the hero pour video (fixed camera, so they line up exactly as they cross-fade).
+  'IL-01': img('signature/iced-coffee/iced-coffee-01-glass', 'jpg', [4, 5], 'dark', 'Sequence frame 1: glass of ice', 'A clear glass full of ice on a wooden bar counter'),
+  'IL-02': img('signature/iced-coffee/iced-coffee-02-first-pour', 'jpg', [4, 5], 'dark', 'Sequence frame 2: first pour', 'Coffee starting to pour onto the ice'),
+  'IL-03': img('signature/iced-coffee/iced-coffee-03-through-ice', 'jpg', [4, 5], 'dark', 'Sequence frame 3: through the ice', 'Coffee running down through the ice cubes'),
+  'IL-04': img('signature/iced-coffee/iced-coffee-04-filling', 'jpg', [4, 5], 'dark', 'Sequence frame 4: filling', 'The glass filling with dark coffee'),
+  'IL-05': img('signature/iced-coffee/iced-coffee-05-complete', 'jpg', [4, 5], 'dark', 'Sequence frame 5: complete', 'A full glass of iced coffee with a light foam on top'),
 
   'SLIDE-01': cutout('slider/slide-hot-coffee', [1, 1], 'Slider: hot coffee cut-out', 'Illustrative image: a steaming cup of black coffee on a saucer'),
   'SLIDE-02': cutout('slider/slide-cold-coffee', [1, 2], 'Slider: iced mocha cut-out', 'Illustrative image: an iced mocha with chocolate drizzle in a tall glass'),
@@ -67,7 +74,7 @@ export const images = {
   'SLIDE-05': cutout('slider/slide-blue-butterfly', [1, 2], 'Slider: blue butterfly cut-out', 'Illustrative image: a blue mocktail with mint, lime and a blue flower'),
 
   'PLATE-01': cutout('food/plate-momo', [3, 2], 'Momo tray (top view)', 'Illustrative image: six steamed momos in a paper tray with a red chutney'),
-  'PLATE-02': cutout('food/plate-pizza', [1, 1], 'Pizza box (top view)', 'Illustrative image: a sliced vegetable pizza in an open box'),
+  'PLATE-02': cutout('food/plate-pizza', [1, 1], 'Pizza (top view)', 'Illustrative image: a vegetable pizza with peppers, olives and onion'),
   'PLATE-03': cutout('food/plate-burger', [3, 2], 'Burger tray (top view)', 'Illustrative image: a double patty burger with fries and a dip in a paper tray'),
   'PLATE-04': cutout('food/plate-fried-special', [3, 2], 'Fried special tray (top view)', 'Illustrative image: chicken nuggets, strips and wings in a paper tray'),
   'PLATE-05': cutout('food/plate-fries', [3, 2], 'Fries tray (top view)', 'Illustrative image: seasoned french fries with a dip in a paper tray'),

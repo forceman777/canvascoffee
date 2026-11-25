@@ -270,7 +270,7 @@ async function scenarioUnconfigured(base, browser) {
   await page.goto(`${base}/menu`);
   await page.locator('.menu-item').first().waitFor();
   check('Every one of the 12 menu categories shows a photo', (await page.locator('.menu-category__media img').count()) === 12);
-  check('Menu items with an exact photo get a thumbnail (10)', (await page.locator('.menu-item__thumb').count()) === 10);
+  check('Menu items with an exact photo get a thumbnail (14)', (await page.locator('.menu-item__thumb').count()) === 14);
   await page.getByRole('button', { name: 'View photo of Iced Mocha' }).click();
   check('Thumbnail opens the item with its photo and price', (await page.locator('dialog[open] .product-dialog__photo img').count()) === 1 && (await page.locator('dialog[open] button[type=submit]').innerText()).includes('₹60'));
   await page.keyboard.press('Escape');
@@ -280,6 +280,7 @@ async function scenarioUnconfigured(base, browser) {
   await page.locator('.cherry__timeline').waitFor({ timeout: 5000 }).catch(() => {});
   check('Our Story: beans photo with a 4-step timeline (no drawings)', (await page.locator('.cherry__photo img').count()) === 1 && (await page.locator('.timeline-step').count()) === 4 && (await page.locator('.cherry__stages').count()) === 0);
   check('Our Story: real tray and glass composition', (await page.locator('.story-duo img').count()) === 2);
+  check('Our Story: the five-moment sequence uses real frames (no drawings)', (await page.locator('.latte-frame img').count()) === 5 && (await page.locator('.latte-frame .image-slot--placeholder').count()) === 0);
   check('Our Story: "The room" and the Reading Corner use real café photos', (await page.locator('.story-room__media img[src*="cafe/lamps"]').count()) === 1 && (await page.locator('.reading__media img[src*="reading/reading-corner"]').count()) === 1);
 
   // Home: the café reel in "Find us in Belda"
@@ -296,6 +297,13 @@ async function scenarioUnconfigured(base, browser) {
   await page.locator('.home-visit__reel').scrollIntoViewIfNeeded();
   await page.waitForTimeout(800);
   check('Home reel: stays paused after the visitor paused it, even when scrolled back', await reel.evaluate((v) => v.paused));
+
+  // Home: menu cards use real media; the momo card is a steaming video
+  await page.locator('.home-menu__grid').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => { const v = document.querySelector('.menu-teaser video'); return v && v.currentTime > 0.3; }, null, { timeout: 10000 }).catch(() => {});
+  check('Home menu cards: momo video plays, drinks and mocktails show photos', (await page.locator('.menu-teaser video').evaluate((v) => !v.paused && v.muted)) && (await page.locator('.menu-teaser__image img').count()) === 2);
+  await page.getByRole('button', { name: 'Pause the momo video' }).click();
+  check('Home menu cards: momo video can be paused', await page.locator('.menu-teaser video').evaluate((v) => v.paused));
 
   // Gallery: real photos and the reel
   await page.goto(`${base}/gallery`);

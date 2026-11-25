@@ -731,6 +731,7 @@ html.has-dialog {
 }
 .product-dialog__photo img {
   width: 100%;
+  height: auto; /* override the height attribute so the 4:3 shape applies */
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius-control);
@@ -870,6 +871,7 @@ body:has(.cart-bar) .toasts {
 }
 .product-dialog__photo img {
   width: 100%;
+  height: auto; /* override the height attribute so the 4:3 shape applies */
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius-control);

@@ -18,15 +18,15 @@ export const homeContent = {
 
 export const signatureContent = {
   title: 'Five moments in a glass',
-  lead: 'Glass, milk, espresso, ice. Watch an iced latte come together as you scroll.',
+  lead: 'A glass of ice, then coffee. Watch an iced coffee come together as you scroll.',
   steps: [
-    { title: 'The glass', body: 'A clear glass, cold and empty. Everything begins with space.' },
-    { title: 'Milk', body: 'Cold milk goes in first, poured in one slow, steady line.' },
-    { title: 'Espresso', body: 'A shot of espresso follows and drifts down through the milk in soft brown clouds.' },
-    { title: 'Ice', body: 'Ice goes in last, cracking quietly as it meets the cold.' },
-    { title: 'The iced latte', body: 'Layered from pale to dark. Stir it, or watch the layers settle first.' },
+    { title: 'The glass', body: 'A clear glass, filled to the brim with ice.' },
+    { title: 'The first pour', body: 'Coffee meets the ice in one slow, steady line.' },
+    { title: 'Through the ice', body: 'It runs down between the cubes, turning amber as it goes.' },
+    { title: 'Filling up', body: 'The glass darkens from the bottom while the ice rises and shifts.' },
+    { title: 'Iced coffee', body: 'Dark, cold and crowned with a light foam. Ready.' },
   ],
-};
+}
 
 export const storyContent = {
   title: 'Our Story',

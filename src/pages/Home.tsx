@@ -16,7 +16,13 @@ import { formatINR } from '../utils/pricing';
 import { site } from '../config/site';
 import { useDocumentTitle } from '../hooks';
 
-const groupImage: Record<string, ImageId> = { drinks: 'MENU-02', food: 'MENU-03', mocktails: 'MENU-12' };
+/** In-context photos where supplied, otherwise the category cut-outs. */
+const groupImage: Record<string, ImageId> = {
+  drinks: hasImage('SCENE-DRINKS') ? 'SCENE-DRINKS' : 'MENU-02',
+  food: 'MENU-03',
+  mocktails: hasImage('SCENE-MOCKTAILS') ? 'SCENE-MOCKTAILS' : 'MENU-12',
+};
+const foodVideo = hasImage('FOOD-VID');
 const hasReel = hasImage('CAFE-VID');
 
 export default function Home() {
@@ -43,7 +49,11 @@ export default function Home() {
               const from = Math.min(...items.map(fromPrice));
               return (
                 <article key={g.id} className="menu-teaser">
-                  <ImageSlot id={groupImage[g.id]} ratio={[4, 3]} sizes="(min-width: 64rem) 30vw, 90vw" />
+                  {g.id === 'food' && foodVideo ? (
+                    <CafeReel variant="card" videoId="FOOD-VID" posterId="FOOD-POSTER" name="momo video" sizes="(min-width: 64rem) 30vw, 90vw" />
+                  ) : (
+                    <ImageSlot id={groupImage[g.id]} ratio={[4, 3]} sizes="(min-width: 64rem) 30vw, 90vw" className="menu-teaser__image" />
+                  )}
                   <div className="menu-teaser__body">
                     <h3 className="menu-teaser__title">{g.name}</h3>
                     <p className="menu-teaser__meta">
