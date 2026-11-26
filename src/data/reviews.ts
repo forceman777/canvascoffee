@@ -4,6 +4,7 @@
  * Rules (checked by reviews.test.ts):
  *  - Names and wording are exactly as written by the customer: no edits, no "corrections".
  *  - Replies by the café are not included. Ratings-only entries (no text) are not included.
+ *  - Very short reviews ("Well done.", "Everything is A1.", "Good.") were removed at the owner's request.
  *  - `rating` is the reviewer's own Google star rating, set ONLY once verified on Google.
  *    `null` means not verified, and no stars are shown for that review.
  */
@@ -30,7 +31,4 @@ export const reviews: Review[] = [
   { name: 'Tathagata Kundu', text: 'Atmosphere is photogenic but sorry to say my food was below expectations.', rating: null },
   { name: 'Arindam Adhikary', text: 'Awesome Resturent. Awesome Staff Behiviour.', rating: null },
   { name: 'Surajit Mahata', text: 'Highly Recommend. Must visit with family.', rating: null },
-  { name: 'Sankar Dutta', text: 'Well done.', rating: null },
-  { name: 'Sujata Das', text: 'Everything is A1.', rating: null },
-  { name: 'Dilip Jain', text: 'Good.', rating: null },
 ];

@@ -11,9 +11,6 @@ const supplied: Array<[string, string]> = [
   ['Tathagata Kundu', 'Atmosphere is photogenic but sorry to say my food was below expectations.'],
   ['Arindam Adhikary', 'Awesome Resturent. Awesome Staff Behiviour.'],
   ['Surajit Mahata', 'Highly Recommend. Must visit with family.'],
-  ['Sankar Dutta', 'Well done.'],
-  ['Sujata Das', 'Everything is A1.'],
-  ['Dilip Jain', 'Good.'],
 ];
 
 describe('customer reviews', () => {

@@ -314,17 +314,18 @@ async function scenarioUnconfigured(base, browser) {
   await page.goto(`${base}/`);
   const reviews = page.locator('#reviews');
   await reviews.scrollIntoViewIfNeeded();
-  const label = () => reviews.locator('.review:not(.review--sizer)').getAttribute('aria-label');
-  check('Reviews: heading, 4.7 / 5 overall and 11 dots', (await reviews.getByRole('heading', { name: 'Loved by Our Guests' }).isVisible()) && (await reviews.locator('.reviews__value').innerText()).replace(/\s/g, '') === '4.7/5' && (await reviews.locator('.reviews__dot').count()) === 11);
-  check('Reviews: one review per slide, word for word', (await label()) === '1 of 11: review by Ashish Murmu' && (await reviews.locator('.review:not(.review--sizer) blockquote').innerText()) === 'Loved the ambience as well as the food quality. Totally value for money.');
-  check('Reviews: no stars assumed on individual reviews', (await reviews.locator('.review-card .stars').count()) === 0);
+  const label = () => reviews.locator('.reviews__slide.is-active').getAttribute('aria-label');
+  const activeText = () => reviews.locator('.reviews__slide.is-active .g-review__text').innerText();
+  check('Reviews: heading, 4.7 / 5 overall and 8 dots', (await reviews.getByRole('heading', { name: /Loved by\s*Our Guests/ }).isVisible()) && (await reviews.locator('.reviews__rating').innerText()).includes('4.7 / 5 overall on Google') && (await reviews.locator('.reviews__dot').count()) === 8);
+  check('Reviews: one review per slide, word for word', (await label()) === '1 of 8: review by Ashish Murmu' && (await activeText()) === 'Loved the ambience as well as the food quality. Totally value for money.');
+  check('Reviews: no stars assumed on individual reviews, short ones removed', (await reviews.locator('.reviews__viewport .stars').count()) === 0 && !(await reviews.innerText()).includes('Everything is A1'));
   await reviews.getByRole('button', { name: 'Next review' }).click();
-  check('Reviews: next arrow', (await label()) === '2 of 11: review by ARIJIT PATRA');
+  check('Reviews: next arrow', (await label()) === '2 of 8: review by ARIJIT PATRA');
   await reviews.getByRole('button', { name: 'Previous review' }).click();
   await reviews.getByRole('button', { name: 'Previous review' }).click();
-  check('Reviews: previous wraps to the last review', (await label()) === '11 of 11: review by Dilip Jain');
-  await reviews.getByRole('button', { name: /Show review 6 of 11/ }).click();
-  check('Reviews: dot jumps to a review (critical ones included as written)', (await reviews.locator('.review:not(.review--sizer) blockquote').innerText()) === 'Atmosphere is photogenic but sorry to say my food was below expectations.');
+  check('Reviews: previous wraps to the last review', (await label()) === '8 of 8: review by Surajit Mahata');
+  await reviews.getByRole('button', { name: /Show review 6 of 8/ }).click();
+  check('Reviews: dot jumps to a review (critical ones included as written)', (await activeText()) === 'Atmosphere is photogenic but sorry to say my food was below expectations.');
   check('Reviews: "Read more reviews on Google" links to the listing', (await reviews.getByRole('link', { name: /Read more reviews on Google/ }).getAttribute('href')).startsWith('https://www.google.com/maps/place/Canvas+O+Coffee'));
 
   // Gallery: real photos and the reel
