@@ -1314,3 +1314,304 @@
   width: 50%;
   bottom: 4%;
 }
+
+/* ===================== Guest reviews ===================== */
+.reviews {
+  padding-block: var(--section-y);
+  overflow: hidden;
+}
+.reviews__grid {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+@media (min-width: 64rem) {
+  .reviews__grid {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: var(--space-9);
+  }
+}
+.reviews__score {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+.reviews__value {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 3rem + 4vw, 6.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  color: var(--burgundy);
+  letter-spacing: -0.03em;
+}
+.reviews__outof {
+  font-size: 0.32em;
+  color: var(--ink-muted);
+  letter-spacing: 0;
+}
+.reviews__source {
+  margin-top: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.reviews__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: var(--space-5);
+  color: var(--burgundy);
+  font-size: 0.93rem;
+  text-decoration: underline;
+  text-decoration-color: rgb(70 28 37 / 0.35);
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color var(--dur-1);
+}
+.reviews__more:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Gold stars */
+.stars {
+  display: inline-flex;
+  gap: 0.15em;
+  color: #b8892f;
+}
+.stars svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.stars--lg svg {
+  width: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem);
+  height: clamp(1.4rem, 1.1rem + 0.9vw, 1.9rem);
+  filter: drop-shadow(0 1px 1px rgb(110 75 20 / 0.25));
+}
+
+/* The card */
+.review-card {
+  position: relative;
+  padding: clamp(1.75rem, 1rem + 3vw, 3.5rem);
+  padding-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+  border-radius: var(--radius-panel);
+  background: var(--walnut);
+  color: var(--ivory);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+  isolation: isolate;
+}
+.review-card::before {
+  /* fine antique-gold inner frame, as on the booking cards */
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgb(210 180 124 / 0.28);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.review-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(90% 80% at 100% 0%, rgb(107 52 64 / 0.55), transparent 60%);
+}
+.review-card__mark {
+  position: absolute;
+  top: -0.15em;
+  left: 0.12em;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 6rem + 6vw, 12rem);
+  line-height: 1;
+  color: var(--brass-light);
+  opacity: 0.22;
+  pointer-events: none;
+}
+.review-card__stage {
+  display: grid;
+}
+.review--sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+.review--sizer .review__text {
+  animation: none !important;
+}
+.review {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin: 0;
+}
+.review__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.review__text--short {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem);
+  line-height: 1.12;
+}
+.review__text--medium {
+  font-size: clamp(1.55rem, 1.2rem + 1.5vw, 2.3rem);
+}
+.review__text--long {
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.7rem);
+  line-height: 1.45;
+}
+.review__by {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.review__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--brass-light);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brass-light);
+  letter-spacing: 0.04em;
+}
+.review__name {
+  display: block;
+  font-weight: 500;
+  font-size: 1.02rem;
+}
+.review__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: rgb(245 235 221 / 0.62);
+}
+.review-card__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgb(245 235 221 / 0.08);
+}
+.review-card__progress span {
+  display: block;
+  height: 100%;
+  background: var(--brass-light);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.review-card__progress span.is-running {
+  animation: dot-progress linear both;
+}
+
+/* Slide transition: the new review glides in, its lines settling in sequence */
+@media (prefers-reduced-motion: no-preference) {
+  .review .review__text {
+    animation: review-in 900ms var(--ease-expo) both;
+  }
+  .review .review__by {
+    animation: review-in 900ms 140ms var(--ease-expo) both;
+  }
+  .review.from-prev .review__text,
+  .review.from-prev .review__by {
+    animation-name: review-in-prev;
+  }
+}
+@keyframes review-in {
+  from {
+    opacity: 0;
+    transform: translateX(36px);
+    filter: blur(3px);
+  }
+}
+@keyframes review-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-36px);
+    filter: blur(3px);
+  }
+}
+
+/* Controls */
+.reviews__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+.reviews__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+}
+.reviews__dot {
+  position: relative;
+  width: 1.6rem;
+  height: 2.5rem;
+}
+.reviews__dot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  translate: -50% -50%;
+  border-radius: var(--radius-pill);
+  background: rgb(48 35 29 / 0.25);
+  transition:
+    width var(--dur-2) var(--ease-out),
+    background-color var(--dur-2);
+}
+.reviews__dot:hover::after {
+  background: rgb(48 35 29 / 0.5);
+}
+.reviews__dot.is-active::after {
+  width: 1.2rem;
+  background: var(--brass);
+}
+.reviews__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.reviews__btn {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+  border: 1px solid rgb(70 28 37 / 0.3);
+  color: var(--burgundy);
+  transition:
+    background-color var(--dur-1),
+    color var(--dur-1),
+    border-color var(--dur-1),
+    transform var(--dur-1);
+}
+.reviews__btn:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--ivory);
+}
+.reviews__btn:active {
+  transform: scale(0.94);
+}
+@media (max-width: 40rem) {
+  .reviews__dot {
+    width: 1.25rem;
+  }
+  .reviews__controls {
+    justify-content: center;
+  }
+}

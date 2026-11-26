@@ -30,6 +30,7 @@ Other commands:
 | Address, phone, hours, socials, delivery area | `src/config/site.ts` |
 | Menu items and prices (single source of truth) | `src/data/menu.ts`, then `npm run db:seed` |
 | Story, Reading Corner and other copy | `src/data/siteContent.ts` |
+| Customer reviews and the overall Google rating (wording exactly as written; set `rating` only once verified) | `src/data/reviews.ts` |
 | Images | Drop files into `assets-src/images/…` (see below) |
 | Colours, type, spacing, motion | `src/styles/tokens.css` |
 

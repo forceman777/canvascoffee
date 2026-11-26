@@ -18,7 +18,7 @@ Last updated: 2026-11-23
 | Backend | Supabase via REST RPC (no SDK). SECURITY DEFINER functions, RLS on, server-side pricing |
 | WhatsApp | `wa.me` hand-off with a pre-filled message. Never treated as a confirmation. |
 | Images | `assets-src/images` → `npm run images` (sharp) → responsive WebP + fallback + manifest |
-| Tests | Vitest (49), Playwright end-to-end (91 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
+| Tests | Vitest (49), Playwright end-to-end (99 checks, 3 builds), axe accessibility, SQL checks on real PostgreSQL |
 
 ## 2. Site map
 

@@ -9,6 +9,7 @@ import { HeroFilm } from '../components/home/HeroFilm';
 import { hasImage } from '../data/images';
 import { FoodShowcase } from '../components/home/FoodShowcase';
 import { CoffeeSlider } from '../components/home/CoffeeSlider';
+import { GuestReviews } from '../components/home/GuestReviews';
 import { categoriesInGroup, fromPrice, menuGroups, products, productsInCategory } from '../data/menu';
 import { homeContent } from '../data/siteContent';
 import type { ImageId } from '../data/images';
@@ -82,6 +83,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <GuestReviews />
 
       {/* ---------- Reservation invitation ---------- */}
       <section className="home-reserve surface-burgundy grain on-dark" aria-labelledby="home-reserve-title">

@@ -215,6 +215,7 @@ async function scenarioUnconfigured(base, browser) {
   await rp.locator('.signature__series li').first().waitFor({ timeout: 5000 }).catch(() => {});
   check('Reduced motion: iced latte (Our Story) shows all 5 frames statically', (await rp.locator('.signature__series li').count()) === 5);
   await rp.goto(`${base}/`);
+  check('Reduced motion: reviews do not autoplay', (await rp.getByRole('button', { name: /automatic reviews/ }).count()) === 0);
   check('Reduced motion: slider does not autoplay (no pause button needed)', (await rp.getByRole('button', { name: /automatic slides/ }).count()) === 0);
   check('Reduced motion: hero shows the still frame instead of playing the video', (await rp.locator('.hero-film__still img').count()) === 1 && (await rp.locator('.hero-film video').count()) === 0);
   await rp.locator('.home-visit__reel').scrollIntoViewIfNeeded();
@@ -308,6 +309,23 @@ async function scenarioUnconfigured(base, browser) {
   check('Home menu cards: momo video plays, drinks and mocktails show photos', (await page.locator('.menu-teaser video').evaluate((v) => !v.paused && v.muted)) && (await page.locator('.menu-teaser__image img').count()) === 2);
   await page.getByRole('button', { name: 'Pause the momo video' }).click();
   check('Home menu cards: momo video can be paused', await page.locator('.menu-teaser video').evaluate((v) => v.paused));
+
+  // Home: guest reviews
+  await page.goto(`${base}/`);
+  const reviews = page.locator('#reviews');
+  await reviews.scrollIntoViewIfNeeded();
+  const label = () => reviews.locator('.review:not(.review--sizer)').getAttribute('aria-label');
+  check('Reviews: heading, 4.7 / 5 overall and 11 dots', (await reviews.getByRole('heading', { name: 'Loved by Our Guests' }).isVisible()) && (await reviews.locator('.reviews__value').innerText()).replace(/\s/g, '') === '4.7/5' && (await reviews.locator('.reviews__dot').count()) === 11);
+  check('Reviews: one review per slide, word for word', (await label()) === '1 of 11: review by Ashish Murmu' && (await reviews.locator('.review:not(.review--sizer) blockquote').innerText()) === 'Loved the ambience as well as the food quality. Totally value for money.');
+  check('Reviews: no stars assumed on individual reviews', (await reviews.locator('.review-card .stars').count()) === 0);
+  await reviews.getByRole('button', { name: 'Next review' }).click();
+  check('Reviews: next arrow', (await label()) === '2 of 11: review by ARIJIT PATRA');
+  await reviews.getByRole('button', { name: 'Previous review' }).click();
+  await reviews.getByRole('button', { name: 'Previous review' }).click();
+  check('Reviews: previous wraps to the last review', (await label()) === '11 of 11: review by Dilip Jain');
+  await reviews.getByRole('button', { name: /Show review 6 of 11/ }).click();
+  check('Reviews: dot jumps to a review (critical ones included as written)', (await reviews.locator('.review:not(.review--sizer) blockquote').innerText()) === 'Atmosphere is photogenic but sorry to say my food was below expectations.');
+  check('Reviews: "Read more reviews on Google" links to the listing', (await reviews.getByRole('link', { name: /Read more reviews on Google/ }).getAttribute('href')).startsWith('https://www.google.com/maps/place/Canvas+O+Coffee'));
 
   // Gallery: real photos and the reel
   await page.goto(`${base}/gallery`);
